@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruqya — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.ruqya-hero{min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(46,175,119,0.1) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 50% 80%,rgba(212,160,23,0.08) 0%,transparent 70%);}
+[data-theme="dark"] .hero-bg{background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(46,175,119,0.08) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 50% 80%,rgba(212,160,23,0.06) 0%,transparent 70%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-ayah-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:600px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-ayah-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-ayah-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-ayah-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* WARNING BANNER */
+.warning-section{padding:0 1.5rem 40px;background:var(--bg);transition:background 0.3s;}
+.warning-card{max-width:800px;margin:0 auto;background:var(--surface);border:1px solid #FCD34D;border-left:4px solid #D97706;border-radius:12px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--shadow);}
+[data-theme="dark"] .warning-card{background:rgba(217,119,6,0.08);border-color:rgba(252,211,77,0.3);border-left-color:#D97706;}
+.warning-icon{font-size:24px;flex-shrink:0;}
+.warning-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#92400E;margin-bottom:4px;}
+[data-theme="dark"] .warning-title{color:#FCD34D;}
+.warning-text{font-size:13px;color:var(--text-2);line-height:1.65;}
+
+/* MAIN 3 CARDS */
+.main-section{padding:0 1.5rem 50px;background:var(--bg);transition:background 0.3s;}
+.main-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:1.2rem;}
+@media(max-width:900px){.main-grid{grid-template-columns:1fr 1fr;}.main-grid > a:first-child{grid-column:span 2;}}
+@media(max-width:600px){.main-grid{grid-template-columns:1fr;}.main-grid > a:first-child{grid-column:span 1;}}
+
+.main-card{padding:32px 28px;border-radius:18px;text-decoration:none;color:white;position:relative;overflow:hidden;transition:all 0.3s;display:flex;flex-direction:column;gap:14px;cursor:pointer;}
+.main-card:hover{transform:translateY(-5px);}
+
+.main-card.ruqya-main{background:linear-gradient(135deg,#1A3A2A 0%,#0F2318 100%);box-shadow:0 8px 32px rgba(15,35,24,0.2);}
+.main-card.ruqya-main:hover{box-shadow:0 12px 40px rgba(15,35,24,0.3);}
+
+.main-card.conditions{background:linear-gradient(135deg,#1E40AF 0%,#1E3A8A 100%);box-shadow:0 8px 32px rgba(30,64,175,0.2);}
+.main-card.conditions:hover{box-shadow:0 12px 40px rgba(30,64,175,0.3);}
+
+.main-card.protection{background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);box-shadow:0 8px 32px rgba(124,58,237,0.2);}
+.main-card.protection:hover{box-shadow:0 12px 40px rgba(124,58,237,0.3);}
+
+.main-card::before{position:absolute;font-family:'Amiri',serif;opacity:0.08;pointer-events:none;line-height:1;right:-10px;bottom:-20px;}
+.main-card.ruqya-main::before{content:'الرُّقْيَة';font-size:120px;}
+.main-card.conditions::before{content:'شُرُوط';font-size:100px;}
+.main-card.protection::before{content:'حِفْظ';font-size:110px;}
+
+.main-icon{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.main-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;}
+.main-arabic{font-family:'Amiri',serif;font-size:18px;color:rgba(255,255,255,0.85);direction:rtl;}
+.main-desc{font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.65;flex:1;}
+.main-features{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.main-feat{font-size:11px;color:white;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:12px;font-weight:600;}
+.main-cta{display:inline-flex;align-items:center;gap:6px;color:white;font-size:13px;font-weight:600;margin-top:4px;}
+
+/* SECTION HEADER */
+.sec-header{text-align:center;padding:50px 1.5rem 30px;background:var(--bg-2);transition:background 0.3s;}
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);background:var(--green-pale);padding:4px 12px;border-radius:6px;margin-bottom:0.8rem;}
+[data-theme="dark"] .sec-tag{background:rgba(46,175,119,0.12);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.sec-desc{font-size:14.5px;color:var(--text-2);max-width:480px;margin:0 auto;line-height:1.7;}
+
+/* RUQYA CONTENTS PREVIEW */
+.contents-wrap{padding:30px 1.5rem 60px;background:var(--bg-2);transition:background 0.3s;}
+.contents-inner{max-width:1100px;margin:0 auto;}
+.contents-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.contents-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.contents-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+@media(max-width:700px){.contents-grid{grid-template-columns:1fr;}}
+
+.content-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column;gap:8px;}
+.content-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.content-source{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-block;width:fit-content;text-transform:uppercase;letter-spacing:0.5px;}
+.content-source.quran{background:var(--green-pale);color:var(--green-mid);}
+.content-source.hadees{background:#FDF6E3;color:var(--gold);}
+[data-theme="dark"] .content-source.quran{background:rgba(46,175,119,0.12);color:var(--green-light);}
+[data-theme="dark"] .content-source.hadees{background:rgba(212,160,23,0.12);color:var(--gold-light);}
+.content-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text);}
+.content-arabic{font-family:'Amiri',serif;font-size:14px;color:var(--text-3);direction:rtl;}
+.content-desc{font-size:12.5px;color:var(--text-2);line-height:1.55;}
+.content-meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:10px;border-top:1px solid var(--border);}
+.content-audio{display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--green-mid);}
+.content-ref{font-size:11px;color:var(--text-3);}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Ruqya</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="ruqya-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🛡️ Islamic Healing</div>
+    <div class="hero-arabic-main">الرُّقْيَةُ الشَّرْعِيَّة</div>
+    <h1 class="hero-title">Ruqya — Quranic Healing</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ</div>
+      <p class="hero-ayah-trans">"And We send down of the Quran that which is healing and mercy for the believers."</p>
+      <span class="hero-ayah-ref">Surah Al-Isra 17:82</span>
+    </div>
+  </div>
+</section>
+
+<!-- WARNING -->
+<div class="warning-section">
+  <div class="warning-card reveal">
+    <span class="warning-icon">⚠️</span>
+    <div>
+      <div class="warning-title">Authentic Islamic Healing Only</div>
+      <p class="warning-text">All content here is from the Quran and authentic Sunnah. We do not promote any form of shirk, black magic, talismans, or non-Islamic practices. Beware of fake healers.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN 3 CARDS -->
+<div class="main-section">
+  <div class="main-grid">
+
+    <!-- COMPLETE RUQYA — Featured -->
+    <a href="#" class="main-card ruqya-main reveal">
+      <div class="main-icon">📖</div>
+      <div class="main-title">Complete Ruqya</div>
+      <div class="main-arabic">الرُّقْيَةُ الكَامِلَة</div>
+      <p class="main-desc">Authentic Ruqya from the Quran and Sunnah — all in one place with Arabic text, translation, and audio recitation by verified reciters.</p>
+      <div class="main-features">
+        <span class="main-feat">📖 Quran</span>
+        <span class="main-feat">📚 Hadees</span>
+        <span class="main-feat">🔊 Audio</span>
+        <span class="main-feat">🌍 4 Languages</span>
+      </div>
+      <span class="main-cta">Start Ruqya →</span>
+    </a>
+
+    <!-- CONDITIONS -->
+    <a href="#" class="main-card conditions reveal">
+      <div class="main-icon">📋</div>
+      <div class="main-title">Conditions & Guidelines</div>
+      <div class="main-arabic">شُرُوطُ الرُّقْيَة</div>
+      <p class="main-desc">Clear rules to perform Ruqya correctly — avoiding non-Islamic practices and fake healers.</p>
+      <span class="main-cta">Read Rules →</span>
+    </a>
+
+    <!-- PROTECTION -->
+    <a href="#" class="main-card protection reveal">
+      <div class="main-icon">🛡️</div>
+      <div class="main-title">Protection Duas</div>
+      <div class="main-arabic">أَدْعِيَةُ الحِفْظ</div>
+      <p class="main-desc">Daily duas for protection from evil eye, harm, and unseen dangers.</p>
+      <span class="main-cta">View Duas →</span>
+    </a>
+
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<div class="sec-header reveal">
+  <span class="sec-tag">What's Inside</span>
+  <h2 class="sec-title">Ruqya Contents</h2>
+  <p class="sec-desc">All authentic Quranic verses and Prophetic methods used in Ruqya — with audio.</p>
+</div>
+
+<div class="contents-wrap">
+  <div class="contents-inner">
+    <div class="contents-label reveal">📚 Verses & Hadees Used in Ruqya</div>
+    <div class="contents-grid">
+
+      <div class="content-card reveal">
+        <span class="content-source quran">From Quran</span>
+        <div class="content-name">Surah Al-Fatihah</div>
+        <div class="content-arabic">سُورَةُ الفَاتِحَة</div>
+        <p class="content-desc">The opening of the Quran — "Umm al-Kitab" — the greatest cure and Ruqya, as mentioned in authentic hadees.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">7 verses</span>
+        </div>
+      </div>
+
+      <div class="content-card reveal">
+        <span class="content-source quran">From Quran</span>
+        <div class="content-name">Ayat al-Kursi</div>
+        <div class="content-arabic">آيَةُ الكُرْسِي</div>
+        <p class="content-desc">The greatest verse in the Quran — protection from Shaytaan and harm throughout the day and night.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">Al-Baqarah 2:255</span>
+        </div>
+      </div>
+
+      <div class="content-card reveal">
+        <span class="content-source quran">From Quran</span>
+        <div class="content-name">Last 2 verses of Al-Baqarah</div>
+        <div class="content-arabic">خَوَاتِيمُ البَقَرَة</div>
+        <p class="content-desc">Powerful verses recited at night — sufficient for protection from all harms, as authentic hadees mention.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">Al-Baqarah 2:285-286</span>
+        </div>
+      </div>
+
+      <div class="content-card reveal">
+        <span class="content-source quran">From Quran</span>
+        <div class="content-name">The 3 Quls (Muawwidhat)</div>
+        <div class="content-arabic">المُعَوِّذَات</div>
+        <p class="content-desc">Surah Al-Ikhlas, Al-Falaq and An-Nas — the strongest verses for seeking protection from all evil.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">Surah 112, 113, 114</span>
+        </div>
+      </div>
+
+      <div class="content-card reveal">
+        <span class="content-source hadees">From Hadees</span>
+        <div class="content-name">Prophetic Ruqya Method</div>
+        <div class="content-arabic">رُقْيَةُ النَّبِيِّ ﷺ</div>
+        <p class="content-desc">The exact method the Prophet ﷺ used to perform Ruqya on himself, his family, and the Sahaba.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">Bukhari, Muslim</span>
+        </div>
+      </div>
+
+      <div class="content-card reveal">
+        <span class="content-source hadees">From Hadees</span>
+        <div class="content-name">Specific Prophetic Duas</div>
+        <div class="content-arabic">أَدْعِيَةُ الرُّقْيَة</div>
+        <p class="content-desc">Specific supplications the Prophet ﷺ used for pain, sickness, evil eye, and protection from harm.</p>
+        <div class="content-meta">
+          <span class="content-audio">🔊 Audio Available</span>
+          <span class="content-ref">Multiple sources</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

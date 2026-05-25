@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Calendar — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.cal-hero{min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1532978879514-6cb7d2da7c47?w=1400&q=80');background-size:cover;background-position:center;opacity:0.08;transition:opacity 0.3s;}
+[data-theme="dark"] .hero-bg{opacity:0.12;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 25%,transparent 75%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-ayah-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:600px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-ayah-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-ayah-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-ayah-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* TODAY'S DATE CARD */
+.today-section{padding:0 1.5rem 50px;background:var(--bg);transition:background 0.3s;}
+.today-card{max-width:700px;margin:0 auto;background:linear-gradient(135deg,#1A3A2A 0%,#0F2318 100%);border-radius:20px;padding:36px 40px;color:white;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.today-card::before{content:'☪';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:200px;color:rgba(212,160,23,0.08);pointer-events:none;font-family:'Amiri',serif;}
+.today-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;position:relative;z-index:2;}
+@media(max-width:600px){.today-grid{grid-template-columns:1fr;gap:1.2rem;}}
+.today-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.5);margin-bottom:8px;}
+.today-date{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:white;margin-bottom:4px;}
+.today-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--gold-light);direction:rtl;margin-bottom:6px;}
+.today-day{font-size:13px;color:rgba(255,255,255,0.6);}
+
+/* SECTION HEADER */
+.sec-header{text-align:center;padding:50px 1.5rem 30px;background:var(--bg-2);transition:background 0.3s;}
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);background:var(--green-pale);padding:4px 12px;border-radius:6px;margin-bottom:0.8rem;}
+[data-theme="dark"] .sec-tag{background:rgba(46,175,119,0.12);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.sec-desc{font-size:14.5px;color:var(--text-2);max-width:480px;margin:0 auto;line-height:1.7;}
+
+/* CALENDAR FEATURE CARDS */
+.cal-grid-wrap{padding:40px 1.5rem 50px;background:var(--bg-2);transition:background 0.3s;}
+.cal-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+@media(max-width:700px){.cal-grid{grid-template-columns:1fr;}}
+
+.ccard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px 24px;text-decoration:none;color:var(--text);transition:all 0.25s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;cursor:pointer;}
+.ccard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent);opacity:0;transition:opacity 0.25s;}
+.ccard:hover{border-color:var(--green-mid);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.ccard:hover::after{opacity:1;}
+.ccard-top{display:flex;align-items:center;justify-content:space-between;}
+.ccard-icon{width:48px;height:48px;border-radius:12px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:24px;transition:background 0.2s;}
+[data-theme="dark"] .ccard-icon{background:rgba(46,175,119,0.12);}
+.ccard:hover .ccard-icon{background:linear-gradient(135deg,var(--green),var(--green-light));}
+.badge-soon{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;background:rgba(184,134,11,0.12);color:var(--gold);}
+[data-theme="dark"] .badge-soon{background:rgba(212,160,23,0.15);color:var(--gold-light);}
+.badge-live{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;background:rgba(34,139,94,0.12);color:var(--green-mid);}
+[data-theme="dark"] .badge-live{background:rgba(46,175,119,0.15);color:var(--green-light);}
+.ccard-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--text);}
+.ccard-arabic{font-family:'Amiri',serif;font-size:15px;color:var(--text-3);direction:rtl;}
+.ccard-desc{font-size:13px;color:var(--text-2);line-height:1.6;}
+.ccard-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+.ccard-chip{font-size:10.5px;color:var(--green-mid);background:var(--green-pale);padding:2px 8px;border-radius:10px;}
+[data-theme="dark"] .ccard-chip{background:rgba(46,175,119,0.1);}
+.ccard-arrow{font-size:14px;color:var(--text-3);align-self:flex-end;transition:all 0.2s;}
+.ccard:hover .ccard-arrow{color:var(--green-mid);transform:translateX(3px);}
+
+/* HIJRI MONTHS LIST */
+.months-section{padding:30px 1.5rem 70px;background:var(--bg-2);transition:background 0.3s;}
+.months-inner{max-width:1100px;margin:0 auto;}
+.months-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.months-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.months-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0.8rem;}
+@media(max-width:900px){.months-grid{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:560px){.months-grid{grid-template-columns:repeat(2,1fr);}}
+.month-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;transition:all 0.2s;cursor:pointer;}
+.month-card:hover{border-color:var(--green-mid);transform:translateY(-2px);}
+.month-num{font-size:11px;color:var(--text-3);font-weight:600;margin-bottom:4px;}
+.month-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.month-arabic{font-family:'Amiri',serif;font-size:13px;color:var(--gold-light);direction:rtl;}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* IMPORTANT DATES */
+.dates-section{padding:30px 1.5rem 50px;background:var(--bg-2);transition:background 0.3s;}
+.dates-inner{max-width:1100px;margin:0 auto;}
+.dates-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.dates-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.dates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+@media(max-width:900px){.dates-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.dates-grid{grid-template-columns:1fr;}}
+
+.date-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;transition:all 0.25s;position:relative;overflow:hidden;cursor:pointer;}
+.date-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),var(--gold-light));}
+.date-card:hover{border-color:var(--gold-light);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+
+.date-card.highlight::before{background:linear-gradient(180deg,#7C3AED,#A78BFA);}
+.date-card.highlight:hover{border-color:#A78BFA;box-shadow:0 8px 32px rgba(124,58,237,0.15);}
+
+.date-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.date-hijri{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);line-height:1.3;}
+.date-arabic{font-family:'Amiri',serif;font-size:14px;color:var(--gold-light);direction:rtl;margin-top:2px;display:block;}
+.date-event{font-size:13.5px;color:var(--text);font-weight:600;margin-top:8px;}
+.date-desc{font-size:12px;color:var(--text-2);line-height:1.5;margin-top:4px;}
+.date-countdown{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--green-pale);color:var(--green-mid);white-space:nowrap;}
+[data-theme="dark"] .date-countdown{background:rgba(46,175,119,0.12);}
+
+.date-card.highlight .date-countdown{background:#EDE9FE;color:#7C3AED;}
+[data-theme="dark"] .date-card.highlight .date-countdown{background:rgba(124,58,237,0.15);color:#A78BFA;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Islamic Calendar</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="cal-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🌙 Hijri Calendar</div>
+    <div class="hero-arabic-main">التَّقْوِيمُ الإِسْلَامِي</div>
+    <h1 class="hero-title">Islamic Calendar</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">يَسْأَلُونَكَ عَنِ الْأَهِلَّةِ ۖ قُلْ هِيَ مَوَاقِيتُ لِلنَّاسِ</div>
+      <p class="hero-ayah-trans">"They ask you about the crescents. Say: They are measurements of time for the people."</p>
+      <span class="hero-ayah-ref">Surah Al-Baqarah 2:189</span>
+    </div>
+  </div>
+</section>
+
+<!-- TODAY'S DATE -->
+<div class="today-section">
+  <div class="today-card reveal">
+    <div class="today-grid">
+      <div>
+        <div class="today-label">Hijri Date</div>
+        <div class="today-date">7 Dhul Qa'dah 1447</div>
+        <div class="today-arabic">٧ ذُو القَعْدَة ١٤٤٧</div>
+        <p class="today-day">Monday</p>
+      </div>
+      <div>
+        <div class="today-label">Gregorian Date</div>
+        <div class="today-date">25 May 2026</div>
+        <div class="today-arabic" style="color:rgba(255,255,255,0.6);">٢٥ مَايُو ٢٠٢٦</div>
+        <p class="today-day">Today</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION HEADER -->
+<div class="sec-header reveal">
+  <span class="sec-tag">Features</span>
+  <h2 class="sec-title">Stay Connected to the Hijri Calendar</h2>
+  <p class="sec-desc">Track important Islamic dates, events, and blessed nights throughout the year.</p>
+</div>
+
+<!-- CALENDAR CARDS -->
+<div class="cal-grid-wrap">
+  <div class="cal-grid">
+
+    <!-- 1. Hijri Date -->
+    <a href="#" class="ccard reveal">
+      <div class="ccard-top">
+        <div class="ccard-icon">📅</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="ccard-title">Hijri Date Converter</div>
+      <div class="ccard-arabic">التَّارِيخُ الهِجْرِي</div>
+      <p class="ccard-desc">Convert between Hijri and Gregorian dates. Track current Islamic date accurately.</p>
+      <div class="ccard-chips">
+        <span class="ccard-chip">Today's Date</span>
+        <span class="ccard-chip">Converter</span>
+      </div>
+      <span class="ccard-arrow">→</span>
+    </a>
+
+    <!-- 2. Islamic Events -->
+    <a href="#" class="ccard reveal">
+      <div class="ccard-top">
+        <div class="ccard-icon">⭐</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="ccard-title">Islamic Events</div>
+      <div class="ccard-arabic">المُنَاسَبَاتُ الإِسْلَامِيَّة</div>
+      <p class="ccard-desc">Ramadan, Eid ul-Fitr, Eid ul-Adha, Muharram and more — with countdowns.</p>
+      <div class="ccard-chips">
+        <span class="ccard-chip">Ramadan</span>
+        <span class="ccard-chip">Eid</span>
+        <span class="ccard-chip">Muharram</span>
+        <span class="ccard-chip">Hajj</span>
+      </div>
+      <span class="ccard-arrow">→</span>
+    </a>
+
+    <!-- 3. Special Nights -->
+    <a href="#" class="ccard reveal">
+      <div class="ccard-top">
+        <div class="ccard-icon">✨</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="ccard-title">Special Nights</div>
+      <div class="ccard-arabic">اللَّيَالِي المُبَارَكَة</div>
+      <p class="ccard-desc">Laylatul Qadr, Shab-e-Barat, and other blessed nights with their significance.</p>
+      <div class="ccard-chips">
+        <span class="ccard-chip">Laylatul Qadr</span>
+        <span class="ccard-chip">Shab-e-Barat</span>
+        <span class="ccard-chip">Shab-e-Miraj</span>
+      </div>
+      <span class="ccard-arrow">→</span>
+    </a>
+
+    <!-- 4. Fasting Dates -->
+    <a href="#" class="ccard reveal">
+      <div class="ccard-top">
+        <div class="ccard-icon">🌙</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="ccard-title">Fasting Dates</div>
+      <div class="ccard-arabic">أَيَّامُ الصِّيَام</div>
+      <p class="ccard-desc">Sehri & Iftar times, voluntary fast dates, and monthly fasting schedules.</p>
+      <div class="ccard-chips">
+        <span class="ccard-chip">Sehri / Iftar</span>
+        <span class="ccard-chip">Ayyam-e-Beedh</span>
+        <span class="ccard-chip">Ashura</span>
+      </div>
+      <span class="ccard-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+
+<!-- IMPORTANT DATES -->
+<div class="dates-section">
+  <div class="dates-inner">
+    <div class="dates-label reveal">⭐ Important Islamic Dates</div>
+    <div class="dates-grid">
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">1 Muharram</div>
+            <span class="date-arabic">١ مُحَرَّم</span>
+          </div>
+          <span class="date-countdown">~7 months</span>
+        </div>
+        <div class="date-event">Hijri New Year</div>
+        <p class="date-desc">The first day of the Islamic calendar — beginning of a new Hijri year.</p>
+      </div>
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">9-10 Muharram</div>
+            <span class="date-arabic">٩-١٠ مُحَرَّم</span>
+          </div>
+          <span class="date-countdown">~7 months</span>
+        </div>
+        <div class="date-event">Yawm-e-Ashura</div>
+        <p class="date-desc">Day of fasting — recommended in the Sunnah, with great rewards.</p>
+      </div>
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">1 Ramadan</div>
+            <span class="date-arabic">١ رَمَضَان</span>
+          </div>
+          <span class="date-countdown">~9 months</span>
+        </div>
+        <div class="date-event">Start of Ramadan</div>
+        <p class="date-desc">The blessed month of fasting, Quran, and spiritual reflection begins.</p>
+      </div>
+
+      <div class="date-card highlight reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">21, 23, 25, 27, 29 Ramadan</div>
+            <span class="date-arabic">اللَّيَالِي الفَرْدِيَّة</span>
+          </div>
+          <span class="date-countdown">Odd Nights</span>
+        </div>
+        <div class="date-event">Laylatul Qadr — Taq Raaten</div>
+        <p class="date-desc">The Night of Power — better than a thousand months. Seek it in the odd nights of the last 10 days.</p>
+      </div>
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">1 Shawwal</div>
+            <span class="date-arabic">١ شَوَّال</span>
+          </div>
+          <span class="date-countdown">~10 months</span>
+        </div>
+        <div class="date-event">Eid ul-Fitr</div>
+        <p class="date-desc">The festival celebrating the end of Ramadan — joy, charity, and gratitude.</p>
+      </div>
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">9 Dhul Hijjah</div>
+            <span class="date-arabic">٩ ذُو الحِجَّة</span>
+          </div>
+          <span class="date-countdown">~5 months</span>
+        </div>
+        <div class="date-event">Yawm-e-Arafah</div>
+        <p class="date-desc">The greatest day of the year — fasting on this day forgives the sins of two years.</p>
+      </div>
+
+      <div class="date-card reveal">
+        <div class="date-top">
+          <div>
+            <div class="date-hijri">10 Dhul Hijjah</div>
+            <span class="date-arabic">١٠ ذُو الحِجَّة</span>
+          </div>
+          <span class="date-countdown">~5 months</span>
+        </div>
+        <div class="date-event">Eid ul-Adha</div>
+        <p class="date-desc">The festival of sacrifice — commemorating Ibrahim (AS)'s devotion to Allah.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- HIJRI MONTHS -->
+<div class="months-section">
+  <div class="months-inner">
+    <div class="months-label reveal">The 12 Hijri Months</div>
+    <div class="months-grid">
+      <div class="month-card reveal"><div class="month-num">01</div><div class="month-name">Muharram</div><div class="month-arabic">مُحَرَّم</div></div>
+      <div class="month-card reveal"><div class="month-num">02</div><div class="month-name">Safar</div><div class="month-arabic">صَفَر</div></div>
+      <div class="month-card reveal"><div class="month-num">03</div><div class="month-name">Rabi' al-Awwal</div><div class="month-arabic">رَبِيع الأَوَّل</div></div>
+      <div class="month-card reveal"><div class="month-num">04</div><div class="month-name">Rabi' al-Thani</div><div class="month-arabic">رَبِيع الثَّانِي</div></div>
+      <div class="month-card reveal"><div class="month-num">05</div><div class="month-name">Jumada al-Awwal</div><div class="month-arabic">جُمَادَى الأَوَّل</div></div>
+      <div class="month-card reveal"><div class="month-num">06</div><div class="month-name">Jumada al-Thani</div><div class="month-arabic">جُمَادَى الثَّانِي</div></div>
+      <div class="month-card reveal"><div class="month-num">07</div><div class="month-name">Rajab</div><div class="month-arabic">رَجَب</div></div>
+      <div class="month-card reveal"><div class="month-num">08</div><div class="month-name">Sha'ban</div><div class="month-arabic">شَعْبَان</div></div>
+      <div class="month-card reveal"><div class="month-num">09</div><div class="month-name">Ramadan</div><div class="month-arabic">رَمَضَان</div></div>
+      <div class="month-card reveal"><div class="month-num">10</div><div class="month-name">Shawwal</div><div class="month-arabic">شَوَّال</div></div>
+      <div class="month-card reveal"><div class="month-num">11</div><div class="month-name">Dhul Qa'dah</div><div class="month-arabic">ذُو القَعْدَة</div></div>
+      <div class="month-card reveal"><div class="month-num">12</div><div class="month-name">Dhul Hijjah</div><div class="month-arabic">ذُو الحِجَّة</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q&A — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.qa-hero{min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(46,175,119,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(212,160,23,0.06) 0%,transparent 50%);}
+.hero-bg::before{content:'?';position:absolute;font-family:'Playfair Display',serif;font-size:300px;font-weight:900;color:var(--text);opacity:0.025;top:50%;left:50%;transform:translate(-50%,-50%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-hadees-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:600px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-hadees-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-hadees-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-hadees-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ASK QUESTION CTA */
+.ask-section{padding:0 1.5rem 50px;background:var(--bg);transition:background 0.3s;}
+.ask-card{max-width:800px;margin:0 auto;background:linear-gradient(135deg,var(--green) 0%,#0F3D2A 100%);border-radius:20px;padding:40px;color:white;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.ask-card::before{content:'?';position:absolute;right:-20px;top:-30px;font-family:'Playfair Display',serif;font-size:240px;font-weight:900;color:rgba(255,255,255,0.05);line-height:1;}
+.ask-grid{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;position:relative;z-index:2;}
+@media(max-width:600px){.ask-grid{grid-template-columns:1fr;text-align:center;}}
+.ask-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:white;margin-bottom:8px;}
+.ask-desc{font-size:14px;color:rgba(255,255,255,0.8);line-height:1.65;max-width:480px;}
+.ask-btn{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--green);padding:14px 28px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.ask-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.15);}
+
+.login-notice{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border-radius:6px;padding:6px 10px;font-size:11.5px;color:rgba(255,255,255,0.8);margin-top:12px;width:fit-content;}
+@media(max-width:600px){.login-notice{margin:12px auto 0;}}
+
+/* SECTION HEADER */
+.sec-header{text-align:center;padding:50px 1.5rem 30px;background:var(--bg-2);transition:background 0.3s;}
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);background:var(--green-pale);padding:4px 12px;border-radius:6px;margin-bottom:0.8rem;}
+[data-theme="dark"] .sec-tag{background:rgba(46,175,119,0.12);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.sec-desc{font-size:14.5px;color:var(--text-2);max-width:480px;margin:0 auto;line-height:1.7;}
+
+/* CATEGORIES */
+.cat-grid-wrap{padding:30px 1.5rem 50px;background:var(--bg-2);transition:background 0.3s;}
+.cat-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+@media(max-width:900px){.cat-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
+
+.cat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 16px;text-decoration:none;color:var(--text);text-align:center;transition:all 0.25s;cursor:pointer;}
+.cat-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.cat-icon{font-size:32px;margin-bottom:10px;display:block;}
+.cat-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.cat-count{font-size:11px;color:var(--text-3);}
+
+/* RECENT Q&A */
+.recent-section{padding:30px 1.5rem 50px;background:var(--bg-2);transition:background 0.3s;}
+.recent-inner{max-width:900px;margin:0 auto;}
+.recent-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.recent-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.qa-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:1rem;transition:all 0.25s;cursor:pointer;}
+.qa-item:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);}
+.qa-cat-badge{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--green-pale);color:var(--green-mid);display:inline-block;margin-bottom:10px;}
+[data-theme="dark"] .qa-cat-badge{background:rgba(46,175,119,0.12);}
+.qa-question{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.5;}
+.qa-question::before{content:'Q: ';color:var(--gold);font-weight:700;}
+.qa-answer{font-size:13.5px;color:var(--text-2);line-height:1.65;}
+.qa-answer::before{content:'A: ';color:var(--green-mid);font-weight:700;}
+.qa-meta{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.qa-asker{font-size:11.5px;color:var(--text-3);}
+.qa-date{font-size:11.5px;color:var(--text-3);}
+.qa-read-more{font-size:12px;color:var(--green-mid);text-decoration:none;font-weight:600;}
+
+/* HOW IT WORKS */
+.how-section{padding:30px 1.5rem 60px;background:var(--bg-2);transition:background 0.3s;}
+.how-inner{max-width:1100px;margin:0 auto;}
+.how-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.5rem;text-align:center;}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+@media(max-width:900px){.how-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.how-grid{grid-template-columns:1fr;}}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 20px;text-align:center;position:relative;}
+.step-num{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:var(--green-mid);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Playfair Display',serif;}
+.step-icon{font-size:32px;margin:8px 0 12px;display:block;}
+.step-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.step-desc{font-size:12px;color:var(--text-2);line-height:1.55;}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Q&A</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="qa-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">❓ Ask & Learn</div>
+    <div class="hero-arabic-main">سُؤَالٌ وَجَوَاب</div>
+    <h1 class="hero-title">Islamic Q&A</h1>
+    <div class="hero-hadees-box">
+      <div class="hero-hadees-arabic">أَلَّا سَأَلُوا إِذْ لَمْ يَعْلَمُوا فَإِنَّمَا شِفَاءُ الْعِيِّ السُّؤَالُ</div>
+      <p class="hero-hadees-trans">"Why did they not ask when they did not know? Indeed the cure for ignorance is asking."</p>
+      <span class="hero-hadees-ref">Sunan Abu Dawood — 336</span>
+    </div>
+  </div>
+</section>
+
+<!-- ASK QUESTION CTA -->
+<div class="ask-section">
+  <div class="ask-card reveal">
+    <div class="ask-grid">
+      <div>
+        <div class="ask-title">Have a Question?</div>
+        <p class="ask-desc">Ask anything about Islam — Aqeedah, Fiqh, Marriage, Quran, Hadees. Our scholars and team will answer with daleel.</p>
+        <div class="login-notice">🔒 Login required to ask · Anonymous option available</div>
+      </div>
+      <a href="#" class="ask-btn">Ask a Question →</a>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="sec-header reveal">
+  <span class="sec-tag">Browse</span>
+  <h2 class="sec-title">Choose a Category</h2>
+  <p class="sec-desc">Find answers organized by Islamic topics — or browse all recent questions below.</p>
+</div>
+
+<div class="cat-grid-wrap">
+  <div class="cat-grid">
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">🕊️</span>
+      <div class="cat-name">Aqeedah</div>
+      <p class="cat-count">Faith & Belief</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">⚖️</span>
+      <div class="cat-name">Fiqh</div>
+      <p class="cat-count">Islamic Law</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">💍</span>
+      <div class="cat-name">Marriage & Family</div>
+      <p class="cat-count">Nikah & Relations</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">🌟</span>
+      <div class="cat-name">Seerah</div>
+      <p class="cat-count">Prophet's Life</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">📖</span>
+      <div class="cat-name">Quran</div>
+      <p class="cat-count">Quranic Sciences</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">📚</span>
+      <div class="cat-name">Hadees</div>
+      <p class="cat-count">Prophetic Traditions</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">🕌</span>
+      <div class="cat-name">Worship</div>
+      <p class="cat-count">Salah, Sawm, Hajj</p>
+    </a>
+
+    <a href="#" class="cat-card reveal">
+      <span class="cat-icon">💼</span>
+      <div class="cat-name">Business & Ethics</div>
+      <p class="cat-count">Halal Earnings</p>
+    </a>
+
+  </div>
+</div>
+
+<!-- RECENT Q&A -->
+<div class="recent-section">
+  <div class="recent-inner">
+    <div class="recent-label reveal">📚 Recent Questions Answered</div>
+
+    <div class="qa-item reveal">
+      <span class="qa-cat-badge">Fiqh</span>
+      <div class="qa-question">Is it permissible to combine two prayers while travelling?</div>
+      <p class="qa-answer">Yes, a traveller is permitted to combine Zuhr with Asr, and Maghrib with Isha — based on multiple authentic hadees. This is a concession (rukhsah) given by Allah to ease...</p>
+      <div class="qa-meta">
+        <span class="qa-asker">By: Anonymous · Answered by: Team</span>
+        <a href="#" class="qa-read-more">Read Full Answer →</a>
+      </div>
+    </div>
+
+    <div class="qa-item reveal">
+      <span class="qa-cat-badge">Aqeedah</span>
+      <div class="qa-question">What is the correct understanding of Tawheed in Islam?</div>
+      <p class="qa-answer">Tawheed is the absolute oneness of Allah. It is divided into three categories: Tawheed ar-Rububiyyah (Lordship), Tawheed al-Uluhiyyah (Worship), and Tawheed al-Asma wa al-Sifat...</p>
+      <div class="qa-meta">
+        <span class="qa-asker">By: Ahmad · Answered by: Scholar</span>
+        <a href="#" class="qa-read-more">Read Full Answer →</a>
+      </div>
+    </div>
+
+    <div class="qa-item reveal">
+      <span class="qa-cat-badge">Marriage & Family</span>
+      <div class="qa-question">What are the rights of parents in Islam?</div>
+      <p class="qa-answer">The rights of parents are immense in Islam. Allah mentions them right after His own right of worship in the Quran. Children must show kindness, obedience in good matters...</p>
+      <div class="qa-meta">
+        <span class="qa-asker">By: Anonymous · Answered by: Team</span>
+        <a href="#" class="qa-read-more">Read Full Answer →</a>
+      </div>
+    </div>
+
+    <div class="qa-item reveal">
+      <span class="qa-cat-badge">Worship</span>
+      <div class="qa-question">Is Witr prayer Wajib or Sunnah?</div>
+      <p class="qa-answer">There is a difference of opinion among scholars. According to the Hanafi madhab, Witr is Wajib. According to other madhabs (Shafi, Maliki, Hanbali), it is a strongly emphasized Sunnah (Sunnah Muakkadah)...</p>
+      <div class="qa-meta">
+        <span class="qa-asker">By: Fatima · Answered by: Scholar</span>
+        <a href="#" class="qa-read-more">Read Full Answer →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="how-label reveal">🔄 How It Works</div>
+    <div class="how-grid">
+
+      <div class="step-card reveal">
+        <span class="step-num">1</span>
+        <span class="step-icon">🔐</span>
+        <div class="step-title">Login</div>
+        <p class="step-desc">Sign in to your account or create a new one.</p>
+      </div>
+
+      <div class="step-card reveal">
+        <span class="step-num">2</span>
+        <span class="step-icon">✍️</span>
+        <div class="step-title">Ask Your Question</div>
+        <p class="step-desc">Choose category, ask anonymously or with your name.</p>
+      </div>
+
+      <div class="step-card reveal">
+        <span class="step-num">3</span>
+        <span class="step-icon">👨‍🏫</span>
+        <div class="step-title">Scholar Reviews</div>
+        <p class="step-desc">Our team and scholars answer with Quran and Hadees daleel.</p>
+      </div>
+
+      <div class="step-card reveal">
+        <span class="step-num">4</span>
+        <span class="step-icon">🔔</span>
+        <div class="step-title">Get Notified</div>
+        <p class="step-desc">Receive notification when your question is answered.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

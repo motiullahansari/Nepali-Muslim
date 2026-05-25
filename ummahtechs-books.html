@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Books & Articles — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.books-hero{min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&q=80');background-size:cover;background-position:center;opacity:0.07;transition:opacity 0.3s;}
+[data-theme="dark"] .hero-bg{opacity:0.04;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 25%,transparent 75%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-ayah-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:620px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-ayah-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-ayah-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-ayah-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* TABS */
+.tabs-section{padding:0 1.5rem 30px;background:var(--bg);transition:background 0.3s;}
+.tabs-wrap{max-width:600px;margin:0 auto;display:flex;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:5px;box-shadow:var(--shadow);}
+.tab-btn{flex:1;padding:10px 20px;border:none;background:transparent;color:var(--text-2);font-size:14px;font-weight:600;cursor:pointer;border-radius:25px;transition:all 0.25s;font-family:'DM Sans',sans-serif;}
+.tab-btn.active{background:linear-gradient(135deg,var(--green),var(--green-light));color:white;box-shadow:0 2px 10px rgba(34,139,94,0.3);}
+
+/* FILTERS */
+.filter-section{padding:0 1.5rem 30px;background:var(--bg);transition:background 0.3s;}
+.filter-wrap{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.filter-chip{padding:7px 16px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.filter-chip:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.filter-chip.active{background:var(--green-pale);border-color:var(--green-mid);color:var(--green-mid);}
+[data-theme="dark"] .filter-chip.active{background:rgba(46,175,119,0.12);}
+
+/* BOOKS GRID */
+.content-wrap{padding:20px 1.5rem 60px;background:var(--bg-2);transition:background 0.3s;}
+.content-inner{max-width:1100px;margin:0 auto;}
+.content-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.5rem;text-align:center;}
+
+.books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+@media(max-width:900px){.books-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.books-grid{grid-template-columns:1fr;}}
+
+.book-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column;}
+.book-card:hover{border-color:var(--green-mid);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.book-cover{height:180px;background:linear-gradient(135deg,var(--green) 0%,#0F3D2A 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.book-cover::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='white' stroke-width='0.5' opacity='0.15'%3E%3Cpolygon points='30,5 55,20 55,40 30,55 5,40 5,20'/%3E%3C/g%3E%3C/svg%3E");}
+.book-icon{font-size:56px;position:relative;z-index:2;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));}
+
+.book-cover.purple{background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);}
+.book-cover.blue{background:linear-gradient(135deg,#1E40AF 0%,#1E3A8A 100%);}
+.book-cover.gold{background:linear-gradient(135deg,#92510B 0%,#5C320B 100%);}
+.book-cover.red{background:linear-gradient(135deg,#991B1B 0%,#7F1D1D 100%);}
+.book-cover.teal{background:linear-gradient(135deg,#0F766E 0%,#134E4A 100%);}
+
+.book-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.book-cat-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:0.3px;background:var(--green-pale);color:var(--green-mid);width:fit-content;}
+[data-theme="dark"] .book-cat-badge{background:rgba(46,175,119,0.12);color:var(--green-light);}
+.book-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);line-height:1.3;}
+.book-author{font-size:12.5px;color:var(--text-3);font-style:italic;}
+.book-desc{font-size:13px;color:var(--text-2);line-height:1.55;flex:1;}
+.book-meta{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);margin-top:6px;}
+.book-pages{font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:4px;}
+.book-read{font-size:12px;color:var(--green-mid);font-weight:600;text-decoration:none;}
+
+/* ARTICLES LIST */
+.articles-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 26px;transition:all 0.25s;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;}
+@media(max-width:600px){.article-card{grid-template-columns:1fr;}}
+.article-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);}
+.article-body{display:flex;flex-direction:column;gap:6px;}
+.article-meta-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+.article-cat{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--green-pale);color:var(--green-mid);text-transform:uppercase;letter-spacing:0.5px;}
+[data-theme="dark"] .article-cat{background:rgba(46,175,119,0.12);color:var(--green-light);}
+.article-cat.purple{background:#EDE9FE;color:#7C3AED;}
+[data-theme="dark"] .article-cat.purple{background:rgba(124,58,237,0.15);color:#A78BFA;}
+.article-cat.blue{background:#DBEAFE;color:#1E40AF;}
+[data-theme="dark"] .article-cat.blue{background:rgba(30,64,175,0.15);color:#60A5FA;}
+.article-cat.gold{background:#FDF6E3;color:var(--gold);}
+[data-theme="dark"] .article-cat.gold{background:rgba(212,160,23,0.15);color:var(--gold-light);}
+.article-date{font-size:11.5px;color:var(--text-3);}
+.article-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);line-height:1.4;}
+.article-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;}
+.article-author{font-size:12px;color:var(--text-3);margin-top:4px;display:flex;align-items:center;gap:6px;}
+.article-author strong{color:var(--green-mid);font-weight:600;}
+.article-read-btn{padding:10px 20px;background:var(--green-pale);color:var(--green-mid);border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:all 0.2s;}
+[data-theme="dark"] .article-read-btn{background:rgba(46,175,119,0.12);}
+.article-read-btn:hover{background:var(--green-mid);color:white;}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Books & Articles</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="books-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">✍️ Islamic Library</div>
+    <div class="hero-arabic-main">الكُتُبُ وَالمَقَالَات</div>
+    <h1 class="hero-title">Books & Articles</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">قُلْ هَلْ يَسْتَوِي الَّذِينَ يَعْلَمُونَ وَالَّذِينَ لَا يَعْلَمُونَ</div>
+      <p class="hero-ayah-trans">"Keh do: Kya jaanne wale aur na jaanne wale baraabar ho sakte hain?"</p>
+      <span class="hero-ayah-ref">Surah Az-Zumar 39:9</span>
+    </div>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tabs-wrap">
+    <button class="tab-btn active" onclick="switchTab('books', this)">📚 Books</button>
+    <button class="tab-btn" onclick="switchTab('articles', this)">📰 Articles</button>
+  </div>
+</div>
+
+<!-- BOOKS TAB -->
+<div class="tab-content active" id="books-tab">
+
+  <!-- BOOK FILTERS -->
+  <div class="filter-section">
+    <div class="filter-wrap">
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Misconceptions</button>
+      <button class="filter-chip">Women in Islam</button>
+      <button class="filter-chip">Aqeedah</button>
+      <button class="filter-chip">Fiqh</button>
+      <button class="filter-chip">History</button>
+      <button class="filter-chip">Comparative</button>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    <div class="content-inner">
+      <div class="content-label">📚 Islamic Books — Curated Library</div>
+      <div class="books-grid">
+
+        <div class="book-card reveal">
+          <div class="book-cover"><span class="book-icon">📖</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">Misconceptions</span>
+            <div class="book-title">Misconceptions About Islam</div>
+            <p class="book-author">By Dr. Zakir Naik</p>
+            <p class="book-desc">Addressing common misunderstandings about Islam — answered with Quran and Sunnah.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 240 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-card reveal">
+          <div class="book-cover purple"><span class="book-icon">🌷</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">Women in Islam</span>
+            <div class="book-title">Islam mein Nari</div>
+            <p class="book-author">By Maulana Wahiduddin Khan</p>
+            <p class="book-desc">The status, rights, and dignity of women in Islam — based on Quran and authentic Sunnah.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 180 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-card reveal">
+          <div class="book-cover blue"><span class="book-icon">🕌</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">Aqeedah</span>
+            <div class="book-title">Kitab at-Tawheed</div>
+            <p class="book-author">By Sheikh Muhammad ibn Abdul Wahhab</p>
+            <p class="book-desc">The foundational book on the oneness of Allah — explaining Tawheed and its categories.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 320 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-card reveal">
+          <div class="book-cover gold"><span class="book-icon">⚖️</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">Fiqh</span>
+            <div class="book-title">Fiqh us-Sunnah</div>
+            <p class="book-author">By Sayyid Sabiq</p>
+            <p class="book-desc">A comprehensive guide to Islamic jurisprudence based on Quran and authentic Sunnah.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 1200 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-card reveal">
+          <div class="book-cover red"><span class="book-icon">🏛️</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">History</span>
+            <div class="book-title">The Sealed Nectar</div>
+            <p class="book-author">By Sheikh Safi-ur-Rahman Mubarakpuri</p>
+            <p class="book-desc">Award-winning biography of Prophet Muhammad ﷺ — Ar-Raheeq Al-Makhtum.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 580 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-card reveal">
+          <div class="book-cover teal"><span class="book-icon">🌍</span></div>
+          <div class="book-body">
+            <span class="book-cat-badge">Comparative</span>
+            <div class="book-title">Islam & Modern World</div>
+            <p class="book-author">By Various Scholars</p>
+            <p class="book-desc">How Islamic teachings address modern challenges — science, ethics, social issues.</p>
+            <div class="book-meta">
+              <span class="book-pages">📄 290 pages</span>
+              <a href="#" class="book-read">Read Now →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ARTICLES TAB -->
+<div class="tab-content" id="articles-tab">
+
+  <!-- ARTICLE FILTERS -->
+  <div class="filter-section">
+    <div class="filter-wrap">
+      <button class="filter-chip active">All Topics</button>
+      <button class="filter-chip">Islam & Hinduism</button>
+      <button class="filter-chip">Islam & Science</button>
+      <button class="filter-chip">Islam & Modern Issues</button>
+      <button class="filter-chip">Comparative Religion</button>
+      <button class="filter-chip">Contemporary Fiqh</button>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    <div class="content-inner">
+      <div class="content-label">📰 Research Articles & Scholarly Writings</div>
+      <div class="articles-grid">
+
+        <div class="article-card reveal">
+          <div class="article-body">
+            <div class="article-meta-top">
+              <span class="article-cat purple">Islam & Hinduism</span>
+              <span class="article-date">📅 March 15, 2026</span>
+            </div>
+            <div class="article-title">Common Ground Between Islam and Hindu Scriptures</div>
+            <p class="article-desc">A scholarly exploration of references to Prophet Muhammad ﷺ in Hindu scriptures and shared monotheistic teachings.</p>
+            <p class="article-author">By <strong>Dr. Mohammad Akram Shaikh</strong> · Researcher</p>
+          </div>
+          <a href="#" class="article-read-btn">Read Article →</a>
+        </div>
+
+        <div class="article-card reveal">
+          <div class="article-body">
+            <div class="article-meta-top">
+              <span class="article-cat blue">Islam & Science</span>
+              <span class="article-date">📅 February 28, 2026</span>
+            </div>
+            <div class="article-title">Scientific Miracles in the Quran</div>
+            <p class="article-desc">Embryology, astronomy, oceanography — how the Quran mentioned scientific facts 1400 years before discovery.</p>
+            <p class="article-author">By <strong>Dr. Aisha Hassan</strong> · Islamic Researcher</p>
+          </div>
+          <a href="#" class="article-read-btn">Read Article →</a>
+        </div>
+
+        <div class="article-card reveal">
+          <div class="article-body">
+            <div class="article-meta-top">
+              <span class="article-cat gold">Islam & Modern Issues</span>
+              <span class="article-date">📅 January 10, 2026</span>
+            </div>
+            <div class="article-title">Islamic Finance vs Modern Banking</div>
+            <p class="article-desc">Understanding Riba (interest), profit-sharing, and Islamic banking principles in today's economy.</p>
+            <p class="article-author">By <strong>Mufti Abdul Rahman</strong> · UmmahTechs Team</p>
+          </div>
+          <a href="#" class="article-read-btn">Read Article →</a>
+        </div>
+
+        <div class="article-card reveal">
+          <div class="article-body">
+            <div class="article-meta-top">
+              <span class="article-cat purple">Islam & Hinduism</span>
+              <span class="article-date">📅 December 22, 2025</span>
+            </div>
+            <div class="article-title">Muslim-Hindu Coexistence in South Asia</div>
+            <p class="article-desc">Historical and contemporary perspectives on harmony, dialogue, and shared cultural values.</p>
+            <p class="article-author">By <strong>Prof. Kamal Ahmad</strong> · Researcher</p>
+          </div>
+          <a href="#" class="article-read-btn">Read Article →</a>
+        </div>
+
+        <div class="article-card reveal">
+          <div class="article-body">
+            <div class="article-meta-top">
+              <span class="article-cat blue">Islam & Science</span>
+              <span class="article-date">📅 November 18, 2025</span>
+            </div>
+            <div class="article-title">AI, Robotics, and Islamic Ethics</div>
+            <p class="article-desc">How Islamic principles guide our approach to modern technology, artificial intelligence, and innovation.</p>
+            <p class="article-author">By <strong>Dr. Tahir Mahmood</strong> · UmmahTechs Team</p>
+          </div>
+          <a href="#" class="article-read-btn">Read Article →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+function switchTab(name,btn){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));document.getElementById(name+'-tab').classList.add('active');}
+document.querySelectorAll('.filter-chip').forEach(chip=>{chip.addEventListener('click',function(){this.parentElement.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active');});});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

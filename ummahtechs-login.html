@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Register — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+
+/* MAIN CONTAINER */
+.auth-wrap{flex:1;padding:100px 1.5rem 40px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(46,175,119,0.08) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 30% 80%,rgba(212,160,23,0.06) 0%,transparent 70%);}
+[data-theme="dark"] .auth-bg{background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(46,175,119,0.06) 0%,transparent 70%);}
+.auth-bg::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231B6B4A' stroke-width='0.5' opacity='0.05'%3E%3Cpolygon points='40,5 75,25 75,55 40,75 5,55 5,25'/%3E%3C/g%3E%3C/svg%3E");background-size:80px 80px;}
+[data-theme="dark"] .auth-bg::before{opacity:0.3;}
+
+.auth-card{position:relative;z-index:2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:40px;width:100%;max-width:460px;box-shadow:var(--shadow-lg);}
+@media(max-width:500px){.auth-card{padding:28px 22px;}}
+
+.auth-header{text-align:center;margin-bottom:1.8rem;}
+.auth-emoji{font-size:42px;margin-bottom:8px;display:block;}
+.auth-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.auth-subtitle{font-size:13.5px;color:var(--text-3);}
+.auth-arabic{font-family:'Amiri',serif;font-size:18px;color:var(--gold-light);direction:rtl;display:block;margin:6px 0;}
+
+/* TABS */
+.auth-tabs{display:flex;background:var(--bg-2);border-radius:10px;padding:4px;margin-bottom:1.5rem;}
+.auth-tab{flex:1;padding:9px;border:none;background:transparent;color:var(--text-3);font-size:13.5px;font-weight:600;cursor:pointer;border-radius:7px;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.auth-tab.active{background:var(--surface);color:var(--green-mid);box-shadow:var(--shadow);}
+
+/* FORM */
+.auth-form{display:none;}
+.auth-form.active{display:block;}
+
+.form-group{margin-bottom:1rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+@media(max-width:400px){.form-row{grid-template-columns:1fr;}}
+
+.form-label{display:block;font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.form-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.forgot-link{font-size:11.5px;color:var(--green-mid);text-decoration:none;font-weight:600;}
+.forgot-link:hover{text-decoration:underline;}
+
+.input-wrap{position:relative;}
+.input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text-3);pointer-events:none;}
+.form-input{width:100%;padding:11px 14px 11px 38px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg-2);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;transition:all 0.2s;outline:none;}
+.form-input:focus{border-color:var(--green-mid);background:var(--surface);}
+.form-input::placeholder{color:var(--text-3);}
+
+.password-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-3);cursor:pointer;font-size:14px;padding:4px;}
+
+.remember-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;font-size:12.5px;color:var(--text-2);}
+.remember-row label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.remember-row input{width:14px;height:14px;accent-color:var(--green-mid);}
+
+.auth-submit{width:100%;padding:13px;background:linear-gradient(135deg,var(--green),var(--green-light));color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 4px 16px rgba(34,139,94,0.3);}
+.auth-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(34,139,94,0.4);}
+
+/* DIVIDER */
+.auth-divider{display:flex;align-items:center;gap:12px;margin:1.4rem 0;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.auth-divider span{font-size:11.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;font-weight:600;}
+
+/* SOCIAL BUTTONS */
+.social-buttons{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+.social-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text-2);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.social-btn:hover{border-color:var(--green-mid);color:var(--text);transform:translateY(-1px);}
+.social-icon{font-size:17px;}
+
+/* TERMS */
+.terms-text{font-size:11.5px;color:var(--text-3);text-align:center;line-height:1.6;margin-top:1.4rem;}
+.terms-text a{color:var(--green-mid);text-decoration:none;font-weight:600;}
+.terms-text a:hover{text-decoration:underline;}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:24px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+  </div>
+</nav>
+
+<!-- AUTH SECTION -->
+<section class="auth-wrap">
+  <div class="auth-bg"></div>
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <span class="auth-emoji">🕌</span>
+      <div class="auth-title" id="auth-title">Welcome Back</div>
+      <span class="auth-arabic">السَّلَامُ عَلَيْكُمْ</span>
+      <p class="auth-subtitle" id="auth-subtitle">Login to continue your journey of Islamic learning</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login', this)">Login</button>
+      <button class="auth-tab" onclick="switchTab('register', this)">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form class="auth-form active" id="login-form" onsubmit="event.preventDefault();">
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <div class="input-wrap">
+          <span class="input-icon">📧</span>
+          <input type="email" class="form-input" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label-row">
+          <label class="form-label">Password</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" class="form-input" placeholder="Enter your password" id="login-pw">
+          <button type="button" class="password-toggle" onclick="togglePw('login-pw',this)">👁️</button>
+        </div>
+      </div>
+
+      <div class="remember-row">
+        <label>
+          <input type="checkbox">
+          Remember me
+        </label>
+      </div>
+
+      <button type="submit" class="auth-submit">Login →</button>
+
+      <div class="auth-divider"><span>Or continue with</span></div>
+
+      <div class="social-buttons">
+        <a href="#" class="social-btn">
+          <span class="social-icon">🇬</span> Google
+        </a>
+        <a href="#" class="social-btn">
+          <span class="social-icon">📘</span> Facebook
+        </a>
+      </div>
+
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form class="auth-form" id="register-form" onsubmit="event.preventDefault();">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="text" class="form-input" placeholder="First name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="text" class="form-input" placeholder="Last name">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <div class="input-wrap">
+          <span class="input-icon">📧</span>
+          <input type="email" class="form-input" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" class="form-input" placeholder="Create a strong password" id="reg-pw">
+          <button type="button" class="password-toggle" onclick="togglePw('reg-pw',this)">👁️</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" class="form-input" placeholder="Re-enter your password" id="reg-cpw">
+          <button type="button" class="password-toggle" onclick="togglePw('reg-cpw',this)">👁️</button>
+        </div>
+      </div>
+
+      <button type="submit" class="auth-submit">Create Account →</button>
+
+      <div class="auth-divider"><span>Or sign up with</span></div>
+
+      <div class="social-buttons">
+        <a href="#" class="social-btn">
+          <span class="social-icon">🇬</span> Google
+        </a>
+        <a href="#" class="social-btn">
+          <span class="social-icon">📘</span> Facebook
+        </a>
+      </div>
+
+    </form>
+
+    <p class="terms-text">
+      By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+    </p>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+function switchTab(name,btn){
+  document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+  document.getElementById(name+'-form').classList.add('active');
+  if(name==='login'){
+    document.getElementById('auth-title').textContent='Welcome Back';
+    document.getElementById('auth-subtitle').textContent='Login to continue your journey of Islamic learning';
+  } else {
+    document.getElementById('auth-title').textContent='Create Account';
+    document.getElementById('auth-subtitle').textContent='Join our community of learners — it only takes a minute';
+  }
+}
+function togglePw(id,btn){const input=document.getElementById(id);if(input.type==='password'){input.type='text';btn.textContent='🙈';}else{input.type='password';btn.textContent='👁️';}}
+</script>
+</body>
+</html>

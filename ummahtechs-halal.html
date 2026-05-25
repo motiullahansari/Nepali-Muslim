@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halal & Masjid Directory — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+  --red:#DC2626; --red-light:#EF4444;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.halal-hero{min-height:440px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1605649461784-edc66ec3c702?w=1400&q=80');background-size:cover;background-position:center;opacity:0.08;transition:opacity 0.3s;}
+[data-theme="dark"] .hero-bg{opacity:0.05;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 25%,transparent 75%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.nepal-badge{display:inline-flex;align-items:center;gap:5px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1rem;animation:fadeUp 0.6s ease both;}
+[data-theme="dark"] .nepal-badge{background:rgba(220,38,38,0.15);color:#FCA5A5;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-ayah-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:620px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-ayah-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-ayah-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-ayah-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* TABS */
+.tabs-section{padding:0 1.5rem 30px;background:var(--bg);transition:background 0.3s;}
+.tabs-wrap{max-width:600px;margin:0 auto;display:flex;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:5px;box-shadow:var(--shadow);}
+.tab-btn{flex:1;padding:10px 20px;border:none;background:transparent;color:var(--text-2);font-size:14px;font-weight:600;cursor:pointer;border-radius:25px;transition:all 0.25s;font-family:'DM Sans',sans-serif;}
+.tab-btn.active{background:linear-gradient(135deg,var(--green),var(--green-light));color:white;box-shadow:0 2px 10px rgba(34,139,94,0.3);}
+
+/* FILTERS */
+.filter-section{padding:0 1.5rem 20px;background:var(--bg);transition:background 0.3s;}
+.filter-wrap{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;}
+.filter-label{font-size:12px;color:var(--text-3);font-weight:600;margin-right:6px;}
+.filter-chip{padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.filter-chip:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.filter-chip.active{background:var(--green-pale);border-color:var(--green-mid);color:var(--green-mid);}
+[data-theme="dark"] .filter-chip.active{background:rgba(46,175,119,0.12);}
+
+/* SUBMIT BANNER */
+.submit-section{padding:0 1.5rem 30px;background:var(--bg);transition:background 0.3s;}
+.submit-card{max-width:1100px;margin:0 auto;background:linear-gradient(135deg,#1A3A2A 0%,#0F2318 100%);border-radius:16px;padding:24px 32px;color:white;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden;}
+.submit-card::before{content:'+';position:absolute;right:30px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:140px;font-weight:900;color:rgba(255,255,255,0.05);line-height:1;}
+.submit-text{position:relative;z-index:2;}
+.submit-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;margin-bottom:4px;}
+.submit-desc{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.submit-btn{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;background:white;color:var(--green);padding:11px 22px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;transition:all 0.2s;white-space:nowrap;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15);}
+
+/* CONTENT WRAP */
+.content-wrap{padding:20px 1.5rem 60px;background:var(--bg-2);transition:background 0.3s;}
+.content-inner{max-width:1100px;margin:0 auto;}
+.content-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-3);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.content-count{font-size:12px;color:var(--text-3);font-weight:500;}
+
+/* HALAL GRID */
+.halal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+@media(max-width:700px){.halal-grid{grid-template-columns:1fr;}}
+
+.halal-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all 0.25s;cursor:pointer;}
+.halal-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.halal-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px;}
+.halal-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.halal-type{font-size:11.5px;color:var(--text-3);}
+.halal-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:12px;background:var(--green-pale);color:var(--green-mid);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;display:flex;align-items:center;gap:4px;}
+[data-theme="dark"] .halal-badge{background:rgba(46,175,119,0.12);color:var(--green-light);}
+.halal-info-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);margin-top:8px;}
+.halal-info-row .icon{font-size:14px;width:18px;}
+.halal-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;margin-top:14px;border-top:1px solid var(--border);}
+.halal-rating{display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--text-2);}
+.halal-stars{color:var(--gold);}
+.halal-map-btn{display:flex;align-items:center;gap:5px;color:var(--green-mid);font-size:12px;font-weight:600;text-decoration:none;}
+
+/* MASJID GRID */
+.masjid-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+@media(max-width:700px){.masjid-grid{grid-template-columns:1fr;}}
+
+.masjid-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column;gap:8px;}
+.masjid-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.masjid-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.masjid-icon{width:42px;height:42px;border-radius:10px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+[data-theme="dark"] .masjid-icon{background:rgba(46,175,119,0.12);}
+.masjid-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.masjid-arabic{font-family:'Amiri',serif;font-size:13px;color:var(--text-3);direction:rtl;}
+.masjid-info{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:6px;margin-top:4px;}
+.masjid-info .icon{font-size:14px;width:18px;}
+.masjid-jumah{background:#FDF6E3;color:var(--gold);padding:4px 10px;border-radius:6px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;width:fit-content;margin-top:6px;}
+[data-theme="dark"] .masjid-jumah{background:rgba(212,160,23,0.12);color:var(--gold-light);}
+.masjid-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;margin-top:8px;border-top:1px solid var(--border);}
+.masjid-imam{font-size:11.5px;color:var(--text-3);font-style:italic;}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Halal & Masjid</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="halal-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="nepal-badge">🇳🇵 Nepal Only</div>
+    <div class="hero-tag">🗺️ Local Directory</div>
+    <div class="hero-arabic-main">حَلَال — نِيبَال</div>
+    <h1 class="hero-title">Halal Places & Masjid Directory</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">يَا أَيُّهَا النَّاسُ كُلُوا مِمَّا فِي الْأَرْضِ حَلَالًا طَيِّبًا</div>
+      <p class="hero-ayah-trans">"Aye logo! Zameen mein jo cheezein halal aur paak hain unhi mein se khao"</p>
+      <span class="hero-ayah-ref">Surah Al-Baqarah 2:168</span>
+    </div>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tabs-wrap">
+    <button class="tab-btn active" onclick="switchTab('halal', this)">🍽️ Halal Places</button>
+    <button class="tab-btn" onclick="switchTab('masjid', this)">🕌 Masjid Directory</button>
+  </div>
+</div>
+
+<!-- SUBMIT BANNER -->
+<div class="submit-section">
+  <div class="submit-card reveal">
+    <div class="submit-text">
+      <div class="submit-title">Know a Halal Place or Masjid?</div>
+      <p class="submit-desc">Help fellow Muslims — submit a halal restaurant, hotel or masjid in Nepal. Our team will verify and publish.</p>
+    </div>
+    <a href="#" class="submit-btn">+ Submit New →</a>
+  </div>
+</div>
+
+<!-- HALAL TAB -->
+<div class="tab-content active" id="halal-tab">
+
+  <div class="filter-section">
+    <div class="filter-wrap">
+      <span class="filter-label">📍 City:</span>
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Kathmandu</button>
+      <button class="filter-chip">Pokhara</button>
+      <button class="filter-chip">Lalitpur</button>
+      <button class="filter-chip">Biratnagar</button>
+      <button class="filter-chip">Birgunj</button>
+    </div>
+  </div>
+
+  <div class="filter-section" style="padding-bottom:0;">
+    <div class="filter-wrap">
+      <span class="filter-label">🏷️ Type:</span>
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Restaurant</button>
+      <button class="filter-chip">Hotel</button>
+      <button class="filter-chip">Cafe</button>
+      <button class="filter-chip">Bakery</button>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    <div class="content-inner">
+      <div class="content-label">
+        <span>🍽️ Halal Restaurants & Hotels in Nepal</span>
+        <span class="content-count">12 places verified</span>
+      </div>
+      <div class="halal-grid">
+
+        <div class="halal-card reveal">
+          <div class="halal-top">
+            <div>
+              <div class="halal-name">Al-Madina Halal Restaurant</div>
+              <p class="halal-type">🍽️ Restaurant · Indian & Middle Eastern</p>
+            </div>
+            <span class="halal-badge">✓ Certified</span>
+          </div>
+          <div class="halal-info-row"><span class="icon">📍</span> Thamel, Kathmandu</div>
+          <div class="halal-info-row"><span class="icon">📞</span> +977 1-441-XXXX</div>
+          <div class="halal-info-row"><span class="icon">🕒</span> 10:00 AM – 10:30 PM</div>
+          <div class="halal-footer">
+            <div class="halal-rating"><span class="halal-stars">★★★★★</span> 4.7 (124 reviews)</div>
+            <a href="#" class="halal-map-btn">🗺️ Open in Maps →</a>
+          </div>
+        </div>
+
+        <div class="halal-card reveal">
+          <div class="halal-top">
+            <div>
+              <div class="halal-name">Bismillah Biryani House</div>
+              <p class="halal-type">🍽️ Restaurant · Pakistani & Mughlai</p>
+            </div>
+            <span class="halal-badge">✓ Certified</span>
+          </div>
+          <div class="halal-info-row"><span class="icon">📍</span> New Road, Kathmandu</div>
+          <div class="halal-info-row"><span class="icon">📞</span> +977 1-422-XXXX</div>
+          <div class="halal-info-row"><span class="icon">🕒</span> 11:00 AM – 11:00 PM</div>
+          <div class="halal-footer">
+            <div class="halal-rating"><span class="halal-stars">★★★★★</span> 4.8 (98 reviews)</div>
+            <a href="#" class="halal-map-btn">🗺️ Open in Maps →</a>
+          </div>
+        </div>
+
+        <div class="halal-card reveal">
+          <div class="halal-top">
+            <div>
+              <div class="halal-name">Hotel Kathmandu Crown</div>
+              <p class="halal-type">🏨 Hotel · Halal Kitchen Available</p>
+            </div>
+            <span class="halal-badge">✓ Certified</span>
+          </div>
+          <div class="halal-info-row"><span class="icon">📍</span> Lazimpat, Kathmandu</div>
+          <div class="halal-info-row"><span class="icon">📞</span> +977 1-441-XXXX</div>
+          <div class="halal-info-row"><span class="icon">🕒</span> 24/7 Available</div>
+          <div class="halal-footer">
+            <div class="halal-rating"><span class="halal-stars">★★★★☆</span> 4.4 (67 reviews)</div>
+            <a href="#" class="halal-map-btn">🗺️ Open in Maps →</a>
+          </div>
+        </div>
+
+        <div class="halal-card reveal">
+          <div class="halal-top">
+            <div>
+              <div class="halal-name">Pokhara Halal Kitchen</div>
+              <p class="halal-type">🍽️ Restaurant · South Asian Cuisine</p>
+            </div>
+            <span class="halal-badge">✓ Certified</span>
+          </div>
+          <div class="halal-info-row"><span class="icon">📍</span> Lakeside, Pokhara</div>
+          <div class="halal-info-row"><span class="icon">📞</span> +977 61-XXX-XXXX</div>
+          <div class="halal-info-row"><span class="icon">🕒</span> 09:00 AM – 11:00 PM</div>
+          <div class="halal-footer">
+            <div class="halal-rating"><span class="halal-stars">★★★★★</span> 4.6 (85 reviews)</div>
+            <a href="#" class="halal-map-btn">🗺️ Open in Maps →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MASJID TAB -->
+<div class="tab-content" id="masjid-tab">
+
+  <div class="filter-section">
+    <div class="filter-wrap">
+      <span class="filter-label">📍 City:</span>
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Kathmandu</button>
+      <button class="filter-chip">Pokhara</button>
+      <button class="filter-chip">Birgunj</button>
+      <button class="filter-chip">Nepalgunj</button>
+      <button class="filter-chip">Janakpur</button>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    <div class="content-inner">
+      <div class="content-label">
+        <span>🕌 Masjids in Nepal</span>
+        <span class="content-count">18 masjids registered</span>
+      </div>
+      <div class="masjid-grid">
+
+        <div class="masjid-card reveal">
+          <div class="masjid-top">
+            <div class="masjid-icon">🕌</div>
+            <div style="flex:1;">
+              <div class="masjid-name">Jame Masjid Kathmandu</div>
+              <div class="masjid-arabic">جَامِع مَسْجِد</div>
+            </div>
+          </div>
+          <div class="masjid-info"><span class="icon">📍</span> Ghantaghar, Kathmandu</div>
+          <div class="masjid-info"><span class="icon">📞</span> +977 1-422-XXXX</div>
+          <div class="masjid-jumah">🕐 Jumah: 1:00 PM</div>
+          <div class="masjid-footer">
+            <p class="masjid-imam">👤 Imam: Maulana Abdul Rahman</p>
+            <a href="#" class="halal-map-btn">🗺️ Maps →</a>
+          </div>
+        </div>
+
+        <div class="masjid-card reveal">
+          <div class="masjid-top">
+            <div class="masjid-icon">🕌</div>
+            <div style="flex:1;">
+              <div class="masjid-name">Kashmiri Takiya Masjid</div>
+              <div class="masjid-arabic">مَسْجِد كَشْمِيرِي</div>
+            </div>
+          </div>
+          <div class="masjid-info"><span class="icon">📍</span> Durbar Marg, Kathmandu</div>
+          <div class="masjid-info"><span class="icon">📞</span> +977 1-421-XXXX</div>
+          <div class="masjid-jumah">🕐 Jumah: 1:15 PM</div>
+          <div class="masjid-footer">
+            <p class="masjid-imam">👤 Imam: Mufti Muhammad Yusuf</p>
+            <a href="#" class="halal-map-btn">🗺️ Maps →</a>
+          </div>
+        </div>
+
+        <div class="masjid-card reveal">
+          <div class="masjid-top">
+            <div class="masjid-icon">🕌</div>
+            <div style="flex:1;">
+              <div class="masjid-name">Nepal Markaz Masjid</div>
+              <div class="masjid-arabic">مَرْكَز مَسْجِد</div>
+            </div>
+          </div>
+          <div class="masjid-info"><span class="icon">📍</span> Birgunj, Parsa</div>
+          <div class="masjid-info"><span class="icon">📞</span> +977 51-XXX-XXXX</div>
+          <div class="masjid-jumah">🕐 Jumah: 1:00 PM</div>
+          <div class="masjid-footer">
+            <p class="masjid-imam">👤 Imam: Maulana Abdul Wahab</p>
+            <a href="#" class="halal-map-btn">🗺️ Maps →</a>
+          </div>
+        </div>
+
+        <div class="masjid-card reveal">
+          <div class="masjid-top">
+            <div class="masjid-icon">🕌</div>
+            <div style="flex:1;">
+              <div class="masjid-name">Pokhara Jame Masjid</div>
+              <div class="masjid-arabic">جَامِع مَسْجِد بُوكْرَا</div>
+            </div>
+          </div>
+          <div class="masjid-info"><span class="icon">📍</span> Mahendrapul, Pokhara</div>
+          <div class="masjid-info"><span class="icon">📞</span> +977 61-XXX-XXXX</div>
+          <div class="masjid-jumah">🕐 Jumah: 1:15 PM</div>
+          <div class="masjid-footer">
+            <p class="masjid-imam">👤 Imam: Hafiz Ahmad Hussain</p>
+            <a href="#" class="halal-map-btn">🗺️ Maps →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+function switchTab(name,btn){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));document.getElementById(name+'-tab').classList.add('active');}
+document.querySelectorAll('.filter-chip').forEach(chip=>{chip.addEventListener('click',function(){this.parentElement.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active');});});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UmmahTechs – Serving the Ummah Through Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════
+   CSS VARIABLES — LIGHT & DARK
+════════════════════════════════════ */
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --gold-pale: #FDF6E3;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --bg-3: #ECEEE8;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --hero-gradient: linear-gradient(135deg, #E8F5EE 0%, #FAFAF8 50%, #FDF6E3 100%);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --bg-3: #162019;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  --hero-gradient: linear-gradient(135deg, #0D1710 0%, #111D14 50%, #0F1A10 100%);
+}
+
+/* ════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════════
+   NAVBAR
+════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  transition: color 0.3s;
+}
+.logo-name span { color: var(--green-mid); }
+.logo-tagline {
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: -2px;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 0;
+  margin-left: auto;
+}
+
+.nav-links > li { position: relative; }
+
+.nav-links > li > a {
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.nav-links > li > a:hover {
+  color: var(--green-mid);
+  background: var(--green-pale);
+}
+
+[data-theme="dark"] .nav-links > li > a:hover {
+  background: rgba(46,175,119,0.1);
+}
+
+/* Dropdown */
+.has-dropdown > a::after {
+  content: '▾';
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 220px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s;
+  z-index: 100;
+}
+
+.has-dropdown:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 13px;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.dropdown a:hover {
+  background: var(--bg-2);
+  color: var(--green-mid);
+}
+
+.dropdown a .d-icon { font-size: 15px; }
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 8px;
+}
+
+/* Nav right side */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Language selector */
+.lang-select {
+  position: relative;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.lang-btn:hover {
+  border-color: var(--green-mid);
+  color: var(--green-mid);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 140px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s;
+  z-index: 200;
+}
+
+.lang-select:hover .lang-dropdown,
+.lang-select:focus-within .lang-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+  transition: all 0.15s;
+}
+
+.lang-option:hover { background: var(--bg-2); color: var(--green-mid); }
+.lang-option.active { color: var(--green-mid); font-weight: 600; }
+.lang-flag { font-size: 16px; }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+  color: var(--text-2);
+}
+
+.theme-toggle:hover {
+  border-color: var(--green-mid);
+  background: var(--green-pale);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgba(46,175,119,0.1);
+}
+
+/* Login & Contribute */
+.btn-login {
+  padding: 7px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-login:hover {
+  border-color: var(--green-mid);
+  color: var(--green-mid);
+}
+
+.btn-contribute {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 10px rgba(34,139,94,0.3);
+}
+
+.btn-contribute:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(34,139,94,0.4);
+}
+
+/* Mobile hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  width: 22px; height: 2px;
+  background: var(--text-2);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+@media(max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* ════════════════════════════════════
+   HERO
+════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  background: var(--hero-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 1.5rem 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+
+/* Decorative Islamic geometric pattern */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231B6B4A' stroke-width='0.5' opacity='0.08'%3E%3Cpolygon points='40,5 75,25 75,55 40,75 5,55 5,25'/%3E%3Cpolygon points='40,15 65,28 65,52 40,65 15,52 15,28'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .hero::before { opacity: 0.04; }
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green-mid);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-light);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.hero-arabic {
+  font-family: 'Amiri', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+  animation: fadeUp 0.6s 0.1s ease both;
+  direction: rtl;
+}
+
+.hero-arabic-trans {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: 1.8rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5.5vw, 58px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--green-mid);
+  position: relative;
+}
+
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green-light), transparent);
+  border-radius: 2px;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+
+/* Stats */
+.hero-stats {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  margin: 0 auto 2.5rem;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.stat-item {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green-mid);
+  display: block;
+}
+
+.stat-label {
+  font-size: 10.5px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* CTA buttons */
+.hero-ctas {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.35s ease both;
+}
+
+.cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 3px 16px rgba(34,139,94,0.35);
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(34,139,94,0.45);
+}
+
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--text-2);
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.cta-secondary:hover {
+  border-color: var(--green-mid);
+  color: var(--green-mid);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════
+   DAILY AYAH & HADEES
+════════════════════════════════════ */
+.daily-section {
+  padding: 60px 1.5rem;
+  background: var(--bg-2);
+  transition: background 0.3s;
+}
+
+.daily-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media(max-width: 700px) {
+  .daily-inner { grid-template-columns: 1fr; }
+}
+
+.daily-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: var(--shadow);
+}
+
+.daily-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.daily-card.ayah::before {
+  background: linear-gradient(90deg, var(--green), var(--green-light));
+}
+
+.daily-card.hadees::before {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+
+.daily-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.daily-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.2rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.daily-card.ayah .daily-label {
+  background: var(--green-pale);
+  color: var(--green);
+}
+
+[data-theme="dark"] .daily-card.ayah .daily-label {
+  background: rgba(46,175,119,0.12);
+  color: var(--green-light);
+}
+
+.daily-card.hadees .daily-label {
+  background: #FDF6E3;
+  color: var(--gold);
+}
+
+[data-theme="dark"] .daily-card.hadees .daily-label {
+  background: rgba(212,160,23,0.12);
+  color: var(--gold-light);
+}
+
+.daily-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  line-height: 1.8;
+  color: var(--text);
+  text-align: right;
+  direction: rtl;
+  margin-bottom: 1rem;
+  padding: 16px;
+  background: var(--bg-2);
+  border-radius: 10px;
+}
+
+.daily-translation {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.daily-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.daily-ref {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.daily-card.ayah .daily-ref { color: var(--green-mid); }
+.daily-card.hadees .daily-ref { color: var(--gold); }
+
+.daily-read-more {
+  font-size: 12px;
+  color: var(--text-3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.daily-card.ayah .daily-read-more:hover { color: var(--green-mid); }
+.daily-card.hadees .daily-read-more:hover { color: var(--gold); }
+
+/* ════════════════════════════════════
+   SECTIONS OVERVIEW
+════════════════════════════════════ */
+.sections-overview {
+  padding: 70px 1.5rem;
+  background: var(--bg);
+  transition: background 0.3s;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green-mid);
+  background: var(--green-pale);
+  padding: 4px 12px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .section-tag {
+  background: rgba(46,175,119,0.12);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 34px);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Main grid */
+.main-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+@media(max-width: 900px) {
+  .main-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width: 560px) {
+  .main-grid { grid-template-columns: 1fr; }
+}
+
+.section-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 20px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.section-card:hover {
+  border-color: var(--green-mid);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.section-card:hover::after { opacity: 1; }
+
+.sc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sc-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: var(--green-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: background 0.2s;
+}
+
+[data-theme="dark"] .sc-icon {
+  background: rgba(46,175,119,0.12);
+}
+
+.section-card:hover .sc-icon {
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+}
+
+.sc-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-live {
+  background: rgba(34,139,94,0.12);
+  color: var(--green-mid);
+}
+
+.badge-soon {
+  background: rgba(184,134,11,0.12);
+  color: var(--gold);
+}
+
+[data-theme="dark"] .badge-live {
+  background: rgba(46,175,119,0.15);
+  color: var(--green-light);
+}
+
+[data-theme="dark"] .badge-soon {
+  background: rgba(212,160,23,0.15);
+  color: var(--gold-light);
+}
+
+.sc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sc-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 14px;
+  color: var(--text-3);
+  direction: rtl;
+}
+
+.sc-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.sc-arrow {
+  font-size: 14px;
+  color: var(--text-3);
+  align-self: flex-end;
+  transition: all 0.2s;
+}
+
+.section-card:hover .sc-arrow {
+  color: var(--green-mid);
+  transform: translateX(3px);
+}
+
+/* Featured card — wider */
+.section-card.featured {
+  grid-column: span 1;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+  border-color: transparent;
+  color: white;
+}
+
+.section-card.featured .sc-title,
+.section-card.featured .sc-desc,
+.section-card.featured .sc-arabic { color: rgba(255,255,255,0.9); }
+.section-card.featured .sc-icon { background: rgba(255,255,255,0.2); }
+.section-card.featured .sc-arrow { color: rgba(255,255,255,0.7); }
+.section-card.featured:hover .sc-arrow { color: white; }
+.section-card.featured::after { display: none; }
+.section-card.featured .badge-live {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* ════════════════════════════════════
+   DONATE BANNER
+════════════════════════════════════ */
+.donate-banner {
+  margin: 0 1.5rem 60px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(135deg, var(--green) 0%, #145A3A 100%);
+  border-radius: 20px;
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.donate-banner::before {
+  content: 'بِسْمِ اللَّه';
+  position: absolute;
+  right: 40px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Amiri', serif;
+  font-size: 80px;
+  color: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+
+.donate-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.donate-text p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.donate-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-donate {
+  padding: 11px 24px;
+  background: white;
+  color: var(--green);
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-donate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.btn-contact {
+  padding: 11px 20px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-contact:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.7);
+}
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer {
+  background: var(--bg-3);
+  border-top: 1px solid var(--border);
+  padding: 52px 1.5rem 28px;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+@media(max-width: 800px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 500px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.footer-brand p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 8px;
+}
+
+.social-btn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.social-btn:hover {
+  background: var(--green-pale);
+  border-color: var(--green-mid);
+}
+
+[data-theme="dark"] .social-btn:hover {
+  background: rgba(46,175,119,0.1);
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-3);
+  margin-bottom: 1rem;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a {
+  font-size: 13.5px;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--green-mid); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.footer-quran {
+  text-align: center;
+}
+
+.footer-quran-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: var(--green-mid);
+  display: block;
+}
+
+.footer-quran-trans {
+  font-size: 11px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+/* ════════════════════════════════════
+   MOBILE NAV DRAWER
+════════════════════════════════════ */
+.mobile-nav {
+  position: fixed;
+  top: 64px; left: 0; right: 0; bottom: 0;
+  background: var(--surface);
+  z-index: 999;
+  padding: 20px 1.5rem;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+.mobile-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ════════════════════════════════════
+   SCROLL ANIMATIONS
+════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="ummahtechs-about.html">About</a></li>
+    <li class="has-dropdown">
+      <a href="#">Features</a>
+      <div class="dropdown">
+        <a href="ummahtechs-quran.html"><span class="d-icon">📖</span> Al-Quran</a>
+        <a href="ummahtechs-hadees.html"><span class="d-icon">📚</span> Hadees</a>
+        <a href="ummahtechs-biography.html"><span class="d-icon">🌟</span> Biography & History</a>
+        <a href="ummahtechs-kids.html"><span class="d-icon">🎨</span> Islam for Kids</a>
+        <div class="dropdown-divider"></div>
+        <a href="ummahtechs-arkan.html"><span class="d-icon">🕌</span> Arkan-e-Islam</a>
+        <a href="ummahtechs-salah.html"><span class="d-icon">🕐</span> Salah Times</a>
+        <a href="ummahtechs-calendar.html"><span class="d-icon">🌙</span> Islamic Calendar</a>
+        <a href="ummahtechs-zakat.html"><span class="d-icon">💰</span> Zakat Calculator</a>
+        <div class="dropdown-divider"></div>
+        <a href="ummahtechs-qa.html"><span class="d-icon">❓</span> Q&A</a>
+        <a href="ummahtechs-duas.html"><span class="d-icon">🤲</span> Duas</a>
+        <a href="ummahtechs-ruqya.html"><span class="d-icon">🛡️</span> Ruqya</a>
+        <a href="ummahtechs-books.html"><span class="d-icon">✍️</span> Books & Articles</a>
+        <div class="dropdown-divider"></div>
+        <a href="ummahtechs-halal.html"><span class="d-icon">🗺️</span> Halal & Masjid (Nepal)</a>
+      </div>
+    </li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="ummahtechs-contribute.html">Contribute</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- Language Selector -->
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN','English')"><span class="lang-flag">🇬🇧</span> English</div>
+        <div class="lang-option" onclick="setLang('HI','हिंदी')"><span class="lang-flag">🇮🇳</span> हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR','اردو')"><span class="lang-flag">🇵🇰</span> اردو</div>
+        <div class="lang-option" onclick="setLang('NP','नेपाली')"><span class="lang-flag">🇳🇵</span> नेपाली</div>
+      </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+      <span id="theme-icon">🌙</span>
+    </button>
+
+    <!-- Login -->
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+
+    <!-- Contribute -->
+    <a href="ummahtechs-contribute.html" class="btn-contribute">✦ Contribute</a>
+
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#">🏠 Home</a>
+  <a href="ummahtechs-about.html">ℹ️ About</a>
+  <a href="ummahtechs-quran.html">📖 Al-Quran</a>
+  <a href="ummahtechs-hadees.html">📚 Hadees</a>
+  <a href="ummahtechs-biography.html">🌟 Biography & History</a>
+  <a href="ummahtechs-kids.html">🎨 Islam for Kids</a>
+  <a href="ummahtechs-arkan.html">🕌 Arkan-e-Islam</a>
+  <a href="ummahtechs-salah.html">🕐 Salah Times</a>
+  <a href="ummahtechs-calendar.html">🌙 Islamic Calendar</a>
+  <a href="ummahtechs-zakat.html">💰 Zakat Calculator</a>
+  <a href="ummahtechs-qa.html">❓ Q&A</a>
+  <a href="ummahtechs-duas.html">🤲 Duas</a>
+  <a href="ummahtechs-ruqya.html">🛡️ Ruqya</a>
+  <a href="ummahtechs-books.html">✍️ Books & Articles</a>
+  <a href="ummahtechs-halal.html">🗺️ Halal & Masjid</a>
+  <a href="ummahtechs-donate.html">💚 Donate</a>
+  <a href="ummahtechs-contribute.html">✦ Contribute</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Authentic Islamic Knowledge Platform
+    </div>
+
+    <div class="hero-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <p class="hero-arabic-trans">In the name of Allah, the Most Gracious, the Most Merciful</p>
+
+    <h1>Serving the <em>Ummah</em><br>Through Technology</h1>
+
+    <p class="hero-desc">Quran, Hadees, Seerah, and authentic Islamic knowledge — in your language, accessible everywhere.</p>
+
+    <div class="hero-ctas">
+      <a href="ummahtechs-quran.html" class="cta-primary">Explore Features →</a>
+      <a href="ummahtechs-about.html" class="cta-secondary">Our Mission</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SEARCH BAR ══════════════ -->
+<section style="padding: 32px 1.5rem; background: var(--bg); transition: background 0.3s;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <div id="search-bar" style="
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 14px 20px;
+      gap: 12px;
+      box-shadow: var(--shadow-lg);
+      transition: border-color 0.3s;
+    ">
+      <span style="font-size:18px; color:var(--text-3);">🔍</span>
+      <input type="text" placeholder="Search Quran, Hadees, Duas, Sahaba, Topics…" style="
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: var(--text);
+        font-family: DM Sans, sans-serif;
+      ">
+      <button style="
+        background: linear-gradient(135deg, var(--green), var(--green-light));
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 8px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: DM Sans, sans-serif;
+      ">Search</button>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px;">
+      <span style="font-size:11.5px; color:var(--text-3);">Popular:</span>
+      <a href="#" style="font-size:12px; color:var(--green-mid); text-decoration:none; background:var(--green-pale); padding:3px 10px; border-radius:12px;">Surah Yasin</a>
+      <a href="#" style="font-size:12px; color:var(--green-mid); text-decoration:none; background:var(--green-pale); padding:3px 10px; border-radius:12px;">Abu Bakr RA</a>
+      <a href="#" style="font-size:12px; color:var(--green-mid); text-decoration:none; background:var(--green-pale); padding:3px 10px; border-radius:12px;">Sahih Bukhari</a>
+      <a href="#" style="font-size:12px; color:var(--green-mid); text-decoration:none; background:var(--green-pale); padding:3px 10px; border-radius:12px;">Dua e Qunoot</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DAILY AYAH + HADEES ══════════════ -->
+<section class="daily-section">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:2rem;">
+      <span class="section-tag">Daily Reminders</span>
+      <h2 class="section-title" style="margin-top:0.5rem;">Ayah & Hadees of the Day</h2>
+    </div>
+    <div class="daily-inner reveal">
+
+      <!-- Daily Ayah -->
+      <div class="daily-card ayah">
+        <div class="daily-label">📖 Ayah of the Day</div>
+        <div class="daily-arabic">
+          وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ
+        </div>
+        <p class="daily-translation">
+          "And whoever fears Allah — He will make for him a way out, and will provide for him from where he does not expect."
+        </p>
+        <div class="daily-source">
+          <span class="daily-ref">Surah At-Talaq 65:2–3</span>
+          <a href="ummahtechs-quran.html" class="daily-read-more">Read Quran →</a>
+        </div>
+      </div>
+
+      <!-- Daily Hadees -->
+      <div class="daily-card hadees">
+        <div class="daily-label">📜 Hadees of the Day</div>
+        <div class="daily-arabic">
+          إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى
+        </div>
+        <p class="daily-translation">
+          "Actions are but by intentions, and every person shall have only what they intended."
+        </p>
+        <div class="daily-source">
+          <span class="daily-ref">Sahih Bukhari — 1</span>
+          <a href="ummahtechs-hadees.html" class="daily-read-more">Read Hadees →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SECTIONS OVERVIEW ══════════════ -->
+<section class="sections-overview" id="features">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-header reveal">
+      <span class="section-tag">All Features</span>
+      <h2 class="section-title">Everything in One Place</h2>
+      <p class="section-desc">Authentic Islamic knowledge organized for easy access — from Quran to daily tools.</p>
+    </div>
+
+    <div class="main-grid">
+
+      <!-- 1. QURAN — Core Knowledge -->
+      <a href="ummahtechs-quran.html" class="section-card featured reveal">
+        <div class="sc-top">
+          <div class="sc-icon">📖</div>
+          <span class="sc-badge badge-live">Live</span>
+        </div>
+        <div class="sc-title">Al-Quran Al-Kareem</div>
+        <div class="sc-arabic">الْقُرْآنُ الْكَرِيمُ</div>
+        <p class="sc-desc">Tafseer, Tajweed, Learning Quran, History, Encyclopedia — all in one.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 2. HADEES — Core Knowledge -->
+      <a href="ummahtechs-hadees.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">📚</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Hadees</div>
+        <div class="sc-arabic">الحَدِيثُ الشَّرِيف</div>
+        <p class="sc-desc">Sihah Sittah, Bulugh-ul-Maram, Riyaz-us-Saliheen and more.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 3. BIOGRAPHY & HISTORY — Core Knowledge -->
+      <a href="ummahtechs-biography.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🌟</div>
+          <span class="sc-badge badge-live">Live</span>
+        </div>
+        <div class="sc-title">Biography & History</div>
+        <div class="sc-arabic">السِّيرَةُ وَالتَّارِيخ</div>
+        <p class="sc-desc">Seerah, Anbiya, Sahaba, Ahle Bayt, Islamic History.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 4. ISLAM FOR KIDS — Core Knowledge -->
+      <a href="ummahtechs-kids.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🎨</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Islam for Kids</div>
+        <div class="sc-arabic">الإِسْلامُ لِلْأَطْفَال</div>
+        <p class="sc-desc">Prophet stories, Sahaba tales, Akhlaaq, quizzes for young learners.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 5. ARKAN-E-ISLAM — Core Knowledge -->
+      <a href="ummahtechs-arkan.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🕌</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Arkan-e-Islam</div>
+        <div class="sc-arabic">أَرْكَانُ الإِسْلام</div>
+        <p class="sc-desc">Shahadah, Salah, Zakat, Sawm, Hajj/Umrah — complete guides.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 6. BOOKS & ARTICLES — Core Knowledge -->
+      <a href="ummahtechs-books.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">✍️</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Books & Articles</div>
+        <div class="sc-arabic">الكُتُبُ وَالمَقَالَات</div>
+        <p class="sc-desc">Islamic books, misconceptions, research articles by scholars.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 7. SALAH TIMES — Tools -->
+      <a href="ummahtechs-salah.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🕐</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Salah Times</div>
+        <div class="sc-arabic">أَوْقَاتُ الصَّلَاة</div>
+        <p class="sc-desc">Prayer times, Namaz & Wudu guide, Qaza tracker, Tasbeeh.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 8. ISLAMIC CALENDAR — Tools -->
+      <a href="ummahtechs-calendar.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🌙</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Islamic Calendar</div>
+        <div class="sc-arabic">التَّقْوِيمُ الإِسْلَامِي</div>
+        <p class="sc-desc">Hijri dates, Ramadan, Eid, special nights and Islamic events.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 9. ZAKAT CALCULATOR — Tools -->
+      <a href="ummahtechs-zakat.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">💰</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Zakat Calculator</div>
+        <div class="sc-arabic">حَاسِبَةُ الزَّكَاة</div>
+        <p class="sc-desc">Calculate Zakat on gold, silver, cash — with Nisab information.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 10. DUAS — Tools -->
+      <a href="ummahtechs-duas.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🤲</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Duas</div>
+        <div class="sc-arabic">الدُّعَاء</div>
+        <p class="sc-desc">Complete Hisnul Muslim in Hindi, Urdu, English & Nepali.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 11. RUQYA — Tools -->
+      <a href="ummahtechs-ruqya.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🛡️</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Ruqya</div>
+        <div class="sc-arabic">الرُّقْيَةُ الشَّرْعِيَّة</div>
+        <p class="sc-desc">Authentic Quranic & Prophetic protection and healing methods.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 12. HALAL & MASJID — Tools -->
+      <a href="ummahtechs-halal.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🗺️</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Halal & Masjid</div>
+        <div class="sc-arabic">حَلَال — نيبال</div>
+        <p class="sc-desc">Halal restaurants, hotels & Masjid directory — Nepal only.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 14. ABOUT US — Info -->
+      <a href="ummahtechs-about.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">ℹ️</div>
+          <span class="sc-badge badge-live">Live</span>
+        </div>
+        <div class="sc-title">About Us</div>
+        <div class="sc-arabic">مَنْ نَحْنُ</div>
+        <p class="sc-desc">Our mission, vision, goals and the team behind UmmahTechs.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 15. Q&A — Community -->
+      <a href="ummahtechs-qa.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">❓</div>
+          <span class="sc-badge badge-soon">Soon</span>
+        </div>
+        <div class="sc-title">Q&A</div>
+        <div class="sc-arabic">سُؤَالٌ وَجَوَاب</div>
+        <p class="sc-desc">Anonymous Islamic Q&A answered by scholars with daleel.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+      <!-- 16. CONTRIBUTE — Community -->
+      <a href="ummahtechs-contribute.html" class="section-card reveal">
+        <div class="sc-top">
+          <div class="sc-icon">🤝</div>
+          <span class="sc-badge badge-live">Open</span>
+        </div>
+        <div class="sc-title">Contribute</div>
+        <div class="sc-arabic">المُسَاهَمَة</div>
+        <p class="sc-desc">Join our team — translate, research, write, or develop.</p>
+        <span class="sc-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DONATE BANNER ══════════════ -->
+<div style="padding: 0 1.5rem 70px;">
+  <div class="donate-banner reveal">
+    <div class="donate-text">
+      <h3>Support the Mission</h3>
+      <p>Help us make authentic Islamic knowledge accessible to every Muslim in South Asia — in their own language.</p>
+    </div>
+    <div class="donate-actions">
+      <a href="mailto:info@ummahtechs.com" class="btn-donate">💚 Donate Now</a>
+      <a href="https://wa.me/" class="btn-contact">WhatsApp Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="margin-bottom:0.2rem;">
+        <div class="logo-mark">U</div>
+        <div>
+          <span class="logo-name">Ummah<span>Techs</span></span>
+        </div>
+      </a>
+      <p>Illuminating hearts with divine knowledge through authentic Islamic resources and modern technology.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">📷</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Knowledge</h4>
+      <ul>
+        <li><a href="ummahtechs-quran.html">Al-Quran</a></li>
+        <li><a href="ummahtechs-hadees.html">Hadees</a></li>
+        <li><a href="ummahtechs-biography.html">Biography & History</a></li>
+        <li><a href="ummahtechs-books.html">Books & Articles</a></li>
+        <li><a href="ummahtechs-duas.html">Duas</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="ummahtechs-salah.html">Salah Times</a></li>
+        <li><a href="ummahtechs-zakat.html">Zakat Calculator</a></li>
+        <li><a href="ummahtechs-calendar.html">Islamic Calendar</a></li>
+        <li><a href="ummahtechs-ruqya.html">Ruqya</a></li>
+        <li><a href="ummahtechs-halal.html">Halal & Masjid</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="ummahtechs-kids.html">Islam for Kids</a></li>
+        <li><a href="ummahtechs-arkan.html">Arkan-e-Islam</a></li>
+        <li><a href="ummahtechs-qa.html">Q&A</a></li>
+        <li><a href="ummahtechs-contribute.html">Contribute</a></li>
+        <li><a href="ummahtechs-donate.html">Donations</a></li>
+        <li><a href="ummahtechs-about.html">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · Built with ♥ for the Ummah · info@ummahtechs.com</p>
+    <div class="footer-quran">
+      <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+      <span class="footer-quran-trans">"My Lord, increase me in knowledge" — Quran 20:114</span>
+    </div>
+    <p style="font-size:11.5px;">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+// Theme Toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+// Language Selector
+function setLang(code, name) {
+  document.getElementById('lang-label').textContent = code;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.closest('.lang-option').classList.add('active');
+}
+
+// Mobile Nav
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// Close mobile nav on link click
+document.querySelectorAll('.mobile-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salah Times — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1B6B4A; --green-mid:#228B5E; --green-light:#2EAF77; --green-pale:#E8F5EE;
+  --gold:#B8860B; --gold-light:#D4A017;
+}
+[data-theme="light"] {
+  --bg:#FAFAF8; --bg-2:#F3F3EE; --surface:#FFFFFF; --surface-2:#F7F7F4;
+  --border:#E2E4DC; --text:#1A2318; --text-2:#4A5545; --text-3:#7A8875;
+  --nav-bg:rgba(250,250,248,0.95); --shadow:0 2px 20px rgba(0,0,0,0.08); --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg:#0D1710; --bg-2:#111D14; --surface:#1A2A1E; --surface-2:#1F3224;
+  --border:#2A3D2E; --text:#EEF2EC; --text-2:#A8BBA4; --text-3:#6B8066;
+  --nav-bg:rgba(13,23,16,0.95); --shadow:0 2px 20px rgba(0,0,0,0.3); --shadow-lg:0 8px 40px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;transition:background 0.3s,border-color 0.3s;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:white;}
+.logo-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);}
+.logo-name span{color:var(--green-mid);}
+.logo-tagline{font-size:9px;color:var(--text-3);display:block;margin-top:-2px;}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;margin-left:1rem;font-size:13px;color:var(--text-3);}
+.nav-breadcrumb a{color:var(--text-3);text-decoration:none;}
+.nav-breadcrumb a:hover{color:var(--green-mid);}
+.nav-breadcrumb span{color:var(--green-mid);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lang-select{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text-2);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.lang-btn:hover{border-color:var(--green-mid);color:var(--green-mid);}
+.lang-dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:200;}
+.lang-select:hover .lang-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-2);transition:all 0.15s;}
+.lang-option:hover{background:var(--bg-2);color:var(--green-mid);}
+.lang-option.active{color:var(--green-mid);font-weight:600;}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--green-mid);}
+.btn-login{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;}
+.btn-login:hover{border-color:var(--green-mid);color:var(--green-mid);}
+
+/* HERO */
+.salah-hero{min-height:460px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1400&q=80');background-size:cover;background-position:center;opacity:0.07;transition:opacity 0.3s;}
+[data-theme="dark"] .hero-bg{opacity:0.04;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 25%,transparent 75%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:2;max-width:720px;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:1.5rem;box-shadow:var(--shadow);animation:fadeUp 0.6s ease both;}
+.hero-arabic-main{font-family:'Amiri',serif;font-size:clamp(26px,4.5vw,40px);color:var(--gold-light);margin-bottom:0.5rem;direction:rtl;animation:fadeUp 0.6s 0.1s ease both;line-height:1.5;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--text);margin-bottom:1.2rem;animation:fadeUp 0.6s 0.15s ease both;}
+.hero-ayah-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green-mid);border-radius:12px;padding:20px 24px;margin:0 auto;max-width:600px;animation:fadeUp 0.6s 0.2s ease both;box-shadow:var(--shadow);}
+.hero-ayah-arabic{font-family:'Amiri',serif;font-size:20px;color:var(--text);direction:rtl;line-height:1.8;margin-bottom:8px;}
+.hero-ayah-trans{font-size:13px;color:var(--text-2);font-style:italic;line-height:1.6;}
+.hero-ayah-ref{font-size:11.5px;color:var(--green-mid);font-weight:600;margin-top:6px;display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+
+
+/* SECTION HEADER */
+.sec-header{text-align:center;padding:50px 1.5rem 30px;background:var(--bg-2);transition:background 0.3s;}
+.sec-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);background:var(--green-pale);padding:4px 12px;border-radius:6px;margin-bottom:0.8rem;}
+[data-theme="dark"] .sec-tag{background:rgba(46,175,119,0.12);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text);margin-bottom:0.4rem;}
+.sec-desc{font-size:14.5px;color:var(--text-2);max-width:480px;margin:0 auto;line-height:1.7;}
+
+/* SALAH CARDS */
+.salah-grid-wrap{padding:40px 1.5rem 70px;background:var(--bg-2);transition:background 0.3s;}
+.salah-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+@media(max-width:900px){.salah-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.salah-grid{grid-template-columns:1fr;}}
+
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 22px;text-decoration:none;color:var(--text);transition:all 0.25s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;cursor:pointer;}
+.scard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent);opacity:0;transition:opacity 0.25s;}
+.scard:hover{border-color:var(--green-mid);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.scard:hover::after{opacity:1;}
+
+/* Salah Times — featured */
+.scard.featured{background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%);border-color:transparent;grid-column:span 1;}
+.scard.featured .scard-title,.scard.featured .scard-desc,.scard.featured .scard-arabic{color:rgba(255,255,255,0.95);}
+.scard.featured .scard-icon{background:rgba(255,255,255,0.2);}
+.scard.featured .scard-arrow{color:rgba(255,255,255,0.7);}
+.scard.featured:hover .scard-arrow{color:white;}
+.scard.featured::after{display:none;}
+.scard.featured .badge-soon{background:rgba(255,255,255,0.2);color:white;}
+
+/* Madhab toggle inside Salah Times card */
+.madhab-toggle{display:flex;gap:6px;margin-top:6px;}
+.madhab-btn{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);background:transparent;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.madhab-btn.active{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.6);color:white;}
+
+.scard-top{display:flex;align-items:center;justify-content:space-between;}
+.scard-icon{width:44px;height:44px;border-radius:11px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:22px;transition:background 0.2s;}
+[data-theme="dark"] .scard-icon{background:rgba(46,175,119,0.12);}
+.scard:not(.featured):hover .scard-icon{background:linear-gradient(135deg,var(--green),var(--green-light));}
+.badge-soon{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;background:rgba(184,134,11,0.12);color:var(--gold);}
+[data-theme="dark"] .badge-soon{background:rgba(212,160,23,0.15);color:var(--gold-light);}
+.badge-live{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;background:rgba(34,139,94,0.12);color:var(--green-mid);}
+[data-theme="dark"] .badge-live{background:rgba(46,175,119,0.15);color:var(--green-light);}
+.scard-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text);}
+.scard-arabic{font-family:'Amiri',serif;font-size:14px;color:var(--text-3);direction:rtl;}
+.scard-desc{font-size:13px;color:var(--text-2);line-height:1.6;}
+.scard-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+.scard-chip{font-size:10.5px;color:var(--green-mid);background:var(--green-pale);padding:2px 8px;border-radius:10px;}
+[data-theme="dark"] .scard-chip{background:rgba(46,175,119,0.1);}
+.scard-arrow{font-size:14px;color:var(--text-3);align-self:flex-end;transition:all 0.2s;}
+.scard:hover .scard-arrow{color:var(--green-mid);transform:translateX(3px);}
+
+footer{background:var(--bg);border-top:1px solid var(--border);padding:28px 1.5rem;transition:background 0.3s,border-color 0.3s;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:12.5px;color:var(--text-3);}
+.footer-quran-arabic{font-family:'Amiri',serif;font-size:17px;color:var(--green-mid);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>Salah Times</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="salah-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🕐 Daily Prayers</div>
+    <div class="hero-arabic-main">أَوْقَاتُ الصَّلَاة</div>
+    <h1 class="hero-title">Salah Times & Guide</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</div>
+      <p class="hero-ayah-trans">"Indeed, prayer has been decreed upon the believers a decree of specified times."</p>
+      <span class="hero-ayah-ref">Surah An-Nisa 4:103</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION HEADER -->
+<div class="sec-header reveal">
+  <span class="sec-tag">Features</span>
+  <h2 class="sec-title">Everything for Your Salah</h2>
+  <p class="sec-desc">Prayer times, guides, Wudu, Qaza tracker, Tasbeeh and duas — all in one place.</p>
+</div>
+
+<!-- SALAH CARDS -->
+<div class="salah-grid-wrap">
+  <div class="salah-grid">
+
+    <!-- 1. Salah Times — Featured -->
+    <a href="#" class="scard featured reveal">
+      <div class="scard-top">
+        <div class="scard-icon">🕐</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Salah Times</div>
+      <div class="scard-arabic">أَوْقَاتُ الصَّلَاة</div>
+      <p class="scard-desc">Accurate prayer timings based on your location. Choose your madhab:</p>
+      <div class="madhab-toggle">
+        <button class="madhab-btn active" onclick="setMadhab(this)">Hanafi</button>
+        <button class="madhab-btn" onclick="setMadhab(this)">Shafi</button>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+    <!-- 2. Namaz Guide -->
+    <a href="#" class="scard reveal">
+      <div class="scard-top">
+        <div class="scard-icon">📋</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Namaz Guide</div>
+      <div class="scard-arabic">دَلِيلُ الصَّلَاة</div>
+      <p class="scard-desc">Step-by-step guide to perform each prayer correctly.</p>
+      <div class="scard-chips">
+        <span class="scard-chip">Common</span>
+        <span class="scard-chip">Hanafi</span>
+        <span class="scard-chip">Shafi</span>
+        <span class="scard-chip">Maliki</span>
+        <span class="scard-chip">Hanbali</span>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+    <!-- 3. Wudu Guide -->
+    <a href="#" class="scard reveal">
+      <div class="scard-top">
+        <div class="scard-icon">💧</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Wudu Guide</div>
+      <div class="scard-arabic">دَلِيلُ الوُضُوء</div>
+      <p class="scard-desc">Illustrated guide to perform Wudu with proper conditions of purification.</p>
+      <div class="scard-chips">
+        <span class="scard-chip">Hanafi</span>
+        <span class="scard-chip">Others</span>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+    <!-- 4. Qaza Tracker -->
+    <a href="#" class="scard reveal">
+      <div class="scard-top">
+        <div class="scard-icon">📊</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Qaza Tracker</div>
+      <div class="scard-arabic">تَتَبُّعُ القَضَاء</div>
+      <p class="scard-desc">Track missed prayers and how to make them up — with the correct method.</p>
+      <div class="scard-chips">
+        <span class="scard-chip">Track Qaza</span>
+        <span class="scard-chip">How to Ada</span>
+        <span class="scard-chip">Niyyat</span>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+    <!-- 5. Tasbeeh -->
+    <a href="#" class="scard reveal">
+      <div class="scard-top">
+        <div class="scard-icon">📿</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Tasbeeh</div>
+      <div class="scard-arabic">التَّسْبِيح</div>
+      <p class="scard-desc">Digital Tasbeeh counter with masnoon after-prayer recitations.</p>
+      <div class="scard-chips">
+        <span class="scard-chip">33-33-34</span>
+        <span class="scard-chip">Custom</span>
+        <span class="scard-chip">Dhikr</span>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+    <!-- 6. Namaz ke baad ki Duaen -->
+    <a href="#" class="scard reveal">
+      <div class="scard-top">
+        <div class="scard-icon">🤲</div>
+        <span class="badge-soon">Soon</span>
+      </div>
+      <div class="scard-title">Duas After Salah</div>
+      <div class="scard-arabic">أَدْعِيَةٌ بَعْدَ الصَّلَاة</div>
+      <p class="scard-desc">Masnoon duas to recite after each prayer — Arabic with translation.</p>
+      <div class="scard-chips">
+        <span class="scard-chip">After Fard</span>
+        <span class="scard-chip">Masnoon</span>
+        <span class="scard-chip">Audio</span>
+      </div>
+      <span class="scard-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){const html=document.documentElement;const icon=document.getElementById('theme-icon');if(html.getAttribute('data-theme')==='light'){html.setAttribute('data-theme','dark');icon.textContent='☀️';}else{html.setAttribute('data-theme','light');icon.textContent='🌙';}}
+function setLang(code){document.getElementById('lang-label').textContent=code;document.querySelectorAll('.lang-option').forEach(el=>el.classList.remove('active'));event.target.closest('.lang-option').classList.add('active');}
+function setMadhab(btn){btn.closest('.madhab-toggle').querySelectorAll('.madhab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
