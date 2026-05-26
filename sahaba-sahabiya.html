@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahaba & Sahabiya — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --gold-deep: #92660C;
+  --gold-pale: #FBF4DC;
+  --gold-glow: #F5D76E;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  --gold-pale: rgba(212,160,23,0.10);
+  --green-pale: rgba(46,175,119,0.10);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ══════════════ NAVBAR ══════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); height: 64px;
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb .crumb-current { color: var(--green-mid); font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.lang-btn {
+  display: flex; align-items: center; gap: 5px; padding: 6px 10px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--text-2);
+  font-family: 'DM Sans', sans-serif;
+}
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* ══════════════ HERO ══════════════ */
+.hero {
+  min-height: 440px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 110px 1.5rem 60px; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1564769625905-50e93615e769?w=1400&q=80');
+  background-size: cover; background-position: center;
+  opacity: 0.06;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 25%, transparent 75%, var(--bg) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 720px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500;
+  color: var(--gold-light); margin-bottom: 1.2rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+.hero-arabic-main {
+  font-family: 'Amiri', serif; font-size: clamp(26px, 4vw, 40px);
+  color: var(--gold-light); margin-bottom: 0.5rem;
+  direction: rtl; animation: fadeUp 0.6s 0.1s ease both; line-height: 1.6;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 38px); font-weight: 700;
+  color: var(--text); margin-bottom: 1.2rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+.hero-ayah-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--gold-light);
+  border-radius: 12px; padding: 20px 24px;
+  margin: 0 auto; max-width: 660px;
+  animation: fadeUp 0.6s 0.2s ease both; box-shadow: var(--shadow);
+}
+.hero-ayah-arabic { font-family: 'Amiri', serif; font-size: 20px; color: var(--text); direction: rtl; line-height: 1.85; margin-bottom: 8px; }
+.hero-ayah-trans { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.6; }
+.hero-ayah-ref { font-size: 11.5px; color: var(--gold-light); font-weight: 600; margin-top: 6px; display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════ STATS STRIP ══════════════ */
+.stats-strip {
+  background: var(--bg-2); padding: 22px 1.5rem;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.stats-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+@media(max-width: 600px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+.stat-item { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green-mid); line-height: 1; }
+.stat-num.gold { color: var(--gold-light); }
+.stat-lbl { font-size: 11.5px; color: var(--text-2); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ══════════════ SECTION SCAFFOLD ══════════════ */
+.section { padding: 55px 1.5rem; }
+.section.alt { background: var(--bg-2); transition: background 0.3s; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 1.6rem; gap: 1rem; flex-wrap: wrap;
+}
+.section-head-left { display: flex; flex-direction: column; gap: 4px; }
+.sec-tag {
+  display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green-mid); background: var(--green-pale);
+  padding: 4px 11px; border-radius: 6px; align-self: flex-start;
+}
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.6vw, 26px); font-weight: 700; color: var(--text); }
+.section-sub { font-size: 13.5px; color: var(--text-2); margin-top: 2px; }
+.section-link { font-size: 13px; font-weight: 500; color: var(--green-mid); text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
+.section-link:hover { opacity: 0.75; }
+
+/* ══════════════ FEATURED SAHABA GRID ══════════════ */
+.feat-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+@media(max-width: 900px) { .feat-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 640px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 380px) { .feat-grid { grid-template-columns: 1fr; } }
+
+.feat-card {
+  position: relative; padding: 20px 16px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 13px; text-decoration: none; color: inherit;
+  transition: all 0.25s; display: flex; flex-direction: column; gap: 6px;
+  overflow: hidden;
+}
+.feat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--green-mid); opacity: 0.5; transition: opacity 0.25s, height 0.25s;
+}
+.feat-card:hover { transform: translateY(-3px); border-color: var(--green-mid); box-shadow: var(--shadow-lg); }
+.feat-card:hover::before { opacity: 1; height: 3px; }
+
+.feat-icon-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
+.feat-emoji {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--green-pale); color: var(--green-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.feat-tag {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 3px 8px; border-radius: 99px;
+  background: var(--gold-pale); color: var(--gold-light);
+  border: 1px solid rgba(212,160,23,0.25);
+}
+
+.feat-arabic {
+  font-family: 'Amiri', serif; font-size: 22px; color: var(--text);
+  direction: rtl; text-align: center; line-height: 1.3; margin: 6px 0 2px;
+  min-height: 30px;
+}
+.feat-name {
+  font-family: 'Playfair Display', serif; font-size: 14.5px; font-weight: 700;
+  color: var(--text); text-align: center; line-height: 1.3;
+}
+.feat-name .salam { font-size: 10px; color: var(--text-3); font-weight: 500; font-family: 'DM Sans', sans-serif; display: block; margin-top: 2px; }
+.feat-lakab {
+  font-family: 'Playfair Display', serif; font-size: 11.5px;
+  color: var(--green-mid); font-style: italic; text-align: center;
+  margin-top: 2px; min-height: 28px;
+}
+.feat-desc {
+  font-size: 11.5px; color: var(--text-2); line-height: 1.55;
+  text-align: center; margin-top: 4px;
+}
+.feat-foot {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; color: var(--text-3); padding-top: 8px;
+  border-top: 1px dashed var(--border); margin-top: auto;
+}
+
+/* ══════════════ CATEGORIES GRID ══════════════ */
+.cat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+@media(max-width: 880px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 480px) { .cat-grid { grid-template-columns: 1fr; } }
+
+.cat-card {
+  position: relative; padding: 22px 22px 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; text-decoration: none; color: inherit;
+  transition: all 0.25s; display: flex; flex-direction: column; gap: 10px;
+  overflow: hidden;
+}
+.cat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--green-mid); opacity: 0.5; transition: opacity 0.25s;
+}
+.cat-card:hover { transform: translateY(-3px); border-color: var(--green-mid); box-shadow: var(--shadow-lg); }
+.cat-card:hover::before { opacity: 1; }
+
+.cat-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cat-icon {
+  width: 44px; height: 44px; border-radius: 11px;
+  background: var(--green-pale); color: var(--green-mid);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+
+.badge-live { font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(34,139,94,0.14); color: var(--green-mid); }
+.badge-soon { font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(184,134,11,0.14); color: var(--gold); }
+[data-theme="dark"] .badge-live { background: rgba(46,175,119,0.18); color: var(--green-light); }
+[data-theme="dark"] .badge-soon { background: rgba(212,160,23,0.18); color: var(--gold-light); }
+
+.cat-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.cat-arabic { font-family: 'Amiri', serif; font-size: 15px; color: var(--text-3); direction: rtl; }
+.cat-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+
+.cat-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.cat-chip {
+  font-size: 10.5px; color: var(--green-mid);
+  background: var(--green-pale); padding: 3px 9px;
+  border-radius: 99px;
+}
+.cat-arrow { font-size: 14px; color: var(--text-3); align-self: flex-end; transition: all 0.2s; margin-top: 4px; }
+.cat-card:hover .cat-arrow { color: var(--green-mid); transform: translateX(3px); }
+
+/* Ashra Mubashara — Live premium card */
+.cat-card.ashra {
+  background: linear-gradient(135deg, #FBF4DC 0%, #F5E8B8 50%, #FBF4DC 100%);
+  border-color: rgba(212,160,23,0.4);
+}
+[data-theme="dark"] .cat-card.ashra {
+  background: linear-gradient(135deg, rgba(212,160,23,0.18) 0%, rgba(184,134,11,0.12) 50%, rgba(212,160,23,0.08) 100%);
+  border-color: rgba(212,160,23,0.35);
+}
+.cat-card.ashra::before { background: linear-gradient(90deg, var(--gold-deep), var(--gold-glow), var(--gold-light)); opacity: 1; height: 3px; }
+.cat-card.ashra .cat-icon {
+  background: linear-gradient(135deg, var(--gold-deep), var(--gold-light));
+  color: white; box-shadow: 0 4px 12px rgba(184,134,11,0.25);
+}
+.cat-card.ashra .cat-title { color: #4A3500; }
+[data-theme="dark"] .cat-card.ashra .cat-title { color: var(--gold-light); }
+.cat-card.ashra .cat-arabic { color: var(--gold-deep); font-weight: 700; }
+[data-theme="dark"] .cat-card.ashra .cat-arabic { color: var(--gold-light); }
+.cat-card.ashra .cat-desc { color: #5A4500; }
+[data-theme="dark"] .cat-card.ashra .cat-desc { color: var(--text-2); }
+.cat-card.ashra .cat-arrow { color: var(--gold-deep); }
+[data-theme="dark"] .cat-card.ashra .cat-arrow { color: var(--gold-light); }
+.cat-card.ashra:hover { border-color: var(--gold-light); box-shadow: 0 8px 32px rgba(212,160,23,0.25); }
+.cat-card.ashra .badge-live { background: var(--gold-light); color: #1A1500; }
+.cat-card.ashra .cat-chip { background: rgba(184,134,11,0.18); color: var(--gold-deep); }
+[data-theme="dark"] .cat-card.ashra .cat-chip { background: rgba(212,160,23,0.18); color: var(--gold-light); }
+
+/* Sahabiyat — Rose accent */
+.cat-card.women::before { background: linear-gradient(90deg, #BE185D, #EC4899); }
+.cat-card.women .cat-icon { background: #FDF2F8; color: #BE185D; }
+[data-theme="dark"] .cat-card.women .cat-icon { background: rgba(190,24,93,0.15); }
+.cat-card.women:hover { border-color: #BE185D; }
+.cat-card.women .cat-chip { background: #FDF2F8; color: #BE185D; }
+[data-theme="dark"] .cat-card.women .cat-chip { background: rgba(190,24,93,0.12); color: #F9A8D4; }
+
+/* ══════════════ FOOTER ══════════════ */
+footer {
+  background: var(--bg-2); border-top: 1px solid var(--border);
+  padding: 28px 1.5rem; text-align: center;
+}
+.footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 16px; color: var(--gold-light); direction: rtl; }
+
+/* ══════════════ REVEAL ══════════════ */
+.reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <a href="ummahtechs-homepage.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="ummahtechs-homepage.html">Home</a>
+    <span>›</span>
+    <a href="ummahtechs-biography.html">Biography</a>
+    <span>›</span>
+    <span class="crumb-current">Sahaba & Sahabiya</span>
+  </div>
+  <div class="nav-right">
+    <button class="lang-btn">🌐 EN ▾</button>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="#" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">👥 Companions of the Prophet ﷺ</div>
+    <div class="hero-arabic-main">الصَّحَابَةُ وَالصَّحَابِيَّات</div>
+    <h1 class="hero-title">Sahaba & Sahabiya</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">مُحَمَّدٌ رَّسُولُ اللَّهِ ۚ وَالَّذِينَ مَعَهُ أَشِدَّاءُ عَلَى الكُفَّارِ رُحَمَاءُ بَيْنَهُمْ</div>
+      <p class="hero-ayah-trans">"Muhammad is the Messenger of Allah, and those with him are forceful against the disbelievers, merciful among themselves."</p>
+      <span class="hero-ayah-ref">Surah Al-Fath 48:29</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ STATS STRIP ══════════════ -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num gold">100,000+</div><div class="stat-lbl">Sahaba at Hajjat-ul-Wada</div></div>
+    <div class="stat-item"><div class="stat-num">1,400</div><div class="stat-lbl">At Bay'at-e-Ridwan</div></div>
+    <div class="stat-item"><div class="stat-num">313</div><div class="stat-lbl">Ahl-e-Badr</div></div>
+    <div class="stat-item"><div class="stat-num gold">10</div><div class="stat-lbl">Ashra Mubashara</div></div>
+  </div>
+</div>
+
+<!-- ══════════════ FEATURED SAHABA ══════════════ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-head-left">
+        <span class="sec-tag">Featured</span>
+        <h2 class="section-title">Famous Companions</h2>
+        <p class="section-sub">Some of the most beloved and celebrated Sahaba whose lives shaped the Ummah.</p>
+      </div>
+      <a href="#" class="section-link">View all →</a>
+    </div>
+
+    <div class="feat-grid reveal">
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">⚔️</div>
+          <span class="feat-tag">Saifullah</span>
+        </div>
+        <div class="feat-arabic">خَالِد بْنُ الوَلِيد</div>
+        <div class="feat-name">Khalid ibn al-Walid <span class="salam">(RA)</span></div>
+        <div class="feat-lakab">"Sword of Allah"</div>
+        <p class="feat-desc">Greatest general of Islamic history; undefeated in 100+ battles; conqueror of Persia & Sham.</p>
+        <div class="feat-foot">~592 – 642 CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">📜</div>
+          <span class="feat-tag">5,374 Hadith</span>
+        </div>
+        <div class="feat-arabic">أَبُو هُرَيْرَة</div>
+        <div class="feat-name">Abu Hurairah <span class="salam">(RA)</span></div>
+        <div class="feat-lakab">"Father of the Kitten"</div>
+        <p class="feat-desc">Most prolific narrator of hadith; spent every moment with the Prophet ﷺ from year 7 AH.</p>
+        <div class="feat-foot">~603 – 681 CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">🛡️</div>
+          <span class="feat-tag">First Persian</span>
+        </div>
+        <div class="feat-arabic">سَلْمَان الفَارِسِي</div>
+        <div class="feat-name">Salman <span class="salam">al-Farisi (RA)</span></div>
+        <div class="feat-lakab">"Minna Ahl al-Bayt"</div>
+        <p class="feat-desc">Proposed the trench strategy at Khandaq; Prophet ﷺ called him "of my household".</p>
+        <div class="feat-foot">~568 – 656 CE · Mada'in</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">📖</div>
+          <span class="feat-tag">Tarjuman al-Quran</span>
+        </div>
+        <div class="feat-arabic">عَبْدُ اللَّه بْنُ عَبَّاس</div>
+        <div class="feat-name">Abdullah <span class="salam">ibn Abbas (RA)</span></div>
+        <div class="feat-lakab">"Habr al-Ummah"</div>
+        <p class="feat-desc">Cousin of the Prophet ﷺ; greatest scholar of tafseer; Prophet ﷺ made du'a for his knowledge.</p>
+        <div class="feat-foot">~618 – 687 CE · Ta'if</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">🎓</div>
+          <span class="feat-tag">Most Knowledgeable</span>
+        </div>
+        <div class="feat-arabic">مُعَاذ بْنُ جَبَل</div>
+        <div class="feat-name">Mu'adh <span class="salam">ibn Jabal (RA)</span></div>
+        <div class="feat-lakab">"Imam al-Ulama"</div>
+        <p class="feat-desc">"The most knowledgeable of my Ummah in halal & haram"; sent as judge to Yemen.</p>
+        <div class="feat-foot">~605 – 639 CE · Amwas plague</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">🤝</div>
+          <span class="feat-tag">Khadim Rasulullah ﷺ</span>
+        </div>
+        <div class="feat-arabic">أَنَس بْنُ مَالِك</div>
+        <div class="feat-name">Anas <span class="salam">ibn Malik (RA)</span></div>
+        <div class="feat-lakab">"Servant of the Prophet ﷺ"</div>
+        <p class="feat-desc">Served the Prophet ﷺ for 10 years from age 10; narrated 2,286 hadith; lived 100+ years.</p>
+        <div class="feat-foot">~612 – 712 CE · Basra</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">🔐</div>
+          <span class="feat-tag">Sahib Sirr</span>
+        </div>
+        <div class="feat-arabic">حُذَيْفَة بْنُ اليَمَان</div>
+        <div class="feat-name">Hudhayfa <span class="salam">ibn al-Yaman (RA)</span></div>
+        <div class="feat-lakab">"Keeper of the Secret"</div>
+        <p class="feat-desc">Entrusted with the names of the hypocrites; scout at Khandaq; warned of fitnah to come.</p>
+        <div class="feat-foot">d. 656 CE · Mada'in</div>
+      </a>
+
+      <a href="#" class="feat-card">
+        <div class="feat-icon-row">
+          <div class="feat-emoji">🕋</div>
+          <span class="feat-tag">First Mu'adhdhin</span>
+        </div>
+        <div class="feat-arabic">بِلَال بْنُ رَبَاح</div>
+        <div class="feat-name">Bilal <span class="salam">ibn Rabah (RA)</span></div>
+        <div class="feat-lakab">"Mu'adhdhin of Rasulullah ﷺ"</div>
+        <p class="feat-desc">Freed by Abu Bakr RA after torture; first to call the adhan; cried "Ahad! Ahad!" under the rock.</p>
+        <div class="feat-foot">~580 – 640 CE · Damascus</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CATEGORIES ══════════════ -->
+<section class="section alt">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-head-left">
+        <span class="sec-tag">Browse by Category</span>
+        <h2 class="section-title">Explore the Sahaba</h2>
+        <p class="section-sub">Organized by role, era, and notable groupings mentioned in Quran and Hadith.</p>
+      </div>
+    </div>
+
+    <div class="cat-grid reveal">
+
+      <!-- 1. KHULAFA-E-RASHIDEEN -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">👑</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Khulafa-e-Rashideen</div>
+        <div class="cat-arabic">الخُلَفَاءُ الرَّاشِدُون</div>
+        <p class="cat-desc">The four Rightly-Guided Caliphs who led the Ummah after the Prophet ﷺ.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Abu Bakr</span>
+          <span class="cat-chip">Umar</span>
+          <span class="cat-chip">Uthman</span>
+          <span class="cat-chip">Ali</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 2. ASHRA MUBASHARA — LIVE -->
+      <a href="ashra-mubashara.html" class="cat-card ashra">
+        <div class="cat-top">
+          <div class="cat-icon">⭐</div>
+          <span class="badge-live">Live</span>
+        </div>
+        <div class="cat-title">Ashra Mubashara</div>
+        <div class="cat-arabic">العَشَرَةُ المُبَشَّرَةُ بِالجَنَّة</div>
+        <p class="cat-desc">The Ten Companions promised Paradise by the Prophet ﷺ in this very life.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Talha</span>
+          <span class="cat-chip">Zubayr</span>
+          <span class="cat-chip">Ibn Awf</span>
+          <span class="cat-chip">+7 more</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 3. MUHAJIRIN -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">🐪</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Muhajirin</div>
+        <div class="cat-arabic">المُهَاجِرُون</div>
+        <p class="cat-desc">Those who left Makkah for the sake of Allah and emigrated to Madinah — men and women alike.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Asma bint Abi Bakr</span>
+          <span class="cat-chip">Umm Salamah</span>
+          <span class="cat-chip">Lubaba bint al-Harith</span>
+          <span class="cat-chip">+ many</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 4. ANSAR -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">🏡</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Ansar</div>
+        <div class="cat-arabic">الأَنْصَار</div>
+        <p class="cat-desc">The helpers of Madinah — Aws and Khazraj — who welcomed and supported the Muhajirin.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Sa'd ibn Mu'adh</span>
+          <span class="cat-chip">Sa'd ibn Ubadah</span>
+          <span class="cat-chip">Ubayy ibn Ka'b</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 5. AHL-E-BADR -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">🌙</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Ahl-e-Badr</div>
+        <div class="cat-arabic">أَهْلُ بَدْر</div>
+        <p class="cat-desc">The 313 companions who fought at Badr — promised forgiveness in the Hadith.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">313 Ghazi</span>
+          <span class="cat-chip">2 AH</span>
+          <span class="cat-chip">First major victory</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 6. BAY'AT-E-RIDWAN -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">🌳</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Ahl-e-Bay'at-e-Ridwan</div>
+        <div class="cat-arabic">أَصْحَابُ بَيْعَةِ الرِّضْوَان</div>
+        <p class="cat-desc">The 1,400 who pledged under the tree at Hudaybiyyah — Allah was pleased with them.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">1,400 Sahaba</span>
+          <span class="cat-chip">6 AH</span>
+          <span class="cat-chip">Quran 48:18</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 7. HADITH NARRATORS -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">📜</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Hadith Narrators</div>
+        <div class="cat-arabic">المُحَدِّثُونَ مِنَ الصَّحَابَة</div>
+        <p class="cat-desc">The top seven companions who narrated the most hadith from the Prophet ﷺ.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Abu Hurairah</span>
+          <span class="cat-chip">Ibn Umar</span>
+          <span class="cat-chip">Anas</span>
+          <span class="cat-chip">Aisha RA</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 8. FUQAHA-E-SAHABA -->
+      <a href="#" class="cat-card">
+        <div class="cat-top">
+          <div class="cat-icon">⚖️</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Fuqaha-e-Sahaba</div>
+        <div class="cat-arabic">الفُقَهَاءُ الصَّحَابَة</div>
+        <p class="cat-desc">The legal scholars and judges from the Companions; Umar's RA consultative council.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Ibn Mas'ud</span>
+          <span class="cat-chip">Mu'adh</span>
+          <span class="cat-chip">Zayd ibn Thabit</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 9. SAHABIYAT -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">🌸</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Sahabiyat</div>
+        <div class="cat-arabic">الصَّحَابِيَّات</div>
+        <p class="cat-desc">The blessed women Companions — scholars, warriors, narrators, and mothers of the Ummah.</p>
+        <div class="cat-chips">
+          <span class="cat-chip">Khansa</span>
+          <span class="cat-chip">Nusayba</span>
+          <span class="cat-chip">Umm Sulaym</span>
+          <span class="cat-chip">+ many</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px; color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

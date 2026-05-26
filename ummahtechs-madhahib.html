@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiqhi Madhahib – UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --gold-pale: #FDF6E3;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --bg-3: #ECEEE8;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --bg-3: #162019;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.logo-name span { color: var(--green-mid); }
+
+.nav-back {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text-2); text-decoration: none;
+  font-size: 13.5px; font-weight: 500;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: all 0.2s;
+}
+.nav-back:hover { color: var(--green-mid); border-color: var(--green-mid); }
+
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+
+/* HERO */
+.page-hero {
+  padding: 120px 1.5rem 70px;
+  text-align: center;
+  background: linear-gradient(135deg, #E8F5EE 0%, #FAFAF8 50%, #FDF6E3 100%);
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .page-hero {
+  background: linear-gradient(135deg, #0D1710 0%, #111D14 50%, #0F1A10 100%);
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231B6B4A' stroke-width='0.5' opacity='0.08'%3E%3Cpolygon points='40,5 75,25 75,55 40,75 5,55 5,25'/%3E%3Cpolygon points='40,15 65,28 65,52 40,65 15,52 15,28'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+.page-hero-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+
+.page-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 500; color: var(--green-mid);
+  margin-bottom: 1.5rem; box-shadow: var(--shadow);
+}
+
+.page-arabic {
+  font-family: 'Amiri', serif;
+  font-size: clamp(18px, 3vw, 26px);
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+  direction: rtl;
+}
+
+.page-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4.5vw, 48px);
+  font-weight: 700; line-height: 1.15;
+  color: var(--text); margin-bottom: 1rem;
+}
+.page-hero h1 em { font-style: normal; color: var(--green-mid); }
+
+.page-desc {
+  font-size: 15.5px; color: var(--text-2);
+  line-height: 1.75; max-width: 520px; margin: 0 auto;
+}
+
+/* INTRO BANNER */
+.intro-banner {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 1.5rem 60px;
+}
+
+.intro-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-top: -30px;
+  position: relative; z-index: 3;
+  box-shadow: var(--shadow);
+  display: flex; gap: 20px; align-items: flex-start;
+}
+
+.intro-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+
+.intro-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--text); margin-bottom: 6px;
+}
+.intro-box p { font-size: 13.5px; color: var(--text-2); line-height: 1.7; }
+
+/* SECTION HEADING */
+.sec-heading {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 1.5rem 32px;
+  text-align: center;
+}
+
+.sec-tag {
+  display: inline-block;
+  background: var(--green-pale);
+  color: var(--green-mid);
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 10px;
+}
+[data-theme="dark"] .sec-tag { background: rgba(46,175,119,0.12); }
+
+.sec-heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700; color: var(--text);
+}
+
+/* MADHAB CARDS */
+.madhab-grid {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 1.5rem 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media(max-width: 640px) {
+  .madhab-grid { grid-template-columns: 1fr; }
+}
+
+.madhab-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  position: relative;
+}
+
+.madhab-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.madhab-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+
+.hanafi::before  { background: linear-gradient(90deg, #1B6B4A, #2EAF77); }
+.maliki::before  { background: linear-gradient(90deg, #B8860B, #D4A017); }
+.shafii::before  { background: linear-gradient(90deg, #1A4A7A, #2E7FBF); }
+.hanbali::before { background: linear-gradient(90deg, #6B2E7A, #9F4FB5); }
+
+.madhab-header {
+  padding: 28px 28px 20px;
+  display: flex; align-items: flex-start; gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.madhab-emblem {
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; flex-shrink: 0;
+}
+
+.hanafi  .madhab-emblem { background: linear-gradient(135deg, #E8F5EE, #C8E8D8); }
+.maliki  .madhab-emblem { background: linear-gradient(135deg, #FDF6E3, #F5E6B0); }
+.shafii  .madhab-emblem { background: linear-gradient(135deg, #E3EEF5, #B0CEE8); }
+.hanbali .madhab-emblem { background: linear-gradient(135deg, #F0E8F5, #D8B0E8); }
+
+[data-theme="dark"] .hanafi  .madhab-emblem { background: rgba(46,175,119,0.15); }
+[data-theme="dark"] .maliki  .madhab-emblem { background: rgba(212,160,23,0.15); }
+[data-theme="dark"] .shafii  .madhab-emblem { background: rgba(46,127,191,0.15); }
+[data-theme="dark"] .hanbali .madhab-emblem { background: rgba(159,79,181,0.15); }
+
+.madhab-title-area {}
+.madhab-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; color: var(--text);
+  margin-bottom: 2px;
+}
+.madhab-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 17px; color: var(--gold-light);
+  direction: rtl;
+}
+
+.madhab-body { padding: 20px 28px 24px; }
+
+.madhab-imam {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px;
+}
+.imam-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-3);
+}
+.imam-name {
+  font-size: 13.5px; font-weight: 600;
+  color: var(--green-mid);
+}
+
+.madhab-info-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.info-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  background: var(--bg-2);
+  border-radius: 20px;
+  font-size: 12px; color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+.madhab-desc {
+  font-size: 13.5px; color: var(--text-2);
+  line-height: 1.7; margin-bottom: 16px;
+}
+
+.madhab-features {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 6px;
+}
+
+.madhab-features li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13px; color: var(--text-2);
+}
+
+.feat-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  margin-top: 6px; flex-shrink: 0;
+}
+.hanafi  .feat-dot { background: var(--green-mid); }
+.maliki  .feat-dot { background: var(--gold-light); }
+.shafii  .feat-dot { background: #2E7FBF; }
+.hanbali .feat-dot { background: #9F4FB5; }
+
+.madhab-footer {
+  padding: 0 28px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.coming-soon-badge {
+  font-size: 11px; font-weight: 600;
+  padding: 4px 10px; border-radius: 6px;
+  background: var(--bg-2); color: var(--text-3);
+  border: 1px solid var(--border);
+}
+
+.madhab-arrow {
+  font-size: 18px; color: var(--text-3);
+  transition: transform 0.2s, color 0.2s;
+}
+.madhab-card:hover .madhab-arrow { transform: translateX(4px); color: var(--green-mid); }
+
+/* HADITH BANNER */
+.hadith-section {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 52px 1.5rem;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.hadith-arabic {
+  font-family: 'Amiri', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--gold-light);
+  direction: rtl;
+  margin-bottom: 10px;
+}
+
+.hadith-trans {
+  font-size: 14px; color: var(--text-2);
+  font-style: italic; margin-bottom: 6px;
+}
+
+.hadith-ref {
+  font-size: 12px; color: var(--text-3);
+  font-weight: 600;
+}
+
+/* FOOTER */
+footer {
+  background: var(--bg-3);
+  border-top: 1px solid var(--border);
+  padding: 32px 1.5rem;
+  text-align: center;
+}
+
+footer p { font-size: 12.5px; color: var(--text-3); margin-bottom: 4px; }
+footer a { color: var(--green-mid); text-decoration: none; }
+
+/* REVEAL */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-hero-inner > * { animation: fadeUp 0.6s ease both; }
+.page-hero-inner > *:nth-child(1) { animation-delay: 0s; }
+.page-hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
+.page-hero-inner > *:nth-child(3) { animation-delay: 0.2s; }
+.page-hero-inner > *:nth-child(4) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="theme-icon">🌙</button>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-tag">🕌 Muslim Groups</div>
+    <div class="page-arabic">الْمَذَاهِبُ الْفِقْهِيَّةُ الأَرْبَعَة</div>
+    <h1>Fiqhi <em>Madhahib</em></h1>
+    <p class="page-desc">The four great schools of Islamic jurisprudence — each a complete framework of fiqh built on Quran, Sunnah, Ijma & Qiyas.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="intro-banner">
+  <div class="intro-box reveal">
+    <div class="intro-icon">📌</div>
+    <div>
+      <h3>What are the Madhahib?</h3>
+      <p>The four Fiqhi Madhahib — Hanafi, Maliki, Shafi'i, and Hanbali — are the four major schools of Sunni Islamic jurisprudence. Each was founded by a great Imam of the 2nd–3rd century Hijri. All four are considered valid, and following any one of them is the Sunnah of the Ummah. They differ in methodology (Usool) and rulings (Furu'), but agree on the fundamentals of Aqeedah.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MADHAHIB GRID -->
+<div class="sec-heading reveal">
+  <div class="sec-tag">4 Imams — 4 Schools</div>
+  <h2>The Four Schools of Fiqh</h2>
+</div>
+
+<div class="madhab-grid">
+
+  <!-- HANAFI -->
+  <div class="madhab-card hanafi reveal">
+    <div class="madhab-header">
+      <div class="madhab-emblem">🟢</div>
+      <div class="madhab-title-area">
+        <div class="madhab-name">Hanafi</div>
+        <div class="madhab-arabic">الحَنَفِيَّة</div>
+      </div>
+    </div>
+    <div class="madhab-body">
+      <div class="madhab-imam">
+        <span class="imam-label">Imam:</span>
+        <span class="imam-name">Abu Hanifa al-Nu'man (80–150 AH)</span>
+      </div>
+      <div class="madhab-info-row">
+        <span class="info-chip">📍 Kufa, Iraq</span>
+        <span class="info-chip">🌍 South Asia, Turkey, Central Asia</span>
+      </div>
+      <p class="madhab-desc">The largest madhab globally, known for its extensive use of Qiyas (analogical reasoning) and Istihsan (juristic preference). Dominant in South Asia, Turkey, and Central Asia.</p>
+      <ul class="madhab-features">
+        <li><span class="feat-dot"></span>Heavy use of Ra'y (opinion) & Qiyas</li>
+        <li><span class="feat-dot"></span>Mursal Hadees accepted under conditions</li>
+        <li><span class="feat-dot"></span>Most widespread globally (~45% of Muslims)</li>
+      </ul>
+    </div>
+    <div class="madhab-footer">
+      <span class="coming-soon-badge">Coming Soon</span>
+      <span class="madhab-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- MALIKI -->
+  <div class="madhab-card maliki reveal">
+    <div class="madhab-header">
+      <div class="madhab-emblem">🟡</div>
+      <div class="madhab-title-area">
+        <div class="madhab-name">Maliki</div>
+        <div class="madhab-arabic">المَالِكِيَّة</div>
+      </div>
+    </div>
+    <div class="madhab-body">
+      <div class="madhab-imam">
+        <span class="imam-label">Imam:</span>
+        <span class="imam-name">Malik ibn Anas (93–179 AH)</span>
+      </div>
+      <div class="madhab-info-row">
+        <span class="info-chip">📍 Madinah, Arabia</span>
+        <span class="info-chip">🌍 North & West Africa</span>
+      </div>
+      <p class="madhab-desc">Founded in Madinah, this madhab gives special weight to the "Amal ahl al-Madinah" (practice of the people of Madinah) as a source of Sunnah. Dominant in North and West Africa.</p>
+      <ul class="madhab-features">
+        <li><span class="feat-dot"></span>Amal ahl al-Madinah as source</li>
+        <li><span class="feat-dot"></span>Maslaha Mursala (public interest)</li>
+        <li><span class="feat-dot"></span>Al-Muwatta — earliest Hadees collection</li>
+      </ul>
+    </div>
+    <div class="madhab-footer">
+      <span class="coming-soon-badge">Coming Soon</span>
+      <span class="madhab-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- SHAFI'I -->
+  <div class="madhab-card shafii reveal">
+    <div class="madhab-header">
+      <div class="madhab-emblem">🔵</div>
+      <div class="madhab-title-area">
+        <div class="madhab-name">Shafi'i</div>
+        <div class="madhab-arabic">الشَّافِعِيَّة</div>
+      </div>
+    </div>
+    <div class="madhab-body">
+      <div class="madhab-imam">
+        <span class="imam-label">Imam:</span>
+        <span class="imam-name">Muhammad ibn Idris al-Shafi'i (150–204 AH)</span>
+      </div>
+      <div class="madhab-info-row">
+        <span class="info-chip">📍 Gaza / Egypt</span>
+        <span class="info-chip">🌍 Southeast Asia, East Africa</span>
+      </div>
+      <p class="madhab-desc">Known as the "Father of Usool al-Fiqh," Imam Shafi'i systematized Islamic jurisprudence in his landmark work Al-Risala. Dominant in Southeast Asia and East Africa.</p>
+      <ul class="madhab-features">
+        <li><span class="feat-dot"></span>First to formalize Usool al-Fiqh</li>
+        <li><span class="feat-dot"></span>Strict adherence to authentic Hadees</li>
+        <li><span class="feat-dot"></span>Al-Risala — first book of Islamic legal theory</li>
+      </ul>
+    </div>
+    <div class="madhab-footer">
+      <span class="coming-soon-badge">Coming Soon</span>
+      <span class="madhab-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- HANBALI -->
+  <div class="madhab-card hanbali reveal">
+    <div class="madhab-header">
+      <div class="madhab-emblem">🟣</div>
+      <div class="madhab-title-area">
+        <div class="madhab-name">Hanbali</div>
+        <div class="madhab-arabic">الحَنْبَلِيَّة</div>
+      </div>
+    </div>
+    <div class="madhab-body">
+      <div class="madhab-imam">
+        <span class="imam-label">Imam:</span>
+        <span class="imam-name">Ahmad ibn Hanbal (164–241 AH)</span>
+      </div>
+      <div class="madhab-info-row">
+        <span class="info-chip">📍 Baghdad, Iraq</span>
+        <span class="info-chip">🌍 Arabian Peninsula</span>
+      </div>
+      <p class="madhab-desc">The most text-literal of the four madhabs, giving maximum preference to Quran and authentic Sunnah over rational methods. Dominant in Saudi Arabia and Arabian Peninsula.</p>
+      <ul class="madhab-features">
+        <li><span class="feat-dot"></span>Strongest emphasis on Hadees & Athar</span></li>
+        <li><span class="feat-dot"></span>Minimum use of Qiyas & Ra'y</li>
+        <li><span class="feat-dot"></span>Musnad Ahmad — vast Hadees collection</li>
+      </ul>
+    </div>
+    <div class="madhab-footer">
+      <span class="coming-soon-badge">Coming Soon</span>
+      <span class="madhab-arrow">→</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- HADITH REMINDER -->
+<div class="hadith-section reveal">
+  <div class="hadith-arabic">اخْتِلافُ أُمَّتِي رَحْمَةٌ</div>
+  <p class="hadith-trans">"The differences of my Ummah are a mercy."</p>
+  <p class="hadith-ref">— Widely reported statement among scholars</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <a href="index.html">UmmahTechs</a> · Built with ♥ for the Ummah · info@ummahtechs.com</p>
+  <p style="margin-top:8px;">
+    <span style="font-family:'Amiri',serif;font-size:16px;color:var(--gold-light);">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+  </p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
