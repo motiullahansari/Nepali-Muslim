@@ -1449,20 +1449,106 @@ footer {
         </div>
       </div>
 
-      <!-- Daily Hadees -->
-      <div class="daily-card hadees">
+      <!-- Daily Hadees — AI Powered -->
+      <div class="daily-card hadees" id="hadees-card">
         <div class="daily-label">📜 Hadees of the Day</div>
-        <div class="daily-arabic">
-          إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى
+
+        <!-- Loading state -->
+        <div id="hadees-loading" style="padding:12px 0;">
+          <div style="display:flex;align-items:center;gap:10px;color:var(--text-3);font-size:13px;">
+            <span id="hadees-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;"></span>
+            Hadees load ho raha hai…
+          </div>
         </div>
-        <p class="daily-translation">
-          "Actions are but by intentions, and every person shall have only what they intended."
-        </p>
-        <div class="daily-source">
-          <span class="daily-ref">Sahih Bukhari — 1</span>
-          <a href="ummahtechs-hadees.html" class="daily-read-more">Read Hadees →</a>
+
+        <!-- Content (hidden until loaded) -->
+        <div id="hadees-content" style="display:none;">
+          <div class="daily-arabic" id="hadees-arabic" style="font-size:19px;"></div>
+          <p class="daily-translation" id="hadees-translation"></p>
+          <div class="daily-source">
+            <span class="daily-ref" id="hadees-ref"></span>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button onclick="loadHadees()" title="Naya hadees" style="background:none;border:none;cursor:pointer;font-size:14px;color:var(--text-3);padding:0;transition:color 0.2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-3)'">↻</button>
+              <a href="ummahtechs-hadees.html" class="daily-read-more">Read Hadees →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error state -->
+        <div id="hadees-error" style="display:none;font-size:13px;color:var(--text-3);font-style:italic;padding:6px 0;">
+          Hadees load nahi ho saka. <button onclick="loadHadees()" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:13px;text-decoration:underline;padding:0;">Dobara try karein</button>
         </div>
       </div>
+
+      <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+      </style>
+
+      <script>
+        async function loadHadees() {
+          const loading = document.getElementById('hadees-loading');
+          const content = document.getElementById('hadees-content');
+          const error   = document.getElementById('hadees-error');
+
+          loading.style.display = 'block';
+          content.style.display = 'none';
+          error.style.display   = 'none';
+
+          // Pick a topic randomly for variety
+          const topics = [
+            'niyyah (intention)', 'kindness to parents', 'honesty and truthfulness',
+            'patience (sabr)', 'brotherhood in Islam', 'seeking knowledge',
+            'dhikr and remembrance of Allah', 'salah (prayer)', 'charity (sadaqah)',
+            'forgiveness and mercy', 'good character (akhlaq)', 'gratitude (shukr)',
+            'trust in Allah (tawakkul)', 'modesty (haya)', 'keeping family ties'
+          ];
+          const topic = topics[Math.floor(Math.random() * topics.length)];
+
+          try {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 400,
+                messages: [{
+                  role: 'user',
+                  content: `Give me ONE authentic hadith about the topic: "${topic}".
+Reply ONLY as a valid JSON object (no markdown, no extra text) with these exact keys:
+{
+  "arabic": "Arabic text of the hadith",
+  "translation": "English translation",
+  "source": "Collection name and hadith number, e.g. Sahih Bukhari — 6018"
+}
+Use only from Sihah Sittah (Bukhari, Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Majah) or Riyad-us-Saliheen.`
+                }]
+              })
+            });
+
+            const data = await res.json();
+            const raw  = data.content.find(b => b.type === 'text')?.text || '';
+            const clean = raw.replace(/```json|```/g, '').trim();
+            const hadees = JSON.parse(clean);
+
+            document.getElementById('hadees-arabic').textContent      = hadees.arabic;
+            document.getElementById('hadees-translation').textContent = '"' + hadees.translation + '"';
+            document.getElementById('hadees-ref').textContent         = hadees.source;
+
+            loading.style.display = 'none';
+            content.style.display = 'block';
+          } catch (e) {
+            loading.style.display = 'none';
+            error.style.display   = 'block';
+          }
+        }
+
+        // Auto-load on page ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', loadHadees);
+        } else {
+          loadHadees();
+        }
+      </script>
 
     </div>
   </div>
@@ -1495,7 +1581,7 @@ footer {
       <a href="ummahtechs-hadees.html" class="section-card reveal">
         <div class="sc-top">
           <div class="sc-icon">📚</div>
-          <span class="sc-badge badge-soon">Soon</span>
+          <span class="sc-badge badge-live">Live</span>
         </div>
         <div class="sc-title">Hadees</div>
         <div class="sc-arabic">الحَدِيثُ الشَّرِيف</div>
