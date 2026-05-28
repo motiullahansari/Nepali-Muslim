@@ -331,6 +331,36 @@ footer {
 .footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
 .footer-quran-arabic { font-family: 'Amiri', serif; font-size: 16px; color: var(--gold-light); direction: rtl; }
 
+/* ══════════════ SAHABIYAT SECTION ══════════════ */
+.sahabiyat-section { background: #FDF2F8; }
+[data-theme="dark"] .sahabiyat-section { background: rgba(190,24,93,0.05); }
+
+.sec-tag-rose {
+  background: #FDF2F8; color: #BE185D;
+}
+[data-theme="dark"] .sec-tag-rose { background: rgba(190,24,93,0.15); color: #F9A8D4; }
+
+/* Rose featured cards */
+.feat-card-rose::before { background: linear-gradient(90deg, #BE185D, #EC4899); }
+.feat-card-rose:hover { border-color: #BE185D; }
+.feat-emoji-rose { background: #FDF2F8 !important; color: #BE185D !important; }
+[data-theme="dark"] .feat-emoji-rose { background: rgba(190,24,93,0.15) !important; }
+.feat-tag-rose { background: #FDF2F8 !important; color: #BE185D !important; border-color: rgba(190,24,93,0.2) !important; }
+[data-theme="dark"] .feat-tag-rose { background: rgba(190,24,93,0.15) !important; color: #F9A8D4 !important; }
+.feat-lakab-rose { color: #BE185D !important; }
+[data-theme="dark"] .feat-lakab-rose { color: #F9A8D4 !important; }
+
+/* Rose category cards */
+.cat-card.women::before { background: linear-gradient(90deg, #BE185D, #EC4899); }
+.cat-card.women .cat-icon { background: #FDF2F8; color: #BE185D; }
+[data-theme="dark"] .cat-card.women .cat-icon { background: rgba(190,24,93,0.15); }
+.cat-card.women:hover { border-color: #BE185D; box-shadow: 0 8px 32px rgba(190,24,93,0.15); }
+.cat-card.women .cat-chip, .women-chip {
+  background: #FDF2F8 !important; color: #BE185D !important;
+}
+[data-theme="dark"] .cat-card.women .cat-chip,
+[data-theme="dark"] .women-chip { background: rgba(190,24,93,0.12) !important; color: #F9A8D4 !important; }
+
 /* ══════════════ REVEAL ══════════════ */
 .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -501,13 +531,13 @@ footer {
   </div>
 </section>
 
-<!-- ══════════════ CATEGORIES ══════════════ -->
+<!-- ══════════════ SAHABA CATEGORIES ══════════════ -->
 <section class="section alt">
   <div class="section-inner">
     <div class="section-head reveal">
       <div class="section-head-left">
-        <span class="sec-tag">Browse by Category</span>
-        <h2 class="section-title">Explore the Sahaba</h2>
+        <span class="sec-tag">Male Companions</span>
+        <h2 class="section-title">Sahaba — الصَّحَابَة</h2>
         <p class="section-sub">Organized by role, era, and notable groupings mentioned in Quran and Hadith.</p>
       </div>
     </div>
@@ -558,11 +588,11 @@ footer {
         </div>
         <div class="cat-title">Muhajirin</div>
         <div class="cat-arabic">المُهَاجِرُون</div>
-        <p class="cat-desc">Those who left Makkah for the sake of Allah and emigrated to Madinah — men and women alike.</p>
+        <p class="cat-desc">Those who left Makkah for the sake of Allah and emigrated to Madinah.</p>
         <div class="cat-chips">
-          <span class="cat-chip">Asma bint Abi Bakr</span>
-          <span class="cat-chip">Umm Salamah</span>
-          <span class="cat-chip">Lubaba bint al-Harith</span>
+          <span class="cat-chip">Abu Bakr</span>
+          <span class="cat-chip">Umar</span>
+          <span class="cat-chip">Uthman</span>
           <span class="cat-chip">+ many</span>
         </div>
         <span class="cat-arrow">→</span>
@@ -627,12 +657,11 @@ footer {
         </div>
         <div class="cat-title">Hadith Narrators</div>
         <div class="cat-arabic">المُحَدِّثُونَ مِنَ الصَّحَابَة</div>
-        <p class="cat-desc">The top seven companions who narrated the most hadith from the Prophet ﷺ.</p>
+        <p class="cat-desc">The top Sahaba who narrated the most hadith from the Prophet ﷺ.</p>
         <div class="cat-chips">
           <span class="cat-chip">Abu Hurairah</span>
           <span class="cat-chip">Ibn Umar</span>
-          <span class="cat-chip">Anas</span>
-          <span class="cat-chip">Aisha RA</span>
+          <span class="cat-chip">Anas ibn Malik</span>
         </div>
         <span class="cat-arrow">→</span>
       </a>
@@ -654,20 +683,258 @@ footer {
         <span class="cat-arrow">→</span>
       </a>
 
-      <!-- 9. SAHABIYAT -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SAHABIYAT SECTION ══════════════ -->
+<section class="section sahabiyat-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-head-left">
+        <span class="sec-tag sec-tag-rose">Women Companions</span>
+        <h2 class="section-title">Sahabiyat — الصَّحَابِيَّات</h2>
+        <p class="section-sub">Scholars, warriors, narrators, and mothers of the Ummah — their legacy shaped Islam.</p>
+      </div>
+    </div>
+
+    <!-- Featured Sahabiyat -->
+    <div class="feat-grid reveal" style="margin-bottom: 28px;">
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">👑</div>
+          <span class="feat-tag feat-tag-rose">Ummul Mumineen</span>
+        </div>
+        <div class="feat-arabic">أُمُّ المُؤْمِنِين خَدِيجَة</div>
+        <div class="feat-name">Khadijah bint Khuwaylid <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"First Believer"</div>
+        <p class="feat-desc">First wife of the Prophet ﷺ; first Muslim; supported the dawah with her wealth and soul.</p>
+        <div class="feat-foot">~555 – 619 CE · Makkah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">📚</div>
+          <span class="feat-tag feat-tag-rose">2,210 Hadith</span>
+        </div>
+        <div class="feat-arabic">أُمُّ المُؤْمِنِين عَائِشَة</div>
+        <div class="feat-name">Aisha bint Abi Bakr <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"Humayra"</div>
+        <p class="feat-desc">Greatest female scholar of Islam; narrated 2,210 hadith; half the deen transmitted through her.</p>
+        <div class="feat-foot">~613 – 678 CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">⚔️</div>
+          <span class="feat-tag feat-tag-rose">Mujahida</span>
+        </div>
+        <div class="feat-arabic">نُسَيْبَة بِنْتُ كَعْب</div>
+        <div class="feat-name">Nusayba bint Ka'b <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"Umm Ammara"</div>
+        <p class="feat-desc">Fought at Uhud, Hunayn, and Yamama; protected the Prophet ﷺ personally at Uhud with her body.</p>
+        <div class="feat-foot">d. ~634 CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">🌹</div>
+          <span class="feat-tag feat-tag-rose">Shuhada</span>
+        </div>
+        <div class="feat-arabic">سُمَيَّة بِنْتُ خَيَّاط</div>
+        <div class="feat-name">Sumayyah bint Khayyat <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"First Martyr of Islam"</div>
+        <p class="feat-desc">The very first martyr in the history of Islam — tortured and killed by Abu Jahl for her faith.</p>
+        <div class="feat-foot">d. ~615 CE · Makkah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">🏥</div>
+          <span class="feat-tag feat-tag-rose">Field Medic</span>
+        </div>
+        <div class="feat-arabic">رُفَيْدَة الأَسْلَمِيَّة</div>
+        <div class="feat-name">Rufaydah al-Aslamiyyah <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"First Nurse in Islam"</div>
+        <p class="feat-desc">Set up the first field hospital in Islam; treated the wounded in Khandaq and other battles.</p>
+        <div class="feat-foot">7th century CE · Arabia</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">🎓</div>
+          <span class="feat-tag feat-tag-rose">Faqiha</span>
+        </div>
+        <div class="feat-arabic">أُمُّ سَلَمَة</div>
+        <div class="feat-name">Umm Salamah <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"Wisest of the Wives"</div>
+        <p class="feat-desc">Known for her wisdom and sound judgment; narrated 378 hadith; advised the Prophet ﷺ at Hudaybiyyah.</p>
+        <div class="feat-foot">~596 – 680 CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">✍️</div>
+          <span class="feat-tag feat-tag-rose">Muallima</span>
+        </div>
+        <div class="feat-arabic">الشِّفَاء بِنْتُ عَبْدِ اللَّه</div>
+        <div class="feat-name">Al-Shifa bint Abdullah <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"First Female Teacher"</div>
+        <p class="feat-desc">One of the few literate women; taught reading & writing; appointed by Umar RA to oversee the marketplace.</p>
+        <div class="feat-foot">7th century CE · Madinah</div>
+      </a>
+
+      <a href="#" class="feat-card feat-card-rose">
+        <div class="feat-icon-row">
+          <div class="feat-emoji feat-emoji-rose">🌿</div>
+          <span class="feat-tag feat-tag-rose">Ansariyya</span>
+        </div>
+        <div class="feat-arabic">أُمُّ سُلَيْم</div>
+        <div class="feat-name">Umm Sulaym <span class="salam">(RA)</span></div>
+        <div class="feat-lakab feat-lakab-rose">"Umm Anas's Mother"</div>
+        <p class="feat-desc">Her mahr was the Islam of Abu Talha RA; carried a dagger at Hunayn; known for her sabr and tawakkul.</p>
+        <div class="feat-foot">d. ~634 CE · Madinah</div>
+      </a>
+
+    </div>
+
+    <!-- Sahabiyat Categories -->
+    <div class="cat-grid reveal">
+
+      <!-- 1. UMMAHAAT UL MUMINEEN -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">💎</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Ummahaat ul Mumineen</div>
+        <div class="cat-arabic">أُمَّهَاتُ المُؤْمِنِين</div>
+        <p class="cat-desc">The blessed wives of the Prophet ﷺ — Mothers of all believers, each a scholar in her own right.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Khadijah</span>
+          <span class="cat-chip women-chip">Aisha</span>
+          <span class="cat-chip women-chip">Umm Salamah</span>
+          <span class="cat-chip women-chip">+9</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 2. BANAT-E-RASOOL -->
       <a href="#" class="cat-card women">
         <div class="cat-top">
           <div class="cat-icon">🌸</div>
           <span class="badge-soon">Soon</span>
         </div>
-        <div class="cat-title">Sahabiyat</div>
-        <div class="cat-arabic">الصَّحَابِيَّات</div>
-        <p class="cat-desc">The blessed women Companions — scholars, warriors, narrators, and mothers of the Ummah.</p>
+        <div class="cat-title">Banat-e-Rasool ﷺ</div>
+        <div class="cat-arabic">بَنَاتُ الرَّسُول ﷺ</div>
+        <p class="cat-desc">The four daughters of the Prophet ﷺ — Zaynab, Ruqayyah, Umm Kulthum, and Fatimah.</p>
         <div class="cat-chips">
-          <span class="cat-chip">Khansa</span>
-          <span class="cat-chip">Nusayba</span>
-          <span class="cat-chip">Umm Sulaym</span>
-          <span class="cat-chip">+ many</span>
+          <span class="cat-chip women-chip">Fatimah</span>
+          <span class="cat-chip women-chip">Zaynab</span>
+          <span class="cat-chip women-chip">Ruqayyah</span>
+          <span class="cat-chip women-chip">Umm Kulthum</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 3. MUHAJIRAT -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">🐪</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Muhajirat</div>
+        <div class="cat-arabic">المُهَاجِرَات</div>
+        <p class="cat-desc">The women who left their homes in Makkah for Allah's sake and migrated to Madinah.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Asma bint Abi Bakr</span>
+          <span class="cat-chip women-chip">Umm Habiba</span>
+          <span class="cat-chip women-chip">+ many</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 4. ANSARIYAT -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">🏡</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Ansariyat</div>
+        <div class="cat-arabic">الأَنْصَارِيَّات</div>
+        <p class="cat-desc">The women of Madinah who welcomed the Prophet ﷺ and stood firm in supporting Islam.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Umm Sulaym</span>
+          <span class="cat-chip women-chip">Umm Ammara</span>
+          <span class="cat-chip women-chip">+ many</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 5. MUJAHIDAT -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">⚔️</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Mujahidat</div>
+        <div class="cat-arabic">المُجَاهِدَات</div>
+        <p class="cat-desc">The warrior women who participated in battles — treating the wounded, supplying water, and fighting.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Nusayba</span>
+          <span class="cat-chip women-chip">Umm Ammara</span>
+          <span class="cat-chip women-chip">Khawla bint Azwar</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 6. HADITH NARRATORS (WOMEN) -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">📜</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Hadith Narrators</div>
+        <div class="cat-arabic">المُحَدِّثَاتُ مِنَ الصَّحَابِيَّات</div>
+        <p class="cat-desc">Women Companions who preserved and transmitted thousands of hadith to the Ummah.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Aisha — 2,210</span>
+          <span class="cat-chip women-chip">Umm Salamah — 378</span>
+          <span class="cat-chip women-chip">+ many</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 7. SHUHADA (WOMEN) -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">🌹</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Shuhada-e-Khawateen</div>
+        <div class="cat-arabic">الشَّهِيدَات</div>
+        <p class="cat-desc">The women who gave their lives for Islam — beginning with the first martyr Sumayyah RA.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Sumayyah RA</span>
+          <span class="cat-chip women-chip">First martyr of Islam</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <!-- 8. SCHOLARS & TEACHERS -->
+      <a href="#" class="cat-card women">
+        <div class="cat-top">
+          <div class="cat-icon">🎓</div>
+          <span class="badge-soon">Soon</span>
+        </div>
+        <div class="cat-title">Scholars & Teachers</div>
+        <div class="cat-arabic">العَالِمَاتُ المُعَلِّمَات</div>
+        <p class="cat-desc">Women Companions who were recognized scholars, teachers, and muftis of the early Ummah.</p>
+        <div class="cat-chips">
+          <span class="cat-chip women-chip">Aisha RA</span>
+          <span class="cat-chip women-chip">Al-Shifa bint Abdullah</span>
+          <span class="cat-chip women-chip">Hafsa RA</span>
         </div>
         <span class="cat-arrow">→</span>
       </a>
