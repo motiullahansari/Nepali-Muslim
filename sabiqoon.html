@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabiqoon al-Awwaloon — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --amber: #92400E;
+  --amber-light: #D97706;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════
+   NAVBAR
+══════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); height: 64px;
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); transition: color 0.3s; }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); flex-wrap: wrap; }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb span { color: var(--green-mid); font-weight: 600; }
+
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+.lang-select { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 5px; padding: 6px 10px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--text-2);
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.lang-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.lang-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px; min-width: 140px;
+  box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+  transform: translateY(-6px); transition: all 0.2s; z-index: 200;
+}
+.lang-select:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 13px; color: var(--text-2); transition: all 0.15s; }
+.lang-option:hover { background: var(--bg-2); color: var(--green-mid); }
+.lang-option.active { color: var(--green-mid); font-weight: 600; }
+
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  min-height: 460px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 1.5rem 60px; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1548273989-e90f53ea0501?w=1400&q=80');
+  background-size: cover; background-position: center;
+  opacity: 0.07; transition: opacity 0.3s;
+}
+[data-theme="dark"] .hero-bg { opacity: 0.04; }
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 25%, transparent 75%, var(--bg) 100%);
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500;
+  color: var(--green-mid); margin-bottom: 1.5rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-arabic-main {
+  font-family: 'Amiri', serif; font-size: clamp(26px, 4.5vw, 42px);
+  color: var(--gold-light); margin-bottom: 0.5rem;
+  direction: rtl; animation: fadeUp 0.6s 0.1s ease both; line-height: 1.5;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.8vw, 36px); font-weight: 700;
+  color: var(--text); margin-bottom: 1.2rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+
+.hero-ayah-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--amber-light);
+  border-radius: 12px; padding: 20px 24px;
+  margin: 0 auto; max-width: 620px;
+  animation: fadeUp 0.6s 0.2s ease both; box-shadow: var(--shadow);
+}
+.hero-ayah-arabic {
+  font-family: 'Amiri', serif; font-size: 20px; color: var(--text);
+  direction: rtl; line-height: 2; margin-bottom: 8px;
+}
+.hero-ayah-trans { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.7; }
+.hero-ayah-ref { font-size: 11.5px; color: var(--amber-light); font-weight: 600; margin-top: 6px; display: block; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════════════════════════
+   STATS BAR
+══════════════════════════════════ */
+.stats-bar {
+  background: var(--green); padding: 18px 1.5rem;
+  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: white; }
+.stat-label { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ══════════════════════════════════
+   CATEGORY SECTIONS
+══════════════════════════════════ */
+.section-wrap { padding: 60px 1.5rem; background: var(--bg); transition: background 0.3s; }
+.section-wrap:nth-child(even) { background: var(--bg-2); }
+
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.cat-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.cat-icon { 
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; background: var(--green-pale); 
+}
+[data-theme="dark"] .cat-icon { background: rgba(46,175,119,0.12); }
+.cat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--green-mid); margin-bottom: 3px; }
+.cat-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text); }
+
+/* ══════════════════════════════════
+   PERSON CARDS
+══════════════════════════════════ */
+.cards-grid {
+  display: grid; gap: 1.2rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+.cards-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+.cards-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+@media(max-width: 1000px) { .cards-grid.four-col { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 900px) { .cards-grid, .cards-grid.two-col { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 560px) { .cards-grid, .cards-grid.two-col, .cards-grid.four-col { grid-template-columns: 1fr; } }
+
+.pcard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 20px 18px;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  cursor: pointer; text-decoration: none; display: block; color: inherit;
+  position: relative; overflow: hidden;
+}
+.pcard::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--green-light));
+  opacity: 0; transition: opacity 0.25s;
+}
+.pcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--green-mid); }
+.pcard:hover::before { opacity: 1; }
+
+/* Special card for Khadijah RA */
+.pcard.featured {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--surface), rgba(212,160,23,0.04));
+}
+.pcard.featured::before { opacity: 1; background: linear-gradient(90deg, var(--gold), var(--amber-light)); }
+
+/* Special card for Abu Bakr RA */
+.pcard.siddiq {
+  border-color: var(--green-mid);
+  background: linear-gradient(135deg, var(--surface), rgba(34,139,94,0.04));
+}
+.pcard.siddiq::before { opacity: 1; }
+
+.pcard-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
+.pcard-num {
+  font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700;
+  color: var(--text-3); background: var(--bg-2); border-radius: 6px;
+  padding: 3px 9px; flex-shrink: 0;
+}
+.pcard-badge {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+  padding: 3px 10px; border-radius: 6px; flex-shrink: 0;
+}
+.badge-awwal { background: rgba(212,160,23,0.15); color: var(--gold); }
+.badge-green { background: var(--green-pale); color: var(--green-mid); }
+[data-theme="dark"] .badge-green { background: rgba(46,175,119,0.12); }
+
+.pcard-arabic {
+  font-family: 'Amiri', serif; font-size: 20px; color: var(--gold-light);
+  direction: rtl; margin-bottom: 4px; line-height: 1.5; text-align: right;
+}
+.pcard-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.pcard-title { font-size: 12px; color: var(--green-mid); font-weight: 600; margin-bottom: 10px; }
+.pcard-desc { font-size: 13px; color: var(--text-2); line-height: 1.65; margin-bottom: 14px; }
+
+.pcard-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  font-size: 11px; padding: 3px 9px; border-radius: 6px;
+  background: var(--bg-2); color: var(--text-3); border: 1px solid var(--border);
+  font-weight: 500;
+}
+.chip.green { background: var(--green-pale); color: var(--green-mid); border-color: transparent; }
+[data-theme="dark"] .chip.green { background: rgba(46,175,119,0.12); }
+.chip.gold { background: rgba(212,160,23,0.12); color: var(--gold); border-color: transparent; }
+
+/* ══════════════════════════════════
+   SECTION DIVIDER
+══════════════════════════════════ */
+.sec-divider {
+  text-align: center; padding: 30px 1.5rem 0;
+  background: var(--bg-2);
+}
+.sec-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green-mid); background: var(--green-pale);
+  padding: 4px 12px; border-radius: 6px; margin-bottom: 0.8rem;
+}
+[data-theme="dark"] .sec-tag { background: rgba(46,175,119,0.12); }
+.sec-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.8vw, 28px); font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.sec-desc { font-size: 14px; color: var(--text-2); max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+
+/* ══════════════════════════════════
+   REVEAL ANIMATION
+══════════════════════════════════ */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg); transition: background 0.3s;
+  padding: 28px 1.5rem;
+  text-align: center;
+}
+.footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.footer-bottom p { font-size: 13px; color: var(--text-3); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 18px; color: var(--green-mid); direction: rtl; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <a href="ummahtechs-biography.html">Biography & History</a>
+    <span>›</span>
+    <span>Sabiqoon al-Awwaloon</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🕊️ The First Muslims</div>
+    <div class="hero-arabic-main">السَّابِقُونَ الأَوَّلُون</div>
+    <h1 class="hero-title">Sabiqoon al-Awwaloon</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">
+        وَالسَّابِقُونَ الْأَوَّلُونَ مِنَ الْمُهَاجِرِينَ وَالْأَنصَارِ وَالَّذِينَ اتَّبَعُوهُم بِإِحْسَانٍ رَّضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ
+      </div>
+      <p class="hero-ayah-trans">"And the first forerunners — among the Muhajirin and the Ansar — and those who followed them with good conduct, Allah is pleased with them and they are pleased with Him."</p>
+      <span class="hero-ayah-ref">Surah At-Tawbah 9:100</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ STATS BAR ══════════════ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">10</div>
+    <div class="stat-label">First Muslims</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Categories</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">610 CE</div>
+    <div class="stat-label">Year of Islam</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">رَضِيَ اللَّهُ عَنْهُم</div>
+    <div class="stat-label">May Allah be pleased with them</div>
+  </div>
+</div>
+
+<!-- ══════════════ SECTION: FIRST WOMAN ══════════════ -->
+<div class="sec-divider reveal">
+  <span class="sec-tag">Category 1</span>
+  <h2 class="sec-title">Pehli Khatoon · أُولَى النِّسَاء</h2>
+  <p class="sec-desc">The very first person to embrace Islam — before any man, woman or child.</p>
+</div>
+
+<div class="section-wrap reveal">
+  <div class="section-inner">
+    <div class="cat-header">
+      <div class="cat-icon">👑</div>
+      <div>
+        <div class="cat-label">First of all</div>
+        <div class="cat-title">Mother of the Believers</div>
+      </div>
+    </div>
+    <div class="cards-grid two-col">
+
+      <div class="pcard featured reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#1</span>
+          <span class="pcard-badge badge-awwal">Pehli Muslim</span>
+        </div>
+        <div class="pcard-arabic">خَدِيجَةُ بِنْتُ خُوَيْلِد</div>
+        <div class="pcard-name">Sayyida Khadijah bint Khuwaylid RA</div>
+        <div class="pcard-title">Umm-ul-Mumineen · Mother of the Believers</div>
+        <p class="pcard-desc">
+          The very first person to accept Islam — before any man, woman, young or old. When Wahy first descended in Cave Hira, she was the one who consoled the Prophet ﷺ, wrapped him in a cloak, and took him to Waraqah ibn Nawfal. Her unwavering faith was the first foundation of Islam.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip gold">Pehli Muslim</span>
+          <span class="chip green">Umm-ul-Mumineen</span>
+          <span class="chip">Mecca</span>
+          <span class="chip">~555–619 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" style="background: var(--surface-2); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:12px; min-height:200px;">
+        <div style="font-size:36px; opacity:0.3;">🕊️</div>
+        <div style="font-family:'Playfair Display',serif; font-size:15px; color:var(--text-3);">She stood alone</div>
+        <p style="font-size:13px; color:var(--text-3); max-width:260px; line-height:1.6;">
+          Khadijah RA accepted Islam alone in her category — no other woman was at her level at that moment.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECTION: FIRST MAN ══════════════ -->
+<div class="sec-divider reveal" style="background: var(--bg);">
+  <span class="sec-tag">Category 2</span>
+  <h2 class="sec-title">Pehle Mard · أَوَّلُ الرِّجَال</h2>
+  <p class="sec-desc">The first adult free man to accept Islam.</p>
+</div>
+
+<div class="section-wrap reveal" style="background: var(--bg);">
+  <div class="section-inner">
+    <div class="cat-header">
+      <div class="cat-icon">🌟</div>
+      <div>
+        <div class="cat-label">Al-Siddiq</div>
+        <div class="cat-title">The Truthful One</div>
+      </div>
+    </div>
+    <div class="cards-grid two-col">
+
+      <div class="pcard siddiq reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#2</span>
+          <span class="pcard-badge badge-green">As-Siddiq</span>
+        </div>
+        <div class="pcard-arabic">أَبُو بَكْرٍ الصِّدِّيق</div>
+        <div class="pcard-name">Abu Bakr as-Siddiq RA</div>
+        <div class="pcard-title">Khalifat-ur-Rasool · First Caliph of Islam</div>
+        <p class="pcard-desc">
+          The first free adult man to accept Islam. His acceptance brought many others into the fold — Uthman, Zubair, Abdur Rahman ibn Auf, Sa'd ibn Abi Waqqas, and Talha RA all embraced Islam through him. He accompanied the Prophet ﷺ in the Cave of Thawr during Hijra and was later chosen as the first Khalifah.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip green">Pehle Mard</span>
+          <span class="chip green">As-Siddiq</span>
+          <span class="chip">Ashra Mubashara</span>
+          <span class="chip">~573–634 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" style="background: var(--surface-2); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:12px; min-height:200px;">
+        <div style="font-size:34px; opacity:0.3;">🌙</div>
+        <div style="font-family:'Playfair Display',serif; font-size:15px; color:var(--text-3);">Daawa by example</div>
+        <p style="font-size:13px; color:var(--text-3); max-width:260px; line-height:1.6;">
+          Abu Bakr RA did not accept Islam alone — he immediately began calling others. 5 out of the Ashra Mubashara accepted Islam through him directly.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECTION: FIRST BOY / SLAVE ══════════════ -->
+<div class="sec-divider reveal">
+  <span class="sec-tag">Category 3</span>
+  <h2 class="sec-title">Pehle Bachche aur Ghulam · الأَطْفَال وَالعَبِيد</h2>
+  <p class="sec-desc">The first child and the first freed slave to enter the fold of Islam.</p>
+</div>
+
+<div class="section-wrap reveal">
+  <div class="section-inner">
+    <div class="cat-header">
+      <div class="cat-icon">🌱</div>
+      <div>
+        <div class="cat-label">Young hearts, brave souls</div>
+        <div class="cat-title">First Child & First Freed Slave</div>
+      </div>
+    </div>
+    <div class="cards-grid two-col">
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#3</span>
+          <span class="pcard-badge badge-green">Pehle Bacha</span>
+        </div>
+        <div class="pcard-arabic">عَلِيُّ بْنُ أَبِي طَالِب</div>
+        <div class="pcard-name">Ali ibn Abi Talib RA</div>
+        <div class="pcard-title">Ameer-ul-Mumineen · Fourth Caliph of Islam</div>
+        <p class="pcard-desc">
+          The first child and youth to accept Islam, approximately 10 years old at the time. He was raised in the household of the Prophet ﷺ. Known for his immense courage, deep knowledge, and unwavering loyalty. He later became the fourth Khalifah of Islam and is considered among the greatest of the Sahaba.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip green">Pehle Bacha</span>
+          <span class="chip green">Ashra Mubashara</span>
+          <span class="chip">Ahle Bayt</span>
+          <span class="chip">~600–661 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#4</span>
+          <span class="pcard-badge badge-green">Pehle Ghulam</span>
+        </div>
+        <div class="pcard-arabic">زَيْدُ بْنُ حَارِثَة</div>
+        <div class="pcard-name">Zaid ibn Haritha RA</div>
+        <div class="pcard-title">Hibb-un-Nabi ﷺ · Beloved of the Prophet</div>
+        <p class="pcard-desc">
+          The first freed slave to accept Islam. Originally a slave purchased and then freed by the Prophet ﷺ, he became so beloved that people called him "Zaid ibn Muhammad" — son of Muhammad. He was the commander of the Expedition of Mu'tah and is the only Sahabi mentioned by name in the Quran.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip green">Pehle Azaad Ghulam</span>
+          <span class="chip gold">Named in Quran</span>
+          <span class="chip">Mu'tah Commander</span>
+          <span class="chip">~581–629 CE</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECTION: ABU BAKR'S 5 ══════════════ -->
+<div class="sec-divider reveal" style="background: var(--bg);">
+  <span class="sec-tag">Category 4</span>
+  <h2 class="sec-title">Abu Bakr RA ke Zariye · بِدَعْوَةِ أَبِي بَكْر</h2>
+  <p class="sec-desc">Five great companions who entered Islam through the personal efforts of Abu Bakr as-Siddiq RA.</p>
+</div>
+
+<div class="section-wrap reveal" style="background: var(--bg);">
+  <div class="section-inner">
+    <div class="cat-header">
+      <div class="cat-icon">👥</div>
+      <div>
+        <div class="cat-label">Ashra Mubashara</div>
+        <div class="cat-title">All five are among the ten promised Jannah</div>
+      </div>
+    </div>
+    <div class="cards-grid four-col">
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#5</span>
+          <span class="pcard-badge badge-green">Ashra</span>
+        </div>
+        <div class="pcard-arabic">عُثْمَانُ بْنُ عَفَّان</div>
+        <div class="pcard-name">Uthman ibn Affan RA</div>
+        <div class="pcard-title">Dhul-Noorayn · Third Caliph</div>
+        <p class="pcard-desc">Married two daughters of the Prophet ﷺ. Compiled the Quran into one Mushaf. Third Khalifah of Islam.</p>
+        <div class="pcard-chips">
+          <span class="chip green">Dhul-Noorayn</span>
+          <span class="chip">Third Khalifah</span>
+          <span class="chip">~576–656 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#6</span>
+          <span class="pcard-badge badge-green">Ashra</span>
+        </div>
+        <div class="pcard-arabic">الزُّبَيْرُ بْنُ العَوَّام</div>
+        <div class="pcard-name">Zubair ibn al-Awwam RA</div>
+        <div class="pcard-title">Hawari-un-Nabi ﷺ · Disciple of the Prophet</div>
+        <p class="pcard-desc">Nephew of Khadijah RA. First person to draw a sword in the path of Allah. Known as "Hawari" (disciple) of the Prophet ﷺ.</p>
+        <div class="pcard-chips">
+          <span class="chip green">Hawari</span>
+          <span class="chip">~594–656 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#7</span>
+          <span class="pcard-badge badge-green">Ashra</span>
+        </div>
+        <div class="pcard-arabic">عَبْدُ الرَّحْمَنِ بْنُ عَوْف</div>
+        <div class="pcard-name">Abdur Rahman ibn Auf RA</div>
+        <div class="pcard-title">Generous Merchant of Madinah</div>
+        <p class="pcard-desc">One of the wealthiest Sahaba. Known for extraordinary generosity — donated half his wealth for the sake of Allah. Led the prayer when the Prophet ﷺ was absent.</p>
+        <div class="pcard-chips">
+          <span class="chip green">Generous</span>
+          <span class="chip">~580–654 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#8</span>
+          <span class="pcard-badge badge-green">Ashra</span>
+        </div>
+        <div class="pcard-arabic">سَعْدُ بْنُ أَبِي وَقَّاص</div>
+        <div class="pcard-name">Sa'd ibn Abi Waqqas RA</div>
+        <div class="pcard-title">Faris-ul-Islam · First Archer of Islam</div>
+        <p class="pcard-desc">First person to shoot an arrow in the path of Allah. Maternal uncle of the Prophet ﷺ. Conquered Persia. One of the last of the Ashra Mubashara to pass away.</p>
+        <div class="pcard-chips">
+          <span class="chip green">Pehle Archer</span>
+          <span class="chip">~595–674 CE</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Talha separately below the 4-col -->
+    <div style="margin-top: 1.2rem; max-width: 380px;">
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#9</span>
+          <span class="pcard-badge badge-green">Ashra</span>
+        </div>
+        <div class="pcard-arabic">طَلْحَةُ بْنُ عُبَيْدِاللَّه</div>
+        <div class="pcard-name">Talha ibn Ubaidullah RA</div>
+        <div class="pcard-title">Talhat-ul-Khayr · The Living Martyr</div>
+        <p class="pcard-desc">
+          Known as "Talhat-ul-Khayr" and "Talhat-ul-Fayyad." Shielded the Prophet ﷺ with his own body in the Battle of Uhud, suffering severe wounds. The Prophet ﷺ called him a living martyr.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip green">Talhat-ul-Khayr</span>
+          <span class="chip gold">Living Martyr</span>
+          <span class="chip">~594–656 CE</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ SECTION: BILAL ══════════════ -->
+<div class="sec-divider reveal">
+  <span class="sec-tag">Category 5</span>
+  <h2 class="sec-title">Shuhadaa-e-Aziyyat · شُهَدَاءُ الأَذَى</h2>
+  <p class="sec-desc">Those who suffered the most brutal persecution but never wavered in their faith.</p>
+</div>
+
+<div class="section-wrap reveal">
+  <div class="section-inner">
+    <div class="cat-header">
+      <div class="cat-icon">⛓️</div>
+      <div>
+        <div class="cat-label">Perseverance in pain</div>
+        <div class="cat-title">Tortured but unbroken</div>
+      </div>
+    </div>
+    <div class="cards-grid two-col">
+
+      <div class="pcard reveal">
+        <div class="pcard-top">
+          <span class="pcard-num">#10</span>
+          <span class="pcard-badge badge-green">Muazzin</span>
+        </div>
+        <div class="pcard-arabic">بِلَالُ بْنُ رَبَاح</div>
+        <div class="pcard-name">Bilal ibn Rabah RA</div>
+        <div class="pcard-title">Muazzin-e-Rasool ﷺ · First Muezzin of Islam</div>
+        <p class="pcard-desc">
+          An Abyssinian slave owned by Umayyah ibn Khalaf, he was dragged across burning desert sand with a rock placed on his chest — yet cried only "Ahad! Ahad!" (One! One!). Abu Bakr RA purchased him and set him free. He became the first and most beloved Muezzin of Islam — his voice echoing Adhan from atop the Kaaba after the conquest of Mecca.
+        </p>
+        <div class="pcard-chips">
+          <span class="chip green">Pehle Muazzin</span>
+          <span class="chip gold">Ahad! Ahad!</span>
+          <span class="chip">Freed by Abu Bakr RA</span>
+          <span class="chip">~580–640 CE</span>
+        </div>
+      </div>
+
+      <div class="pcard reveal" style="background: var(--surface-2); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:12px; min-height:200px;">
+        <div style="font-family:'Amiri',serif; font-size:28px; color:var(--gold-light); direction:rtl; line-height:2;">أَحَد ۔۔ أَحَد</div>
+        <p style="font-size:13px; color:var(--text-3); max-width:260px; line-height:1.65;">
+          Under the scorching Mecca sun, with a boulder on his chest, Bilal RA said only <strong style="color:var(--gold);">"Ahad! Ahad!"</strong> — his unshakable tawheed in the face of torture.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">رَضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ</span>
+    <p style="font-size:11.5px; color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+function setLang(code) {
+  document.getElementById('lang-label').textContent = code;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.closest('.lang-option').classList.add('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
