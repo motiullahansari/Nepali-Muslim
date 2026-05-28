@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encyclopedia of Quran — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════
+   NAVBAR
+══════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700; color: var(--text);
+  transition: color 0.3s;
+}
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+
+.nav-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: 1rem;
+  font-size: 13px; color: var(--text-3);
+}
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb span.active { color: var(--green-mid); font-weight: 600; }
+
+.nav-right {
+  display: flex; align-items: center; gap: 8px; margin-left: auto;
+}
+
+.lang-select { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; color: var(--text-2);
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.lang-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.lang-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px; min-width: 140px;
+  box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+  transform: translateY(-6px); transition: all 0.2s; z-index: 200;
+}
+.lang-select:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 7px; cursor: pointer;
+  font-size: 13px; color: var(--text-2); transition: all 0.15s;
+}
+.lang-option:hover { background: var(--bg-2); color: var(--green-mid); }
+.lang-option.active { color: var(--green-mid); font-weight: 600; }
+
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s; color: var(--text-2);
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border);
+  border-radius: 8px; background: transparent;
+  color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.enc-hero {
+  min-height: 380px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 1.5rem 50px;
+  overflow: hidden;
+}
+.enc-hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1585036156171-384164a8c675?w=1200&q=80');
+  background-size: cover; background-position: center;
+  opacity: 0.07; transition: opacity 0.3s;
+}
+[data-theme="dark"] .enc-hero-bg { opacity: 0.04; }
+.enc-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);
+}
+.enc-hero-content {
+  position: relative; z-index: 2; max-width: 720px;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 500; color: var(--green-mid);
+  margin-bottom: 1.5rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+.hero-arabic-main {
+  font-family: 'Amiri', serif;
+  font-size: clamp(24px, 4vw, 38px);
+  color: var(--gold-light); margin-bottom: 0.5rem;
+  direction: rtl; animation: fadeUp 0.6s 0.1s ease both; line-height: 1.5;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px); font-weight: 700;
+  color: var(--text); margin-bottom: 0.8rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+.hero-subtitle {
+  font-size: 15px; color: var(--text-2); line-height: 1.6;
+  animation: fadeUp 0.6s 0.2s ease both; max-width: 540px; margin: 0 auto;
+}
+
+/* ══════════════════════════════════
+   BOOK CARD
+══════════════════════════════════ */
+.book-section {
+  max-width: 900px; margin: 0 auto 3rem;
+  padding: 0 1.5rem;
+}
+.book-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex; gap: 28px; align-items: flex-start;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+.book-card:hover { box-shadow: var(--shadow-lg); }
+.book-cover {
+  flex-shrink: 0;
+  width: 90px; height: 120px;
+  background: linear-gradient(145deg, var(--green), var(--green-mid));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  box-shadow: 4px 4px 16px rgba(27,107,74,0.3);
+}
+.book-info { flex: 1; }
+.book-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--green-pale); color: var(--green-mid);
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  margin-bottom: 10px;
+}
+[data-theme="dark"] .book-badge { background: rgba(46,175,119,0.15); }
+.book-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: var(--text);
+  margin-bottom: 4px;
+}
+.book-title-hindi {
+  font-family: 'Amiri', serif;
+  font-size: 15px; color: var(--gold);
+  margin-bottom: 10px;
+}
+.book-author { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+.book-author strong { color: var(--green-mid); }
+.book-desc { font-size: 13.5px; color: var(--text-3); line-height: 1.65; }
+.book-stats {
+  display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap;
+}
+.book-stat {
+  font-size: 12px; color: var(--text-3);
+  display: flex; align-items: center; gap: 5px;
+}
+.book-stat strong { color: var(--green-mid); font-size: 14px; }
+
+/* ══════════════════════════════════
+   SEARCH + FILTER BAR
+══════════════════════════════════ */
+.search-section {
+  max-width: 900px; margin: 0 auto 1.5rem;
+  padding: 0 1.5rem;
+}
+.search-wrap {
+  position: relative; margin-bottom: 1rem;
+}
+.search-icon {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; pointer-events: none;
+}
+.search-input {
+  width: 100%; padding: 14px 16px 14px 46px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 12px; font-size: 14.5px;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.search-input::placeholder { color: var(--text-3); }
+.search-input:focus {
+  border-color: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(34,139,94,0.1);
+}
+.search-count {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--text-3);
+}
+
+/* Alphabet Bar */
+.alpha-bar {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px;
+}
+.alpha-btn {
+  padding: 5px 10px; border-radius: 7px; border: none;
+  background: transparent; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px; font-weight: 500; color: var(--text-2);
+  transition: all 0.15s;
+}
+.alpha-btn:hover { background: var(--green-pale); color: var(--green-mid); }
+.alpha-btn.active {
+  background: var(--green-mid); color: white;
+}
+[data-theme="dark"] .alpha-btn:hover { background: rgba(46,175,119,0.15); }
+.alpha-btn.all-btn {
+  font-size: 12px; padding: 5px 12px;
+  border: 1px solid var(--border); color: var(--text-3);
+}
+.alpha-btn.all-btn.active { background: var(--green-mid); color: white; border-color: transparent; }
+
+/* ══════════════════════════════════
+   TOPICS GRID
+══════════════════════════════════ */
+.topics-section {
+  max-width: 900px; margin: 0 auto 4rem;
+  padding: 0 1.5rem;
+}
+.topics-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.topics-label {
+  font-size: 13px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.topic-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 18px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: flex-start; gap: 12px;
+  text-decoration: none;
+}
+.topic-card:hover {
+  border-color: var(--green-mid);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+.topic-num {
+  flex-shrink: 0; width: 28px; height: 28px;
+  background: var(--green-pale); color: var(--green-mid);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+[data-theme="dark"] .topic-num { background: rgba(46,175,119,0.15); }
+.topic-text { flex: 1; min-width: 0; }
+.topic-name {
+  font-size: 14.5px; font-weight: 600; color: var(--text);
+  margin-bottom: 3px; line-height: 1.3;
+}
+.topic-preview {
+  font-size: 12px; color: var(--text-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.4;
+}
+.topic-arrow {
+  flex-shrink: 0; font-size: 14px; color: var(--text-3);
+  transition: all 0.2s; margin-top: 2px;
+}
+.topic-card:hover .topic-arrow { color: var(--green-mid); transform: translateX(3px); }
+
+.no-results {
+  text-align: center; padding: 60px 20px;
+  color: var(--text-3); display: none;
+}
+.no-results-icon { font-size: 40px; margin-bottom: 12px; }
+.no-results p { font-size: 15px; }
+
+/* ══════════════════════════════════
+   MODAL — Full Article
+══════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 80px 1rem 2rem;
+  opacity: 0; visibility: hidden;
+  transition: all 0.25s;
+  overflow-y: auto;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+
+.modal-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; width: 100%; max-width: 760px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+  transform: translateY(20px);
+  transition: transform 0.25s;
+  overflow: hidden;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+
+.modal-header {
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  padding: 28px 32px 24px;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 18px; right: 18px;
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255,255,255,0.2); border: none;
+  cursor: pointer; color: white; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.3); }
+.modal-topic-num {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.7);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;
+}
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: white;
+  line-height: 1.3;
+}
+
+.modal-body {
+  padding: 28px 32px 32px;
+  max-height: 65vh; overflow-y: auto;
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: var(--bg-2); }
+.modal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.modal-body::-webkit-scrollbar-thumb:hover { background: var(--green-mid); }
+
+.modal-content {
+  font-size: 14.5px; color: var(--text-2);
+  line-height: 1.85;
+  white-space: pre-wrap;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Quran quotes inside article */
+.modal-content .quran-quote {
+  background: var(--bg-2); border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0; padding: 14px 18px;
+  margin: 16px 0; font-style: italic; color: var(--text);
+}
+
+.modal-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 32px; border-top: 1px solid var(--border);
+  gap: 12px;
+}
+.modal-nav-btn {
+  padding: 8px 18px; border-radius: 9px;
+  border: 1.5px solid var(--border); background: var(--surface-2);
+  color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.modal-nav-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.modal-nav-btn:disabled { opacity: 0.35; cursor: default; }
+.modal-nav-info { font-size: 12px; color: var(--text-3); }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 1.5rem;
+}
+.footer-bottom {
+  max-width: 900px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  font-size: 12.5px; color: var(--text-3);
+}
+.footer-quran-arabic {
+  font-family: 'Amiri', serif; font-size: 17px; color: var(--green-mid);
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 600px) {
+  .book-card { flex-direction: column; padding: 20px; }
+  .book-cover { width: 70px; height: 95px; font-size: 28px; }
+  .modal-body { padding: 20px; }
+  .modal-header { padding: 22px 20px 18px; }
+  .modal-nav { padding: 14px 20px; }
+  .nav-breadcrumb { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <a href="ummahtechs-quran.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <a href="ummahtechs-quran.html">Al-Quran</a>
+    <span>›</span>
+    <span class="active">Encyclopedia</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">HI</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option active" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span>
+    </button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="enc-hero">
+  <div class="enc-hero-bg"></div>
+  <div class="enc-hero-overlay"></div>
+  <div class="enc-hero-content">
+    <div class="hero-tag">📚 Knowledge Base</div>
+    <div class="hero-arabic-main">مَوْسُوعَةُ القُرْآنِ الْكَرِيم</div>
+    <h1 class="hero-title">Encyclopedia of the Quran</h1>
+    <p class="hero-subtitle">कुरआन मजीद की इन्साइक्लोपीडिया — हर विषय पर गहन जानकारी, कुरआन, हदीस और इतिहास की रोशनी में।</p>
+  </div>
+</section>
+
+<!-- ══════════════ BOOK CARD ══════════════ -->
+<div class="book-section reveal">
+  <div class="book-card">
+    <div class="book-cover">📖</div>
+    <div class="book-info">
+      <div class="book-badge">📚 Source Book</div>
+      <div class="book-title">Encyclopedia of the Holy Quran</div>
+      <div class="book-title-hindi">कुरआन मजीद की इन्साइक्लोपीडिया</div>
+      <div class="book-author">लेखक: <strong>प्रो. डॉ. मुहम्मद ज़ियाउर्रहमान आज़मी</strong> &nbsp;·&nbsp; प्रकाशक: दारुस्सलाम</div>
+      <div class="book-desc">कुरआन मजीद के विभिन्न विषयों पर एक व्यापक ज्ञानकोश — जिसमें कुरआन, सहीह हदीस, और इतिहास के आधार पर प्रत्येक विषय का विस्तृत विवरण किया गया है। हिन्दी पाठकों के लिए विशेष रूप से तैयार।</div>
+      <div class="book-stats">
+        <div class="book-stat"><strong>379</strong> Topics</div>
+        <div class="book-stat"><strong>हिंदी</strong> Language</div>
+        <div class="book-stat"><strong>अ–ह</strong> Alphabetical</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SEARCH + ALPHA BAR ══════════════ -->
+<div class="search-section reveal">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input
+      type="text"
+      class="search-input"
+      id="searchInput"
+      placeholder="कोई भी विषय खोजें... जैसे: अल्लाह, अनफ़ाल, असहाब..."
+      oninput="filterTopics()"
+    />
+    <span class="search-count" id="searchCount"></span>
+  </div>
+  <div class="alpha-bar" id="alphaBar"></div>
+</div>
+
+<!-- ══════════════ TOPICS GRID ══════════════ -->
+<div class="topics-section reveal">
+  <div class="topics-header">
+    <span class="topics-label" id="topicsLabel">All Topics</span>
+  </div>
+  <div class="topics-grid" id="topicsGrid"></div>
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🔎</div>
+    <p>कोई विषय नहीं मिला। कोई और शब्द आज़माएं।</p>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-topic-num" id="modalNum"></div>
+      <div class="modal-title" id="modalTitle"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+    <div class="modal-nav">
+      <button class="modal-nav-btn" id="prevBtn" onclick="navigateTopic(-1)">← Prev</button>
+      <span class="modal-nav-info" id="modalNavInfo"></span>
+      <button class="modal-nav-btn" id="nextBtn" onclick="navigateTopic(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA — Replace this with API fetch later
+   await fetch('/api/encyclopedia') 
+═══════════════════════════════════════════ */
+const ENCYCLOPEDIA_DATA = [
+  {
+    id: 1, alfabe: "अ", topic: "अल्लाह",
+    chapter: `अल्लाह अरबी भाषा का शब्द है। वह 'इलाह' से बना है जिसका अर्थ है 'उपास्य', 'पूज्य'। अल्लाह में विश्वास रखने का अर्थ है कि हम केवल उसी की उपासना करें; उसकी उपासना में किसी को साझी न बनाएँ। क्योंकि वास्तव में इस ब्रह्मांड का बनानेवाला केवल एक ही है जिसे हम अल्लाह कहते हैं।
+
+«क्या अल्लाह के साथ कोई और प्रभु-पूज्य है? उच्च है अल्लाह उस शिर्क से जो ये लोग करते हैं।» (कुरआन, सूरा-27, अन-नम्ल, आयत-63)
+
+शिर्क अल्लाह के निकट वह सबसे बड़ा पाप है जिसको वह क्षमा नहीं करेगा —
+
+«अल्लाह इसको क्षमा नहीं करेगा कि उसका साझी ठहराया जाए। किन्तु उससे नीचे दर्जे के अपराध को जिसके लिए चाहेगा क्षमा कर देगा।» (कुरआन, सूरा-4, अन-निसा, आयत-48)
+
+कुरआन चूँकि अल्लाह की अन्तिम पुस्तक है इसलिए इस पुस्तक में अल्लाह ने अपने अस्तित्व तथा अपनी विशेषताओं (सिफ़ात) को खोल-खोल कर बयान कर दिया है और शिर्क के सारे द्वार बन्द कर दिए हैं।
+
+इस्लाम धर्म की विशेषता यह है कि वह एक अल्लाह में आस्था रखने तथा उसी की उपासना करने का आदेश देता है। इसलिए आप कुरआन की जिस आयत पर भी ध्यान देंगे आप को एकमात्र अल्लाह के प्रभु-पूज्य होने का प्रमाण मिलेगा।`
+  },
+  {
+    id: 2, alfabe: "अ", topic: "अस्मा-ए-हुस्ना",
+    chapter: `अर्थात् अल्लाह के सुन्दर और शुभ नाम। कुरआन में है —
+
+«अल्लाह के अच्छे-अच्छे नाम हैं तो तुम उसे उन्हीं नामों से पुकारो, और उन लोगों को छोड़ दो जो उसके नामों के विषय में कुटिलता ग्रहण करते हैं।» (सूरा-7, अल-आराफ़, आयत-180)
+
+एक सहीह हदीस में आया है कि अल्लाह के निन्यानवे नाम हैं जो उनकी तस्बीह करेगा, स्वर्ग में जाएगा। (सहीह बुखारी, 6410 तथा सहीह मुस्लिम, 2677)
+
+अल्लाह के प्रमुख नामों में शामिल हैं:
+अर-रहमान, अर-रहीम, अल-मलिक, अल-कुद्दूस, अस-सलाम, अल-मोमिन, अल-अज़ीज़, अल-हकीम, अल-अलीम, अल-ग़फ़ूर, अल-वदूद, अल-करीम और बहुत से अन्य।
+
+सारांश यह कि अल्लाह के इन नामों के जाप करने का अर्थ है इनके अनुसार जीवन व्यतीत करना।`
+  },
+  {
+    id: 3, alfabe: "अ", topic: "अल्लाह की रस्सी को मज़बूती से पकड़ना",
+    chapter: `कुरआन में आया है —
+
+«सब मिलकर अल्लाह की रस्सी को मज़बूती से पकड़ो, और विभेद में न पड़ो।» (सूरा-3, आले-इमरान, आयत-103)
+
+यहाँ अल्लाह की रस्सी से तात्पर्य कुरआन तथा नबी (ﷺ) की शिक्षाएँ हैं। उनपर अमल करने से ही एक व्यक्ति सच्चा मुसलमान बन सकता है।
+
+हदीसों में नबी (ﷺ) का कथन आया है कि मैं तुम्हारे बीच दो चीज़ें छोड़कर जा रहा हूँ। एक अल्लाह की किताब, दूसरी अपनी सुन्नत। इनपर सच्चे दिल से अमल करनेवाला कभी भटक नहीं सकता।
+
+«अल्लाह की उस कृपा को याद करो जो उसने तुमपर की, तुम एक-दूसरे के शत्रु थे, तो उसने तुम्हारे दिलों को परस्पर एक-दूसरे से जोड़ दिया, जिसके कारण तुम उसकी कृपा से भाई-भाई बन गए।» (सूरा-3, आले-इमरान, आयत-103)`
+  },
+  {
+    id: 4, alfabe: "अ", topic: "अहलुल-बैत",
+    chapter: `अहलुल-बैत का अर्थ है घरवाले। कुरआन में आया है —
+
+«अल्लाह तो बस यही चाहता है कि ऐ नबी के घर वालो! तुमसे गन्दगी को दूर रखे, और तुम्हें पूरी तरह पाक-साफ़ रखे।» (सूरा-33, अल-अहज़ाब, आयत-33)
+
+इस आयत से अभिप्रेत नबी (ﷺ) की पत्नियाँ हैं। उनसे किसी की मर्यादा बनती है तो किसी की बिगड़ती है।
+
+अहले-बैत की श्रेणियाँ:
+पहली श्रेणी — नबी (ﷺ) की पवित्र पत्नियाँ जो मुसलमानों की माता के समान हैं।
+दूसरी श्रेणी — नबी (ﷺ) की संतान: फ़ातिमा, अली, हसन और हुसैन (रज़ियल्लाहु अन्हुम)।
+तीसरी श्रेणी — वे सभी लोग जिनके लिए दान लेना निषिद्ध है।
+
+सारांश यह कि अहले-बैत से तात्पर्य केवल अली, फ़ातिमा और उनकी सन्तान लेना उचित नहीं है।`
+  },
+  {
+    id: 5, alfabe: "अ", topic: "अल्वाह",
+    chapter: `अल्वाह लौह का बहुवचन है जिसका अर्थ है तख़्ती, जिस पर लिखा जाता है। कुरआन में अल्वाह शब्द तीन विभिन्न विषयों में प्रयुक्त हुआ है:
+
+1. नूह (अलैहिस्सलाम) की नौका — जो तख़्तियों और लोहे की कीलों से बनाई गई थी। (सूरा-54, अल-क़मर, आयत-13)
+
+2. लौहे-महफ़ूज़ — जहाँ कुरआन को सुरक्षित रखा गया है। (सूरा-85, अल-बुरूज, आयत-22)। इसलिए संसार में रहनेवाले चाहे जितना जतन कर लें न तो वे कुरआन को मिटा सकते हैं और न उसमें परिवर्तन कर सकते हैं।
+
+3. मूसा (अलैहिस्सलाम) को दी गई तख़्तियाँ —
+«और हमने उसके लिए तख़्तियों पर उपदेश के रूप में हर चीज़ और उसका विस्तृत विवरण लिख दिया।» (सूरा-7, अल-आराफ़, आयत-145)`
+  },
+  {
+    id: 6, alfabe: "अ", topic: "अन्सार",
+    chapter: `यह नासिर का बहुवचन है, जिसका अर्थ है सहायता करनेवाले।
+
+मदीना के वासियों में दो अरब क़बीले थे: 'औस' और 'ख़ज़रज'। इन दोनों के बीच आपस में लड़ाई-झगड़े चले आ रहे थे। इस्लाम ने इनके दिलों को जोड़कर भाई-भाई बना दिया।
+
+«अल्लाह की उस कृपा को याद करो, तुम एक-दूसरे के शत्रु थे, तो उसने तुम्हारे दिलों को परस्पर एक-दूसरे से जोड़ दिया।» (सूरा-3, आले-इमरान, आयत-103)
+
+नबी (ﷺ) ने फ़रमाया: "अनसार जिस घाटी से जाएँगे, मैं भी उसी घाटी से जाऊँगा।" (बुखारी, 3779)
+
+«पहले ईमान लानेवाले मुहाजिरीन से भी और अनसार से भी, अल्लाह प्रसन्न हुआ, और वे अल्लाह से प्रसन्न हुए।» (सूरा-9, अत-तौबा, आयत-100)`
+  },
+  {
+    id: 7, alfabe: "अ", topic: "अनफ़ाल",
+    chapter: `यह 'नफ़्ल' का बहुवचन है, जिसका अर्थ है बढ़ोतरी और अधिकता।
+
+अल-अनफ़ाल कुरआन की आठवीं सूरा का नाम है, जो सन 2 हिजरी में बदर के युद्ध के बाद अवतरित हुई।
+
+«(ऐ नबी) लोग तुमसे अनफ़ाल (ग़नीमतों) के विषय में पूछ रहे हैं। कहो, 'अनफ़ाल' अल्लाह के लिए, और रसूल के लिए हैं।» (कुरआन, सूरा-8, अनफ़ाल, आयत-1)
+
+ग़नीमत के माल का विभाजन: युद्ध में प्राप्त माल को पाँच भागों में विभाजित किया जाएगा। चार भाग सैनिकों में बाँटे जाएँगे और पाँचवाँ भाग सरकारी ख़ज़ाने में — जिसे अनाथों, निर्धनों और यात्रियों पर ख़र्च किया जाएगा।
+
+नबी (ﷺ) ने फ़रमाया: "ग़नीमत का माल मेरे लिए हलाल किया गया है, मुझसे पहले किसी जाति में हलाल नहीं था।" (बुखारी 438)`
+  },
+  {
+    id: 8, alfabe: "अ", topic: "अल-अहक़ाफ़",
+    chapter: `अहक़ाफ़ 'हिक़्फ़' का बहुवचन है, जिसका अर्थ है बालू के बड़े-बड़े टीले।
+
+कुरआन में 'अहक़ाफ़' नाम की एक सूरा है जिसमें कुल 35 आयतें हैं।
+
+«याद करो आद के भाई (हूद) को जब उसने अपनी जातिवालों को अहक़ाफ़ में सचेत किया।» (सूरा-46, अल-अहक़ाफ़, आयत-21)
+
+'अहक़ाफ़' से अभिप्राय वह बहुत बड़ा मरुस्थलीय स्थान है जो सऊदी अरब के दक्षिण में पाया जाता है — 'रूबअ ख़ाली'। यहाँ आद नाम की एक बड़ी जाति आबाद थी। इस जाति की ओर हूद (अलैहिस्सलाम) को नबी बनाकर भेजा गया, परन्तु उन्होंने बात न मानी।
+
+«आद (के वृत्तान्त) में भी शिक्षाप्रद निशानियाँ हैं जब हमने उनपर उजाड़ देनेवाली आँधी भेजी।» (सूरा-51, अज़-ज़रियात, आयतें-41,42)`
+  },
+  {
+    id: 9, alfabe: "अ", topic: "अलिफ़-लाम-मीम",
+    chapter: `कुरआन की बहुत-सी सूरतों के आरम्भ में इस प्रकार के अक्षर आए हैं, जिनको अरबी भाषा में 'हुरूफ़े-मुक़त्तआत' कहते हैं। इसका अर्थ है अलग-अलग अक्षर।
+
+विद्वानों में इसके भावार्थ को लेकर मतभेद पाया जाता है:
+
+कुछ विद्वानों का विचार है कि इनके द्वारा अल्लाह अरबी भाषा के कवियों को चैलेंज कर रहा है कि इन्हीं अक्षरों से कुरआन जैसी कोई किताब लाकर दिखाओ। यह कुरआन ही का चमत्कार है कि आज तक कोई इस चैलेंज का उत्तर नहीं दे सका।
+
+अलिफ़-लाम-मीम वाली सूरतें: सूरा-2 (अल-बक़रा), सूरा-3 (आले-इमरान), सूरा-29 (अल-अनकबूत), सूरा-30 (अर-रूम), सूरा-31 (लुक़्मान), सूरा-32 (अस-सजदा)।
+
+कुछ विद्वानों का विचार है कि इसका वास्तविक ज्ञान केवल अल्लाह को है।`
+  },
+  {
+    id: 10, alfabe: "अ", topic: "अल-यसअ (अलैहिस्सलाम)",
+    chapter: `पैग़म्बर अल-यसअ का वर्णन कुरआन में दो स्थानों पर आया है।
+
+«इस्माईल, अल-यसअ, यूनुस और लूत — उन सब में से प्रत्येक को हमने संसारवालों के मुक़ाबले में बड़ाई प्रदान की।» (सूरा-6, अल-अनआम, आयत-86)
+
+«इस्माईल, अल-यसअ और ज़ुलकिफ़्ल को भी याद करो, ये सब नेक लोगों में से थे।» (सूरा-38, साद, आयत-48)
+
+हसन बसरी का कहना है कि अल-यसअ (अलैहिस्सलाम) इलियास (अलैहिस्सलाम) के समय में थे और इलियास के पश्चात् अल-यसअ ही अल्लाह की ओर लोगों को बुलाते रहे।
+
+ये बाइबल के यसअ बिन शफ़त हो सकते हैं जो जार्डन के एक गाँव में पैदा हुए थे। इलियास (अलैहिस्सलाम) की मृत्यु के पश्चात् वे बनी-इसराईल में काम करते रहे।`
+  },
+  {
+    id: 11, alfabe: "अ", topic: "असहाबुल-कहफ़",
+    chapter: `अर्थात् गुफा में जीवन व्यतीत करनेवाले।
+
+ये कुछ नव युवक थे जो अपने रब पर ईमान लाए और बादशाह के अत्याचार के कारण एक पहाड़ी गुफा में शरण लेकर अल्लाह की रक्षा में तीन सौ नौ वर्ष तक सोते रहे।
+
+«वे हैं कि उस गुफा के एक विस्तृत स्थान में हैं। यह अल्लाह की निशानियों में से है।» (सूरा-18, अल-कहफ़, आयत-17)
+
+«और इसी तरह हमने उन्हें उठा खड़ा किया कि वे आपस में पूछताछ करें। उनमें से एक ने कहा, "तुम कितना ठहरे रहे?" वे बोले, "हम यही कोई एक दिन या एक दिन से भी कम ठहरे होंगे।"» (सूरा-18, अल-कहफ़, आयत-19)
+
+इतिहास से पता चलता है कि जिस बादशाह के समय में यह घटना घटी उसका नाम डेसिस (DECIUS) था, जिसने सन् 249 से 251 ईस्वी तक रोम पर शासन किया।`
+  },
+  {
+    id: 12, alfabe: "अ", topic: "असहाबुल-उख़दूद",
+    chapter: `इसका अर्थ है खाईवाले।
+
+«नष्ट हों खाईवाले, ईंधन भरी आगवाले।» (सूरा-85, बुरूज, आयत-4-5)
+
+यमन के हिमयरी राजा 'ज़ूनवास' ने, जो यहूदी था, 'नजरानियों' पर आक्रमण कर दिया। उनको यहूदियत ग्रहण करने या मृत्यु को गले लगाने का आदेश दिया। उन्होंने इनकार कर दिया। इसपर उसने एक बड़ा गढ़ा खुदवाया, उसको भड़कती हुई आग से भर दिया और आदेश का उल्लंघन करनेवालों को उसमें डलवा दिया — लगभग बीस हज़ार लोगों को।
+
+«उन ईमानवालों से उनकी शत्रुता का कारण केवल यह था कि वे उस अल्लाह पर ईमान लाए थे, जो प्रभुत्वशाली था।» (सूरा-85, अल-बुरूज, आयत-8)
+
+यह घटना लगभग 523 ईस्वी में घटी थी।`
+  },
+  {
+    id: 13, alfabe: "अ", topic: "असहाबुल-क़रिया",
+    chapter: `असहाबुल-क़रिया का अर्थ है बस्तीवाले।
+
+«उदाहरण के लिए बस्तीवालों का क़िस्सा उनके सामने रखो, जब उनके पास रसूल आए।» (सूरा-36, या-सीन, आयत-13)
+
+इन आयतों में किसी ऐसी बस्ती का वर्णन है जिनको मक्का के रहनेवाले भली प्रकार जानते थे। तीन रसूल भेजे गए परन्तु बस्तीवालों ने इनकार किया।
+
+«इतने में नगर के दूरस्थ स्थान से भागता हुआ एक मनुष्य आया और बोला, "ऐ मेरी जाति के लोगो, इन रसूलों के मार्गदर्शन को अपनाओ।"» (सूरा-36, या-सीन, आयत-20)
+
+सबसे प्रसिद्ध व्याख्या के अनुसार उस बस्ती का नाम अन्ताकिया बताया गया है जो सीरिया और टर्की की सीमा के निकट है।`
+  },
+  {
+    id: 14, alfabe: "अ", topic: "असहाबुल-फ़ील",
+    chapter: `इसका अर्थ है हाथीवाले। हाथी को अरबी में 'फ़ील' कहते हैं।
+
+«क्या तुमने देखा नहीं कि तुम्हारे रब ने हाथीवालों के साथ क्या किया? क्या उसने उनकी चाल को अकारथ नहीं कर दिया? और उनपर झुण्ड-के-झुण्ड पक्षी भेजे, जो उनपर कंकरीले पत्थर मार रहे थे।» (सूरा-105, अल-फ़ील, आयतें-1-4)
+
+यह घटना 570-571 ईस्वी की है — वही वर्ष जिसमें नबी मुहम्मद (ﷺ) का जन्म हुआ।
+
+यमन के सरदार अबरहा ने एक बड़ा गिरजा बनवाया और काबा की यात्रा बन्द कराने की कोशिश की। जब लोगों ने नहीं माना तो उसने हाथियों की सेना के साथ मक्का पर आक्रमण किया। परन्तु अल्लाह ने पक्षियों का झुण्ड भेजकर पूरी सेना को नष्ट कर दिया।`
+  },
+  {
+    id: 15, alfabe: "अ", topic: "असहाबुस-सफ़ीना",
+    chapter: `अर्थात् नाववाले।
+
+«फिर हमने उन्हें (नूह) तथा नाववालों को बचा लिया, और हमने इस घटना को सारे संसार के लिए एक निशानी बना दिया।» (सूरा-29, अल-अनकबूत, आयत-15)
+
+«यहाँ तक कि जब हमारा आदेश आ गया और स्रोत से पानी उबलने लगा तो हमने कहा कि इस नाव में सभी प्रकार के जीव-जन्तुओं के एक-एक जोड़े और अपने परिवारवालों को चढ़ा लो।» (सूरा-11, हूद, आयत-40)
+
+«और फिर वह नाव 'जूदी' नामक पर्वत पर ठहर गई।» (सूरा-11, हूद, आयत-44)
+
+यह जूदी पर्वत कहाँ है? कुरआन में स्पष्ट नहीं बताया गया। बाइबल में इसको 'अरारात' पर्वत कहा गया है। मुस्लिम विद्वानों का विचार है कि यह पर्वत अरब प्रायद्वीप तथा मूसिल के बीच पाया जाता है।`
+  }
+];
+
+/* ═══════════════════════
+   STATE
+═══════════════════════ */
+let currentFilter = 'all';
+let currentSearch = '';
+let currentTopicIndex = -1;
+let filteredTopics = [];
+
+/* ═══════════════════════
+   INIT
+═══════════════════════ */
+function init() {
+  buildAlphaBar();
+  renderTopics();
+}
+
+/* ═══════════════════════
+   ALPHABETICAL BAR
+═══════════════════════ */
+function buildAlphaBar() {
+  const letters = [...new Set(ENCYCLOPEDIA_DATA.map(d => d.alfabe))].sort();
+  const bar = document.getElementById('alphaBar');
+  let html = `<button class="alpha-btn all-btn active" onclick="filterByAlpha('all', this)">सभी</button>`;
+  letters.forEach(l => {
+    html += `<button class="alpha-btn" onclick="filterByAlpha('${l}', this)">${l}</button>`;
+  });
+  bar.innerHTML = html;
+}
+
+function filterByAlpha(letter, btn) {
+  currentFilter = letter;
+  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTopics();
+}
+
+/* ═══════════════════════
+   FILTER & RENDER
+═══════════════════════ */
+function filterTopics() {
+  currentSearch = document.getElementById('searchInput').value.trim().toLowerCase();
+  renderTopics();
+}
+
+function renderTopics() {
+  filteredTopics = ENCYCLOPEDIA_DATA.filter(item => {
+    const matchAlpha = currentFilter === 'all' || item.alfabe === currentFilter;
+    const matchSearch = !currentSearch ||
+      item.topic.toLowerCase().includes(currentSearch) ||
+      item.chapter.toLowerCase().includes(currentSearch);
+    return matchAlpha && matchSearch;
+  });
+
+  const grid = document.getElementById('topicsGrid');
+  const noResults = document.getElementById('noResults');
+  const label = document.getElementById('topicsLabel');
+  const countEl = document.getElementById('searchCount');
+
+  label.textContent = currentFilter === 'all'
+    ? `All Topics (${filteredTopics.length})`
+    : `"${currentFilter}" — ${filteredTopics.length} topic${filteredTopics.length !== 1 ? 's' : ''}`;
+
+  countEl.textContent = currentSearch ? `${filteredTopics.length} मिले` : '';
+
+  if (filteredTopics.length === 0) {
+    grid.innerHTML = '';
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  grid.innerHTML = filteredTopics.map((item, i) => `
+    <div class="topic-card" onclick="openTopic(${i})">
+      <div class="topic-num">${item.id}</div>
+      <div class="topic-text">
+        <div class="topic-name">${item.topic}</div>
+        <div class="topic-preview">${item.chapter.substring(0, 80).replace(/\n/g,' ')}…</div>
+      </div>
+      <div class="topic-arrow">→</div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════
+   MODAL
+═══════════════════════ */
+function openTopic(filteredIndex) {
+  currentTopicIndex = filteredIndex;
+  renderModal();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderModal() {
+  const item = filteredTopics[currentTopicIndex];
+  document.getElementById('modalNum').textContent = `Topic ${item.id} of 379`;
+  document.getElementById('modalTitle').textContent = item.topic;
+  document.getElementById('modalContent').textContent = item.chapter;
+  document.getElementById('modalNavInfo').textContent = `${currentTopicIndex + 1} / ${filteredTopics.length}`;
+  document.getElementById('prevBtn').disabled = currentTopicIndex === 0;
+  document.getElementById('nextBtn').disabled = currentTopicIndex === filteredTopics.length - 1;
+  // Scroll modal body to top
+  document.querySelector('.modal-body').scrollTop = 0;
+}
+
+function navigateTopic(dir) {
+  const next = currentTopicIndex + dir;
+  if (next >= 0 && next < filteredTopics.length) {
+    currentTopicIndex = next;
+    renderModal();
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('modalOverlay').classList.contains('open')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigateTopic(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigateTopic(-1);
+});
+
+/* ═══════════════════════
+   THEME / LANG
+═══════════════════════ */
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+function setLang(code) {
+  document.getElementById('lang-label').textContent = code;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.closest('.lang-option').classList.add('active');
+}
+
+/* ═══════════════════════
+   SCROLL REVEAL
+═══════════════════════ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ═══════════════════════
+   START
+═══════════════════════ */
+init();
+</script>
+</body>
+</html>
