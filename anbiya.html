@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbiya-e-Kiram — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --amber: #92400E;
+  --amber-light: #D97706;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ══════════ NAVBAR ══════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); height: 64px;
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb span { color: var(--green-mid); font-weight: 600; }
+
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* ══════════ HERO ══════════ */
+.hero {
+  min-height: 380px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 1.5rem 50px; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(27,107,74,0.10) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(212,160,23,0.06) 0%, transparent 60%);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 20%, transparent 80%, var(--bg) 100%);
+}
+
+/* Geometric pattern bg */
+.hero-pattern {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231B6B4A' stroke-width='1'%3E%3Cpolygon points='30,2 56,16 56,44 30,58 4,44 4,16'/%3E%3Cpolygon points='30,10 50,21 50,39 30,50 10,39 10,21'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+[data-theme="dark"] .hero-pattern { opacity: 0.04; }
+
+.hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500;
+  color: var(--green-mid); margin-bottom: 1.2rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.5s ease both;
+}
+.hero-number {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(64px, 10vw, 100px); font-weight: 700;
+  color: var(--green-mid); opacity: 0.08; line-height: 1;
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  pointer-events: none; user-select: none;
+}
+.hero-arabic {
+  font-family: 'Amiri', serif; font-size: clamp(28px, 5vw, 46px);
+  color: var(--gold-light); direction: rtl; line-height: 1.5;
+  margin-bottom: 0.4rem;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3.5vw, 32px); font-weight: 700;
+  color: var(--text); margin-bottom: 1rem;
+  animation: fadeUp 0.5s 0.15s ease both;
+}
+.hero-desc {
+  font-size: 14.5px; color: var(--text-2); line-height: 1.7; max-width: 500px; margin: 0 auto;
+  animation: fadeUp 0.5s 0.2s ease both;
+}
+
+.hero-ayah-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--amber-light);
+  border-radius: 12px; padding: 16px 22px;
+  margin: 1.5rem auto 0; max-width: 520px;
+  animation: fadeUp 0.5s 0.25s ease both; box-shadow: var(--shadow);
+}
+.hero-ayah-arabic { font-family: 'Amiri', serif; font-size: 20px; color: var(--text); direction: rtl; line-height: 1.8; margin-bottom: 6px; }
+.hero-ayah-trans { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.6; }
+.hero-ayah-ref { font-size: 11px; color: var(--amber-light); font-weight: 600; margin-top: 5px; display: block; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════ STATS BAR ══════════ */
+.stats-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 20px 1.5rem; display: flex; justify-content: center; gap: 3rem;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+  color: var(--green-mid); display: block;
+}
+.stat-label { font-size: 11.5px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; }
+
+/* ══════════ GRID SECTION ══════════ */
+.grid-section { padding: 50px 1.5rem 70px; background: var(--bg-2); transition: background 0.3s; }
+.grid-section-inner { max-width: 1200px; margin: 0 auto; }
+
+.sec-header { text-align: center; margin-bottom: 36px; }
+.sec-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green-mid); background: var(--green-pale);
+  padding: 4px 12px; border-radius: 6px; margin-bottom: 0.6rem;
+}
+[data-theme="dark"] .sec-tag { background: rgba(46,175,119,0.12); }
+.sec-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; color: var(--text); }
+
+/* ══════════ PROPHET CARDS ══════════ */
+.prophets-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+@media(max-width: 1100px) { .prophets-grid { grid-template-columns: repeat(4, 1fr); } }
+@media(max-width: 800px)  { .prophets-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 560px)  { .prophets-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.prophet-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 16px 18px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
+  text-decoration: none; color: inherit;
+  animation: fadeUp 0.4s ease both;
+}
+.prophet-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(27,107,74,0.04), transparent);
+  opacity: 0; transition: opacity 0.25s;
+}
+.prophet-card:hover {
+  border-color: var(--green-mid);
+  box-shadow: 0 8px 32px rgba(27,107,74,0.12);
+  transform: translateY(-3px);
+}
+.prophet-card:hover::before { opacity: 1; }
+
+/* Last card — Muhammad ﷺ special */
+.prophet-card.special {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
+  border-color: var(--green);
+  color: white;
+}
+.prophet-card.special .pcard-num { color: rgba(255,255,255,0.5); }
+.prophet-card.special .pcard-arabic { color: rgba(255,255,255,0.9); }
+.prophet-card.special .pcard-name { color: white; }
+.prophet-card.special .pcard-ulul { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+.prophet-card.special:hover { box-shadow: 0 10px 40px rgba(27,107,74,0.35); }
+
+.pcard-num {
+  font-size: 10.5px; font-weight: 700; color: var(--text-3);
+  background: var(--bg-2); border-radius: 6px;
+  padding: 2px 8px; margin-bottom: 10px;
+  font-family: 'Playfair Display', serif; align-self: flex-start;
+}
+.pcard-icon {
+  font-size: 26px; margin-bottom: 8px; line-height: 1;
+}
+.pcard-arabic {
+  font-family: 'Amiri', serif; font-size: 18px;
+  color: var(--gold-light); direction: rtl; line-height: 1.4;
+  margin-bottom: 6px;
+}
+.pcard-name {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: 14px; color: var(--text); margin-bottom: 4px;
+}
+.pcard-ulul {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--amber-light);
+  background: rgba(217,119,6,0.08); border-radius: 5px;
+  padding: 2px 7px; margin-top: 4px;
+}
+
+/* ══════════ ULUL AZAM SECTION ══════════ */
+.ulul-section { padding: 0 1.5rem 60px; background: var(--bg-2); }
+.ulul-inner { max-width: 1200px; margin: 0 auto; }
+.ulul-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.ulul-line { flex: 1; height: 1px; background: var(--border); }
+.ulul-label {
+  font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--amber-light); white-space: nowrap;
+}
+
+.ulul-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+}
+@media(max-width: 900px) { .ulul-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 560px) { .ulul-grid { grid-template-columns: 1fr 1fr; } }
+
+.ulul-card {
+  background: linear-gradient(135deg, rgba(212,160,23,0.06), rgba(212,160,23,0.02));
+  border: 1.5px solid rgba(212,160,23,0.25); border-radius: 14px;
+  padding: 18px 14px; text-align: center; transition: all 0.25s;
+}
+.ulul-card:hover {
+  border-color: var(--gold-light);
+  box-shadow: 0 6px 24px rgba(212,160,23,0.15);
+  transform: translateY(-2px);
+}
+.ulul-card .pcard-icon { font-size: 28px; margin-bottom: 8px; }
+.ulul-card .pcard-arabic { font-size: 20px; color: var(--gold-light); }
+.ulul-card .pcard-name { font-size: 15px; color: var(--text); }
+.ulul-card .ulul-badge {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  color: var(--amber-light); background: rgba(217,119,6,0.1);
+  border-radius: 5px; padding: 2px 8px; margin-top: 5px;
+  letter-spacing: 0.5px;
+}
+
+/* ══════════ FOOTER ══════════ */
+footer {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 24px 1.5rem; text-align: center;
+}
+.footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.footer-bottom p { font-size: 12.5px; color: var(--text-3); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 18px; color: var(--gold-light); direction: rtl; }
+
+/* ══════════ REVEAL ══════════ */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <a href="ummahtechs-biography.html">Biography & History</a>
+    <span>›</span>
+    <span>Anbiya-e-Kiram</span>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⭐ Anbiya-e-Kiram</div>
+    <div class="hero-arabic">الأَنْبِيَاءُ الكِرَام</div>
+    <h1 class="hero-title">The Noble Prophets of Allah</h1>
+    <p class="hero-desc">Stories and biographies of all 25 Prophets mentioned in the Holy Quran — from Adam AS to Muhammad ﷺ</p>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">وَلَقَدْ أَرْسَلْنَا رُسُلًا مِّن قَبْلِكَ مِنْهُم مَّن قَصَصْنَا عَلَيْكَ</div>
+      <p class="hero-ayah-trans">"And We have certainly sent messengers before you. Among them are those whose stories We have related to you."</p>
+      <span class="hero-ayah-ref">Surah Ghafir 40:78</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">25</span>
+    <span class="stat-label">Prophets in Quran</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">5</span>
+    <span class="stat-label">Ulul Azam (Great Prophets)</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">124,000+</span>
+    <span class="stat-label">Total Prophets Sent</span>
+  </div>
+</div>
+
+<!-- ULUL AZAM -->
+<div class="ulul-section" style="padding-top:50px;">
+  <div class="ulul-inner">
+    <div class="ulul-header">
+      <div class="ulul-line"></div>
+      <span class="ulul-label">✦ Ulul Azam — The Five Greatest Prophets ✦</span>
+      <div class="ulul-line"></div>
+    </div>
+    <div class="ulul-grid reveal">
+      <div class="ulul-card">
+        <div class="pcard-icon">🌊</div>
+        <div class="pcard-arabic">نُوح</div>
+        <div class="pcard-name">Nuh AS</div>
+        <span class="ulul-badge">Prophet of Patience</span>
+      </div>
+      <div class="ulul-card">
+        <div class="pcard-icon">🔥</div>
+        <div class="pcard-arabic">إِبْرَاهِيم</div>
+        <div class="pcard-name">Ibrahim AS</div>
+        <span class="ulul-badge">Khalilullah — Friend of Allah</span>
+      </div>
+      <div class="ulul-card">
+        <div class="pcard-icon">⚡</div>
+        <div class="pcard-arabic">مُوسَى</div>
+        <div class="pcard-name">Musa AS</div>
+        <span class="ulul-badge">Kalimullah — Who Spoke to Allah</span>
+      </div>
+      <div class="ulul-card">
+        <div class="pcard-icon">✨</div>
+        <div class="pcard-arabic">عِيسَى</div>
+        <div class="pcard-name">Isa AS</div>
+        <span class="ulul-badge">Ruhullah — Spirit of Allah</span>
+      </div>
+      <div class="ulul-card">
+        <div class="pcard-icon">🌙</div>
+        <div class="pcard-arabic">مُحَمَّد ﷺ</div>
+        <div class="pcard-name">Muhammad ﷺ</div>
+        <span class="ulul-badge">Khatam-un-Nabiyyin — Last Prophet</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ALL 25 PROPHETS GRID -->
+<div class="grid-section">
+  <div class="grid-section-inner">
+    <div class="sec-header reveal">
+      <span class="sec-tag">All 25 Prophets</span>
+      <h2 class="sec-title">Mentioned in the Holy Quran</h2>
+    </div>
+
+    <div class="prophets-grid">
+
+      <div class="prophet-card reveal" style="animation-delay:0.05s">
+        <span class="pcard-num"># 01</span>
+        <div class="pcard-icon">🌿</div>
+        <div class="pcard-arabic">آدَم</div>
+        <div class="pcard-name">Adam AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.07s">
+        <span class="pcard-num"># 02</span>
+        <div class="pcard-icon">📖</div>
+        <div class="pcard-arabic">إِدْرِيس</div>
+        <div class="pcard-name">Idris AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.09s">
+        <span class="pcard-num"># 03</span>
+        <div class="pcard-icon">🌊</div>
+        <div class="pcard-arabic">نُوح</div>
+        <div class="pcard-name">Nuh AS</div>
+        <span class="pcard-ulul">Ulul Azam</span>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.11s">
+        <span class="pcard-num"># 04</span>
+        <div class="pcard-icon">🌬️</div>
+        <div class="pcard-arabic">هُود</div>
+        <div class="pcard-name">Hud AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.13s">
+        <span class="pcard-num"># 05</span>
+        <div class="pcard-icon">🐪</div>
+        <div class="pcard-arabic">صَالِح</div>
+        <div class="pcard-name">Salih AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.15s">
+        <span class="pcard-num"># 06</span>
+        <div class="pcard-icon">🔥</div>
+        <div class="pcard-arabic">إِبْرَاهِيم</div>
+        <div class="pcard-name">Ibrahim AS</div>
+        <span class="pcard-ulul">Ulul Azam</span>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.17s">
+        <span class="pcard-num"># 07</span>
+        <div class="pcard-icon">🏙️</div>
+        <div class="pcard-arabic">لُوط</div>
+        <div class="pcard-name">Lut AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.19s">
+        <span class="pcard-num"># 08</span>
+        <div class="pcard-icon">🏹</div>
+        <div class="pcard-arabic">إِسْمَاعِيل</div>
+        <div class="pcard-name">Ismail AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.21s">
+        <span class="pcard-num"># 09</span>
+        <div class="pcard-icon">⭐</div>
+        <div class="pcard-arabic">إِسْحَاق</div>
+        <div class="pcard-name">Ishaq AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.23s">
+        <span class="pcard-num"># 10</span>
+        <div class="pcard-icon">🪨</div>
+        <div class="pcard-arabic">يَعْقُوب</div>
+        <div class="pcard-name">Yaqub AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.25s">
+        <span class="pcard-num"># 11</span>
+        <div class="pcard-icon">👑</div>
+        <div class="pcard-arabic">يُوسُف</div>
+        <div class="pcard-name">Yusuf AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.27s">
+        <span class="pcard-num"># 12</span>
+        <div class="pcard-icon">🕊️</div>
+        <div class="pcard-arabic">أَيُّوب</div>
+        <div class="pcard-name">Ayyub AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.29s">
+        <span class="pcard-num"># 13</span>
+        <div class="pcard-icon">⚖️</div>
+        <div class="pcard-arabic">شُعَيْب</div>
+        <div class="pcard-name">Shuaib AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.31s">
+        <span class="pcard-num"># 14</span>
+        <div class="pcard-icon">⚡</div>
+        <div class="pcard-arabic">مُوسَى</div>
+        <div class="pcard-name">Musa AS</div>
+        <span class="pcard-ulul">Ulul Azam</span>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.33s">
+        <span class="pcard-num"># 15</span>
+        <div class="pcard-icon">🎺</div>
+        <div class="pcard-arabic">هَارُون</div>
+        <div class="pcard-name">Harun AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.35s">
+        <span class="pcard-num"># 16</span>
+        <div class="pcard-icon">🌅</div>
+        <div class="pcard-arabic">ذُو الكِفْل</div>
+        <div class="pcard-name">Dhul-Kifl AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.37s">
+        <span class="pcard-num"># 17</span>
+        <div class="pcard-icon">🎵</div>
+        <div class="pcard-arabic">دَاوُد</div>
+        <div class="pcard-name">Dawud AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.39s">
+        <span class="pcard-num"># 18</span>
+        <div class="pcard-icon">🦅</div>
+        <div class="pcard-arabic">سُلَيْمَان</div>
+        <div class="pcard-name">Sulaiman AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.41s">
+        <span class="pcard-num"># 19</span>
+        <div class="pcard-icon">🌩️</div>
+        <div class="pcard-arabic">إِلْيَاس</div>
+        <div class="pcard-name">Ilyas AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.43s">
+        <span class="pcard-num"># 20</span>
+        <div class="pcard-icon">🌾</div>
+        <div class="pcard-arabic">الْيَسَع</div>
+        <div class="pcard-name">Ilyasa AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.45s">
+        <span class="pcard-num"># 21</span>
+        <div class="pcard-icon">🐋</div>
+        <div class="pcard-arabic">يُونُس</div>
+        <div class="pcard-name">Yunus AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.47s">
+        <span class="pcard-num"># 22</span>
+        <div class="pcard-icon">🌺</div>
+        <div class="pcard-arabic">زَكَرِيَّا</div>
+        <div class="pcard-name">Zakariyya AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.49s">
+        <span class="pcard-num"># 23</span>
+        <div class="pcard-icon">🌱</div>
+        <div class="pcard-arabic">يَحْيَى</div>
+        <div class="pcard-name">Yahya AS</div>
+      </div>
+
+      <div class="prophet-card reveal" style="animation-delay:0.51s">
+        <span class="pcard-num"># 24</span>
+        <div class="pcard-icon">✨</div>
+        <div class="pcard-arabic">عِيسَى</div>
+        <div class="pcard-name">Isa AS</div>
+        <span class="pcard-ulul">Ulul Azam</span>
+      </div>
+
+      <a href="ummahtechs-seerah.html" class="prophet-card special reveal" style="animation-delay:0.53s; text-decoration:none; cursor:pointer;">
+        <span class="pcard-num"># 25</span>
+        <div class="pcard-icon">🌙</div>
+        <div class="pcard-arabic">مُحَمَّد ﷺ</div>
+        <div class="pcard-name">Muhammad ﷺ</div>
+        <span class="pcard-ulul">Khatam-un-Nabiyyin</span>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px; color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
