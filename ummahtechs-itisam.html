@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İ'tisâm bil-Sunnah — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+}
+[data-theme="light"] {
+  --bg: #FAFAF8; --bg-2: #F3F3EE; --surface: #FFFFFF; --surface-2: #F7F7F4;
+  --border: #E2E4DC; --text: #1A2318; --text-2: #4A5545; --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08); --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg: #0D1710; --bg-2: #111D14; --surface: #1A2A1E; --surface-2: #1F3224;
+  --border: #2A3D2E; --text: #EEF2EC; --text-2: #A8BBA4; --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3); --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+
+/* NAVBAR */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); height: 64px;
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 36px; height: 36px; background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); transition: color 0.3s; }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb span { color: var(--green-mid); font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.lang-select { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 5px; padding: 6px 10px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--text-2);
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.lang-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.lang-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 6px; min-width: 140px; box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transform: translateY(-6px); transition: all 0.2s; z-index: 200;
+}
+.lang-select:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 13px; color: var(--text-2); transition: all 0.15s; }
+.lang-option:hover { background: var(--bg-2); color: var(--green-mid); }
+.lang-option.active { color: var(--green-mid); font-weight: 600; }
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface-2); cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed; top: 64px; left: 0; z-index: 999; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  width: 0%; transition: width 0.1s linear;
+}
+
+/* HERO */
+.hero {
+  min-height: 460px; position: relative; display: flex; align-items: center;
+  justify-content: center; text-align: center; padding: 110px 1.5rem 70px; overflow: hidden;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0; opacity: 0.035;
+  background-image: radial-gradient(circle at 25% 50%, var(--green) 1px, transparent 1px),
+    radial-gradient(circle at 75% 50%, var(--gold) 1px, transparent 1px);
+  background-size: 55px 55px; transition: opacity 0.3s;
+}
+[data-theme="dark"] .hero-bg-pattern { opacity: 0.06; }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 25%, transparent 75%, var(--bg) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 680px; }
+.hero-breadcrumb-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--green-mid);
+  margin-bottom: 1.5rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both; text-decoration: none; transition: border-color 0.2s;
+}
+.hero-breadcrumb-tag:hover { border-color: var(--green-mid); }
+.hero-arabic-title {
+  font-family: 'Amiri', serif; font-size: clamp(32px, 6vw, 52px); color: var(--gold-light);
+  direction: rtl; line-height: 1.5; margin-bottom: 0.6rem; animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(24px, 3.5vw, 36px); font-weight: 700;
+  color: var(--text); margin-bottom: 0.8rem; animation: fadeUp 0.6s 0.15s ease both;
+}
+.hero-subtitle {
+  font-size: 15px; color: var(--text-2); line-height: 1.7; max-width: 520px;
+  margin: 0 auto 2rem; animation: fadeUp 0.6s 0.2s ease both;
+}
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 2rem; animation: fadeUp 0.6s 0.25s ease both; }
+.hero-stat { text-align: center; }
+.hero-stat-num { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--green-mid); display: block; }
+.hero-stat-label { font-size: 11.5px; color: var(--text-3); display: block; margin-top: 2px; }
+.hero-stat-divider { width: 1px; height: 40px; background: var(--border); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* INTRO BANNER */
+.intro-banner { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 32px 1.5rem; transition: background 0.3s; }
+.intro-inner {
+  max-width: 800px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--green-mid); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow);
+}
+.intro-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--green-mid); margin-bottom: 0.8rem; display: block; }
+.intro-text { font-size: 14.5px; color: var(--text-2); line-height: 1.8; }
+.intro-arabic {
+  font-family: 'Amiri', serif; font-size: 18px; color: var(--text); direction: rtl; text-align: right;
+  margin-top: 1rem; line-height: 1.8; padding-top: 1rem; border-top: 1px solid var(--border);
+}
+
+/* SECTION HEADER */
+.sec-header { text-align: center; padding: 50px 1.5rem 30px; background: var(--bg-2); transition: background 0.3s; }
+.sec-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--green-mid); background: var(--green-pale);
+  padding: 4px 12px; border-radius: 6px; margin-bottom: 0.8rem;
+}
+[data-theme="dark"] .sec-tag { background: rgba(46,175,119,0.12); }
+.sec-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.sec-desc { font-size: 14px; color: var(--text-2); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+/* AYAT SECTION */
+.ayat-wrap { padding: 20px 1.5rem 60px; background: var(--bg-2); transition: background 0.3s; }
+.ayat-inner { max-width: 1100px; margin: 0 auto; }
+.ayat-section-label {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--text-3); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;
+}
+.ayat-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.ayat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.2rem; }
+@media(max-width: 900px) { .ayat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 560px) { .ayat-grid { grid-template-columns: 1fr; } }
+
+/* AYAT CARD */
+.ayat-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px 20px; transition: all 0.25s; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.ayat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light)); opacity: 0; transition: opacity 0.25s;
+}
+.ayat-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.ayat-card:hover::before { opacity: 1; }
+.ayat-card.featured { border-color: rgba(184,134,11,0.25); }
+.ayat-card.featured::before { opacity: 1; }
+
+.ayat-num-badge { display: flex; align-items: center; justify-content: space-between; }
+.ayat-num {
+  font-family: 'Amiri', serif; font-size: 20px; color: var(--gold-light);
+  width: 38px; height: 38px; background: rgba(212,160,23,0.08); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+[data-theme="dark"] .ayat-num { background: rgba(212,160,23,0.12); }
+.ayat-surah-ref {
+  font-size: 11px; font-weight: 700; color: var(--green-mid); background: var(--green-pale);
+  padding: 3px 9px; border-radius: 5px; letter-spacing: 0.3px;
+}
+[data-theme="dark"] .ayat-surah-ref { background: rgba(46,175,119,0.12); }
+.ayat-arabic {
+  font-family: 'Amiri', serif; font-size: 19px; color: var(--text); direction: rtl; text-align: right;
+  line-height: 1.9; padding: 12px 14px; background: var(--bg-2); border-radius: 10px;
+}
+
+/* TRANSLATION TABS */
+.trans-tabs { display: flex; gap: 4px; }
+.trans-tab {
+  padding: 3px 10px; font-size: 11px; font-weight: 600; border-radius: 5px;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--text-3); font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+}
+.trans-tab.active { background: var(--green-pale); color: var(--green-mid); border-color: var(--green-mid); }
+[data-theme="dark"] .trans-tab.active { background: rgba(46,175,119,0.12); }
+.trans-panel { display: none; font-size: 13.5px; color: var(--text-2); line-height: 1.75; }
+.trans-panel.active { display: block; }
+.trans-panel.urdu { font-family: 'Amiri', serif; font-size: 15px; direction: rtl; text-align: right; }
+.trans-panel.hindi { font-size: 13.5px; }
+
+.ayat-theme { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--text-3); margin-top: 2px; }
+.ayat-theme-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-light); flex-shrink: 0; }
+
+/* THEMES SUMMARY */
+.themes-wrap { padding: 50px 1.5rem 60px; background: var(--bg); transition: background 0.3s; }
+.themes-inner { max-width: 1100px; margin: 0 auto; }
+.themes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+@media(max-width: 780px) { .themes-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 480px) { .themes-grid { grid-template-columns: 1fr; } }
+.theme-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; transition: all 0.25s; }
+.theme-card:hover { border-color: var(--green-mid); transform: translateY(-2px); box-shadow: var(--shadow); }
+.theme-icon-wrap {
+  width: 44px; height: 44px; border-radius: 11px; background: var(--green-pale);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+  margin-bottom: 12px; transition: background 0.2s;
+}
+[data-theme="dark"] .theme-icon-wrap { background: rgba(46,175,119,0.12); }
+.theme-card:hover .theme-icon-wrap { background: linear-gradient(135deg, var(--green), var(--green-light)); }
+.theme-card-title { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.theme-card-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
+
+/* METHODOLOGY */
+.method-wrap { padding: 50px 1.5rem 60px; background: var(--bg-2); transition: background 0.3s; }
+.method-inner { max-width: 800px; margin: 0 auto; }
+.method-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; color: var(--text); margin-bottom: 0.5rem; text-align: center; }
+.method-desc { font-size: 14px; color: var(--text-2); text-align: center; line-height: 1.7; margin-bottom: 2rem; }
+.method-steps { display: flex; flex-direction: column; gap: 1rem; }
+.method-step {
+  display: flex; gap: 16px; align-items: flex-start; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; transition: all 0.2s;
+}
+.method-step:hover { border-color: var(--green-mid); box-shadow: var(--shadow); }
+.method-step-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: white; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.method-step-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+.method-step-text { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+/* RELATED */
+.related-wrap { padding: 50px 1.5rem 60px; background: var(--bg); transition: background 0.3s; }
+.related-inner { max-width: 1100px; margin: 0 auto; }
+.related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media(max-width: 600px) { .related-grid { grid-template-columns: 1fr; } }
+.hcard {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 22px 20px; text-decoration: none; color: var(--text); transition: all 0.25s;
+  display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;
+}
+.hcard::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--green), transparent); opacity: 0; transition: opacity 0.25s;
+}
+.hcard:hover { border-color: var(--green-mid); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.hcard:hover::after { opacity: 1; }
+.hcard-top { display: flex; align-items: center; justify-content: space-between; }
+.hcard-icon {
+  width: 42px; height: 42px; border-radius: 10px; background: var(--green-pale);
+  display: flex; align-items: center; justify-content: center; font-size: 20px; transition: background 0.2s;
+}
+[data-theme="dark"] .hcard-icon { background: rgba(46,175,119,0.12); }
+.hcard:hover .hcard-icon { background: linear-gradient(135deg, var(--green), var(--green-light)); }
+.badge-soon { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; background: rgba(184,134,11,0.12); color: var(--gold); }
+[data-theme="dark"] .badge-soon { background: rgba(212,160,23,0.15); color: var(--gold-light); }
+.hcard-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--text); }
+.hcard-arabic { font-family: 'Amiri', serif; font-size: 14px; color: var(--text-3); direction: rtl; }
+.hcard-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.hcard-arrow { font-size: 14px; color: var(--text-3); align-self: flex-end; transition: all 0.2s; }
+.hcard:hover .hcard-arrow { color: var(--green-mid); transform: translateX(3px); }
+
+/* FOOTER */
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 28px 1.5rem; transition: background 0.3s, border-color 0.3s; }
+.footer-bottom { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: 12.5px; color: var(--text-3); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 17px; color: var(--green-mid); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a><span>›</span>
+    <a href="ummahtechs-hadees.html">Hadees</a><span>›</span>
+    <span>İ'tisâm bil-Sunnah</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <a href="ummahtechs-hadees.html" class="hero-breadcrumb-tag">📖 Usool al-Hadith</a>
+    <div class="hero-arabic-title">الاعتصام بالسنة</div>
+    <h1 class="hero-title">İ'tisâm bil-Sunnah</h1>
+    <p class="hero-subtitle">9 Quranic verses establishing the obligation of following the Sunnah — the divine Quranic proof for the authority of Prophetic tradition.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-label">Quranic Verses</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">Surahs</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">Languages</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="intro-banner reveal">
+  <div class="intro-inner">
+    <span class="intro-label">📘 About This Section</span>
+    <p class="intro-text">The authority of the Sunnah is not merely a scholarly position — it is directly commanded by the Quran itself. This section presents 9 carefully selected Quranic verses that collectively establish the obligation to obey the Prophet ﷺ, the warning against opposing his command, and the necessity of referring all disputes back to Allah and His Messenger.</p>
+    <div class="intro-arabic">وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا</div>
+  </div>
+</div>
+
+<!-- SECTION HEADER -->
+<div class="sec-header reveal" style="background: var(--bg-2);">
+  <span class="sec-tag">Quranic Proof</span>
+  <h2 class="sec-title">The 9 Verses</h2>
+  <p class="sec-desc">Each verse forms a pillar of the Quranic argument for following the Prophet ﷺ. Select your language on each card.</p>
+</div>
+
+<!-- AYAT GRID -->
+<div class="ayat-wrap">
+  <div class="ayat-inner">
+
+    <!-- GROUP I -->
+    <div class="ayat-section-label reveal">Group I — Direct Command to Obey</div>
+    <div class="ayat-grid">
+
+      <div class="ayat-card featured reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">١</div>
+          <span class="ayat-surah-ref">Âl-i İmrân 3/31-32</span>
+        </div>
+        <div class="ayat-arabic">قُلْ إِن كُنتُمْ تُحِبُّونَ اللَّهَ فَاتَّبِعُونِي يُحْبِبْكُمُ اللَّهُ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَاللَّهُ غَفُورٌ رَّحِيمٌ ۝ قُلْ أَطِيعُوا اللَّهَ وَالرَّسُولَ ۖ فَإِن تَوَلَّوْا فَإِنَّ اللَّهَ لَا يُحِبُّ الْكَافِرِينَ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Say: If you love Allah, follow me — Allah will love you and forgive your sins. Allah is Most Forgiving, Most Merciful. Say: Obey Allah and the Messenger. If they turn away — Allah does not love the disbelievers."</div>
+        <div class="trans-panel ur">کہہ دو: اگر تم اللہ سے محبت رکھتے ہو تو میری پیروی کرو، اللہ تم سے محبت کرے گا اور تمہارے گناہ معاف کرے گا۔ اللہ سے اور رسول سے فرمانبرداری کرو، اگر وہ روگردانی کریں تو اللہ کافروں کو پسند نہیں کرتا۔</div>
+        <div class="trans-panel hindi">कहो: यदि तुम अल्लाह से प्रेम करते हो तो मेरा अनुसरण करो — अल्लाह तुमसे प्रेम करेगा और तुम्हारे पाप क्षमा करेगा। अल्लाह और रसूल की आज्ञा मानो। यदि वे मुँह फेर लें तो अल्लाह काफ़िरों को पसंद नहीं करता।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>Following the Prophet ﷺ = loving Allah</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٢</div>
+          <span class="ayat-surah-ref">Nisâ 4/80</span>
+        </div>
+        <div class="ayat-arabic">مَّن يُطِعِ الرَّسُولَ فَقَدْ أَطَاعَ اللَّهَ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Whoever obeys the Messenger has indeed obeyed Allah."</div>
+        <div class="trans-panel ur">جس نے رسول کی اطاعت کی اس نے اللہ کی اطاعت کی۔</div>
+        <div class="trans-panel hindi">जिसने रसूल की आज्ञा मानी, उसने अल्लाह की आज्ञा मानी।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>Obeying the Prophet ﷺ = obeying Allah</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٣</div>
+          <span class="ayat-surah-ref">Hucurât 49/1</span>
+        </div>
+        <div class="ayat-arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُقَدِّمُوا بَيْنَ يَدَيِ اللَّهِ وَرَسُولِهِ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"O you who believe! Do not put yourselves ahead of Allah and His Messenger. Fear Allah — indeed, Allah is All-Hearing, All-Knowing."</div>
+        <div class="trans-panel ur">اے ایمان والو! اللہ اور اس کے رسول سے آگے نہ بڑھو اور اللہ سے ڈرو، بے شک اللہ سب سننے والا، سب جاننے والا ہے۔</div>
+        <div class="trans-panel hindi">ऐ ईमान वालो! अल्लाह और उसके रसूल से आगे मत बढ़ो और अल्लाह से डरो — निश्चय ही अल्लाह सब सुनने वाला, सब जानने वाला है।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>No one precedes Allah and His Messenger</div>
+      </div>
+
+    </div>
+
+    <!-- GROUP II -->
+    <div class="ayat-section-label reveal" style="margin-top:2.5rem;">Group II — Arbitration &amp; Excellent Example</div>
+    <div class="ayat-grid">
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٤</div>
+          <span class="ayat-surah-ref">Nisâ 4/65</span>
+        </div>
+        <div class="ayat-arabic">فَلَا وَرَبِّكَ لَا يُؤْمِنُونَ حَتَّىٰ يُحَكِّمُوكَ فِيمَا شَجَرَ بَيْنَهُمْ ثُمَّ لَا يَجِدُوا فِي أَنفُسِهِمْ حَرَجًا مِّمَّا قَضَيْتَ وَيُسَلِّمُوا تَسْلِيمًا</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"No! By your Lord, they will not believe until they make you judge in all disputes between them, then find no discomfort in what you decide, and submit completely."</div>
+        <div class="trans-panel ur">نہیں، تیرے رب کی قسم! وہ ایمان نہیں لائیں گے جب تک آپس کے جھگڑوں میں آپ کو حَکَم نہ بنائیں، پھر آپ کے فیصلے پر دل میں تنگی نہ پائیں اور پوری طرح سر تسلیم خم کر دیں۔</div>
+        <div class="trans-panel hindi">नहीं, तुम्हारे रब की कसम! वे ईमान नहीं लाएंगे जब तक अपने आपसी विवादों में आपको न्यायाधीश न बना लें, फिर आपके निर्णय पर मन में कोई संकोच न पाएं और पूरी तरह समर्पण कर दें।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>The Prophet ﷺ is the ultimate judge in all disputes</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٥</div>
+          <span class="ayat-surah-ref">Nisâ 4/115</span>
+        </div>
+        <div class="ayat-arabic">وَمَن يُشَاقِقِ الرَّسُولَ مِن بَعْدِ مَا تَبَيَّنَ لَهُ الْهُدَىٰ وَيَتَّبِعْ غَيْرَ سَبِيلِ الْمُؤْمِنِينَ نُوَلِّهِ مَا تَوَلَّىٰ وَنُصْلِهِ جَهَنَّمَ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Whoever opposes the Messenger after guidance has become clear, and follows other than the believers' way — We will leave them to what they have chosen and cast them into Hell."</div>
+        <div class="trans-panel ur">جو شخص ہدایت واضح ہو جانے کے بعد رسول کی مخالفت کرے اور مومنوں کی راہ چھوڑ کر چلے، ہم اسے اسی طرف پھیر دیں گے جدھر وہ پھرا اور اسے جہنم میں جھونکیں گے۔</div>
+        <div class="trans-panel hindi">जो व्यक्ति हिदायत स्पष्ट होने के बाद रसूल का विरोध करे और मोमिनों की राह छोड़कर चले — हम उसे उसी ओर फेर देंगे जिधर वह मुड़ा और उसे जहन्नम में झोंक देंगे।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>Opposing the Prophet after clear guidance leads to misguidance</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٦</div>
+          <span class="ayat-surah-ref">Ahzâb 33/21</span>
+        </div>
+        <div class="ayat-arabic">لَّقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Indeed, in the Messenger of Allah you have an excellent example for whoever hopes in Allah and the Last Day and remembers Allah often."</div>
+        <div class="trans-panel ur">یقیناً تمہارے لیے رسول اللہ میں بہترین نمونہ ہے، ہر اس شخص کے لیے جو اللہ اور یومِ آخرت کی امید رکھتا ہو اور اللہ کو کثرت سے یاد کرتا ہو۔</div>
+        <div class="trans-panel hindi">निःसंदेह तुम्हारे लिए रसूलुल्लाह में एक उत्तम आदर्श है — हर उस व्यक्ति के लिए जो अल्लाह और अंतिम दिन की आशा रखता हो और अल्लाह को अधिक याद करता हो।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>The Prophet ﷺ is the perfect living example — Uswah Hasanah</div>
+      </div>
+
+    </div>
+
+    <!-- GROUP III -->
+    <div class="ayat-section-label reveal" style="margin-top:2.5rem;">Group III — Warning Against Opposition</div>
+    <div class="ayat-grid">
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٧</div>
+          <span class="ayat-surah-ref">Nûr 24/63</span>
+        </div>
+        <div class="ayat-arabic">فَلْيَحْذَرِ الَّذِينَ يُخَالِفُونَ عَنْ أَمْرِهِ أَن تُصِيبَهُمْ فِتْنَةٌ أَوْ يُصِيبَهُمْ عَذَابٌ أَلِيمٌ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Let those who oppose his command beware, lest a trial befall them or a painful punishment overtake them."</div>
+        <div class="trans-panel ur">جو لوگ رسول کے حکم کی مخالفت کرتے ہیں انہیں ڈرنا چاہیے کہ انہیں کوئی فتنہ آ پکڑے یا دردناک عذاب آ جائے۔</div>
+        <div class="trans-panel hindi">जो लोग रसूल के आदेश का विरोध करते हैं उन्हें डरना चाहिए कि कोई फ़ितना उन्हें आ पकड़े या दर्दनाक अज़ाब आ जाए।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>Opposing his command leads to fitnah or punishment</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٨</div>
+          <span class="ayat-surah-ref">Ahzâb 33/36</span>
+        </div>
+        <div class="ayat-arabic">وَمَا كَانَ لِمُؤْمِنٍ وَلَا مُؤْمِنَةٍ إِذَا قَضَى اللَّهُ وَرَسُولُهُ أَمْرًا أَن يَكُونَ لَهُمُ الْخِيَرَةُ مِنْ أَمْرِهِمْ ۗ وَمَن يَعْصِ اللَّهَ وَرَسُولَهُ فَقَدْ ضَلَّ ضَلَالًا مُّبِينًا</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"It is not for a believing man or woman, when Allah and His Messenger have decided a matter, to have any choice in it. Whoever disobeys Allah and His Messenger has clearly gone astray."</div>
+        <div class="trans-panel ur">کسی مومن مرد یا مومن عورت کو یہ حق نہیں کہ جب اللہ اور اس کے رسول کوئی فیصلہ کر دیں تو اپنے معاملے میں خود اختیار رکھیں۔ جو اللہ اور رسول کی نافرمانی کرے وہ کھلی گمراہی میں پڑ گیا۔</div>
+        <div class="trans-panel hindi">किसी मोमिन मर्द या मोमिन औरत को यह अधिकार नहीं कि जब अल्लाह और उसका रसूल कोई फ़ैसला कर दें तो वे अपने मामले में खुद अख्तियार रखें। जो अल्लाह और रसूल की नाफ़रमानी करे वह खुली गुमराही में पड़ गया।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>No personal choice after Allah and His Messenger decide</div>
+      </div>
+
+      <div class="ayat-card reveal">
+        <div class="ayat-num-badge">
+          <div class="ayat-num">٩</div>
+          <span class="ayat-surah-ref">Haşr 59/7</span>
+        </div>
+        <div class="ayat-arabic">وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ شَدِيدُ الْعِقَابِ</div>
+        <div class="trans-tabs">
+          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
+          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
+          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
+        </div>
+        <div class="trans-panel active en">"Whatever the Messenger gives you, take it; and whatever he forbids you from, abstain. Fear Allah — indeed, Allah is severe in punishment."</div>
+        <div class="trans-panel ur">رسول تمہیں جو دے وہ لے لو اور جس سے روکے اس سے رک جاؤ۔ اللہ سے ڈرو، بے شک اللہ سخت عذاب دینے والا ہے۔</div>
+        <div class="trans-panel hindi">रसूल तुम्हें जो दें वह ले लो और जिससे रोकें उससे रुक जाओ। अल्लाह से डरो — निश्चय ही अल्लाह बड़ा कड़ा अज़ाब देने वाला है।</div>
+        <div class="ayat-theme"><span class="ayat-theme-dot"></span>The most direct Quranic command of the Sunnah</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- CORE THEMES -->
+<div class="sec-header reveal">
+  <span class="sec-tag">Summary</span>
+  <h2 class="sec-title">Core Themes of These 9 Verses</h2>
+  <p class="sec-desc">These verses collectively establish 6 foundational principles about the authority of the Sunnah.</p>
+</div>
+<div class="themes-wrap">
+  <div class="themes-inner">
+    <div class="themes-grid">
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">❤️</div>
+        <div class="theme-card-title">Condition of Loving Allah</div>
+        <p class="theme-card-desc">Âl-i İmrân 3/31-32 — Claiming love for Allah while abandoning the Sunnah is a contradiction in itself.</p>
+      </div>
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">🔗</div>
+        <div class="theme-card-title">Obedience to the Prophet = Obedience to Allah</div>
+        <p class="theme-card-desc">Nisâ 4/80 — The Quran directly equates obeying the Messenger ﷺ with obeying Allah Himself.</p>
+      </div>
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">🚫</div>
+        <div class="theme-card-title">None Precedes Allah &amp; His Messenger</div>
+        <p class="theme-card-desc">Hucurât 49/1 — Personal opinions and reasoning must never override the command of Allah and His Messenger.</p>
+      </div>
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">⚖️</div>
+        <div class="theme-card-title">The Prophet ﷺ as the Final Judge</div>
+        <p class="theme-card-desc">Nisâ 4/65 — True faith requires making the Prophet ﷺ the judge in every dispute and accepting his ruling with full conviction.</p>
+      </div>
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">🌟</div>
+        <div class="theme-card-title">Uswah Hasanah — The Perfect Example</div>
+        <p class="theme-card-desc">Ahzâb 33/21 — The Prophet's ﷺ life is the complete and perfect model for everyone who hopes in Allah and the Hereafter.</p>
+      </div>
+      <div class="theme-card reveal">
+        <div class="theme-icon-wrap">⚠️</div>
+        <div class="theme-card-title">Warning Against Opposition</div>
+        <p class="theme-card-desc">Nûr 24/63, Ahzâb 33/36, Haşr 59/7 — Opposing the Prophet's command leads to fitnah, clear misguidance, and severe punishment.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="method-wrap reveal">
+  <div class="method-inner">
+    <h2 class="method-title">How to Study These Verses</h2>
+    <p class="method-desc">A structured approach to understanding each verse and its implications.</p>
+    <div class="method-steps">
+      <div class="method-step">
+        <div class="method-step-num">1</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Read the Arabic Text</div>
+          <p class="method-step-text">Begin with the original Arabic to connect directly with the Quran. Notice the strength and directness of the divine language.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">2</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Read in Your Language</div>
+          <p class="method-step-text">Switch between English, Urdu, and Hindi translations using the tab on each card to understand the meaning fully in your preferred language.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">3</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Identify the Theme</div>
+          <p class="method-step-text">Each card's theme label shows the core principle established — obedience, judgment, love of Allah, or warning against opposition.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <div class="method-step-num">4</div>
+        <div class="method-step-content">
+          <div class="method-step-title">Cross-Reference with Hadees</div>
+          <p class="method-step-text">Pair these Quranic proofs with the Hadees collections to see how the Prophet ﷺ embodied these commands in his blessed life.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED -->
+<div class="sec-header reveal">
+  <span class="sec-tag">Explore More</span>
+  <h2 class="sec-title">Continue Your Study</h2>
+  <p class="sec-desc">Explore more sections from Usool al-Hadith and the Hadees collections.</p>
+</div>
+<div class="related-wrap">
+  <div class="related-inner">
+    <div class="related-grid">
+      <a href="ummahtechs-hadees.html" class="hcard reveal">
+        <div class="hcard-top"><div class="hcard-icon">📚</div></div>
+        <div class="hcard-title">Hadees Collections</div>
+        <div class="hcard-arabic">كُتُبُ الحَدِيث</div>
+        <p class="hcard-desc">Browse the Sihah Sittah — the six authentic books of Hadees — and begin reading Prophetic traditions.</p>
+        <span class="hcard-arrow">→</span>
+      </a>
+      <a href="#" class="hcard reveal">
+        <div class="hcard-top"><div class="hcard-icon">📋</div><span class="badge-soon">Soon</span></div>
+        <div class="hcard-title">Mustalah al-Hadith</div>
+        <div class="hcard-arabic">مُصْطَلَحُ الحَدِيث</div>
+        <p class="hcard-desc">The science of Hadith terminology — Sahih, Hasan, Daif, Mawdu — and all grading rules explained.</p>
+        <span class="hcard-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px;color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark'); icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light'); icon.textContent = '🌙';
+  }
+}
+
+function setLang(code) {
+  document.getElementById('lang-label').textContent = code;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.closest('.lang-option').classList.add('active');
+}
+
+function switchTab(btn, lang) {
+  const card = btn.closest('.ayat-card');
+  card.querySelectorAll('.trans-tab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.trans-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  card.querySelector('.trans-panel.' + lang).classList.add('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  const progress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+});
+</script>
+</body>
+</html>
