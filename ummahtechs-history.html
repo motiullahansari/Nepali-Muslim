@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History of Islam — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A;
+  --green-mid: #228B5E;
+  --green-light: #2EAF77;
+  --green-pale: #E8F5EE;
+  --gold: #B8860B;
+  --gold-light: #D4A017;
+  --amber: #92400E;
+  --amber-light: #D97706;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-2: #F3F3EE;
+  --surface: #FFFFFF;
+  --surface-2: #F7F7F4;
+  --border: #E2E4DC;
+  --text: #1A2318;
+  --text-2: #4A5545;
+  --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] {
+  --bg: #0D1710;
+  --bg-2: #111D14;
+  --surface: #1A2A1E;
+  --surface-2: #1F3224;
+  --border: #2A3D2E;
+  --text: #EEF2EC;
+  --text-2: #A8BBA4;
+  --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95);
+  --shadow: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════
+   NAVBAR
+══════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--nav-bg); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); height: 64px;
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white;
+}
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); transition: color 0.3s; }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); flex-wrap: wrap; }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.nav-breadcrumb .crumb-active { color: var(--green-mid); font-weight: 600; }
+
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+.lang-select { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 5px; padding: 6px 10px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--text-2);
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.lang-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.lang-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px; min-width: 140px;
+  box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden;
+  transform: translateY(-6px); transition: all 0.2s; z-index: 200;
+}
+.lang-select:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 13px; color: var(--text-2); transition: all 0.15s; }
+.lang-option:hover { background: var(--bg-2); color: var(--green-mid); }
+.lang-option.active { color: var(--green-mid); font-weight: 600; }
+
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--green-mid); }
+
+.btn-login {
+  padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none;
+}
+.btn-login:hover { border-color: var(--green-mid); color: var(--green-mid); }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.history-hero {
+  min-height: 400px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 110px 1.5rem 60px; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=1400&q=80');
+  background-size: cover; background-position: center center;
+  opacity: 0.07; transition: opacity 0.3s;
+}
+[data-theme="dark"] .hero-bg { opacity: 0.05; }
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 20%, transparent 75%, var(--bg) 100%);
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500;
+  color: var(--green-mid); margin-bottom: 1.2rem; box-shadow: var(--shadow);
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-arabic {
+  font-family: 'Amiri', serif; font-size: clamp(28px, 5vw, 44px);
+  color: var(--gold-light); margin-bottom: 0.4rem;
+  direction: rtl; animation: fadeUp 0.6s 0.1s ease both; line-height: 1.5;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 36px); font-weight: 700;
+  color: var(--text); margin-bottom: 1rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+
+.hero-ayah-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--amber-light);
+  border-radius: 12px; padding: 18px 22px;
+  margin: 0 auto; max-width: 580px;
+  animation: fadeUp 0.6s 0.2s ease both; box-shadow: var(--shadow);
+}
+.hero-ayah-arabic { font-family: 'Amiri', serif; font-size: 21px; color: var(--text); direction: rtl; line-height: 1.8; margin-bottom: 7px; }
+.hero-ayah-trans { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.6; }
+.hero-ayah-ref { font-size: 11px; color: var(--amber-light); font-weight: 600; margin-top: 5px; display: block; }
+
+/* Stats strip */
+.hero-stats {
+  display: flex; justify-content: center; gap: 2rem; margin-top: 1.8rem;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+.stat-item { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--green-mid); }
+.stat-label { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════ */
+.history-body {
+  padding: 20px 1.5rem 80px;
+  background: var(--bg); transition: background 0.3s;
+}
+.history-inner { max-width: 1100px; margin: 0 auto; }
+
+/* Era Banner */
+.era-banner {
+  display: flex; align-items: center; gap: 16px;
+  padding: 44px 0 20px;
+}
+.era-icon {
+  width: 52px; height: 52px; border-radius: 13px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 24px;
+}
+.era-icon.c1 { background: linear-gradient(135deg, rgba(27,107,74,0.15), rgba(46,175,119,0.08)); border: 1px solid rgba(27,107,74,0.2); }
+.era-icon.c2 { background: linear-gradient(135deg, rgba(184,134,11,0.15), rgba(212,160,23,0.08)); border: 1px solid rgba(184,134,11,0.2); }
+.era-icon.c3 { background: linear-gradient(135deg, rgba(146,64,14,0.18), rgba(217,119,6,0.08)); border: 1px solid rgba(146,64,14,0.2); }
+.era-icon.c4 { background: linear-gradient(135deg, rgba(80,50,20,0.15), rgba(140,80,30,0.08)); border: 1px solid rgba(100,60,20,0.2); }
+
+.era-text {}
+.era-label {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.8px; color: var(--text-3); margin-bottom: 4px;
+}
+.era-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2.2vw, 20px); font-weight: 700; color: var(--text);
+}
+.era-years { font-size: 12px; color: var(--gold); font-weight: 600; margin-top: 3px; }
+.era-divider { flex: 1; height: 1px; background: var(--border); }
+
+/* Cards Grid */
+.topics-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+}
+@media(max-width: 900px) { .topics-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 540px) { .topics-grid { grid-template-columns: 1fr; } }
+
+/* Topic Card */
+.tcard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 18px 18px;
+  text-decoration: none; color: var(--text);
+  transition: all 0.25s; display: flex; flex-direction: column;
+  gap: 7px; position: relative; overflow: hidden; cursor: pointer;
+}
+.tcard::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+  opacity: 0; transition: opacity 0.25s;
+}
+.tcard.v-green::before { background: linear-gradient(180deg, var(--green), var(--green-light)); }
+.tcard.v-gold::before  { background: linear-gradient(180deg, var(--gold), var(--gold-light)); }
+.tcard.v-amber::before { background: linear-gradient(180deg, var(--amber), var(--amber-light)); }
+
+.tcard:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.tcard.v-green:hover { border-color: var(--green-mid); }
+.tcard.v-gold:hover  { border-color: var(--gold-light); }
+.tcard.v-amber:hover { border-color: var(--amber-light); }
+.tcard:hover::before { opacity: 1; }
+
+.tcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+
+.tcard-num {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.5px; color: var(--text-3);
+}
+
+.tcard-badge {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.4px; padding: 2px 7px; border-radius: 4px;
+}
+.tcard-badge.b-green { color: var(--green-mid); background: var(--green-pale); }
+.tcard-badge.b-gold  { color: var(--gold); background: rgba(184,134,11,0.1); }
+.tcard-badge.b-amber { color: var(--amber-light); background: rgba(146,64,14,0.1); }
+[data-theme="dark"] .tcard-badge.b-green { background: rgba(46,175,119,0.12); }
+[data-theme="dark"] .tcard-badge.b-gold  { background: rgba(184,134,11,0.14); }
+[data-theme="dark"] .tcard-badge.b-amber { background: rgba(146,64,14,0.14); }
+
+.tcard-title {
+  font-family: 'Playfair Display', serif; font-size: 14.5px;
+  font-weight: 600; color: var(--text); line-height: 1.4;
+}
+.tcard-arabic {
+  font-family: 'Amiri', serif; font-size: 14px;
+  color: var(--text-3); direction: rtl; line-height: 1.6;
+}
+.tcard-year { font-size: 11px; font-weight: 600; color: var(--gold); }
+.tcard-desc { font-size: 12px; color: var(--text-2); line-height: 1.55; flex: 1; }
+
+.tcard-arrow {
+  font-size: 13px; color: var(--text-3);
+  align-self: flex-end; margin-top: 6px; transition: all 0.2s;
+}
+.tcard.v-green:hover .tcard-arrow { color: var(--green-mid); transform: translateX(3px); }
+.tcard.v-gold:hover  .tcard-arrow { color: var(--gold-light); transform: translateX(3px); }
+.tcard.v-amber:hover .tcard-arrow { color: var(--amber-light); transform: translateX(3px); }
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 28px 1.5rem; transition: background 0.3s, border-color 0.3s;
+}
+.footer-bottom {
+  max-width: 1100px; margin: 0 auto; display: flex;
+  align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom p { font-size: 12.5px; color: var(--text-3); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 17px; color: var(--green-mid); }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <a href="ummahtechs-biography.html">Biography & History</a>
+    <span>›</span>
+    <span class="crumb-active">History of Islam</span>
+  </div>
+  <div class="nav-right">
+    <div class="lang-select">
+      <button class="lang-btn">🌐 <span id="lang-label">EN</span> ▾</button>
+      <div class="lang-dropdown">
+        <div class="lang-option active" onclick="setLang('EN')">🇬🇧 English</div>
+        <div class="lang-option" onclick="setLang('HI')">🇮🇳 हिंदी</div>
+        <div class="lang-option" onclick="setLang('UR')">🇵🇰 اردو</div>
+        <div class="lang-option" onclick="setLang('NP')">🇳🇵 नेपाली</div>
+      </div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="ummahtechs-login.html" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="history-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🏛️ Islamic History</div>
+    <div class="hero-arabic">تَارِيخُ الإِسْلَام</div>
+    <h1 class="hero-title">History of Islam</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">أَفَلَمْ يَسِيرُوا فِي الْأَرْضِ فَيَنظُرُوا كَيْفَ كَانَ عَاقِبَةُ الَّذِينَ مِن قَبْلِهِمْ</div>
+      <p class="hero-ayah-trans">"Have they not traveled through the land and observed how was the end of those before them?"</p>
+      <span class="hero-ayah-ref">Surah Yusuf 12:109</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Eras</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">21</div>
+        <div class="stat-label">Topics</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">118</div>
+        <div class="stat-label">Years Covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ HISTORY CONTENT ══════════════ -->
+<div class="history-body">
+  <div class="history-inner">
+
+    <!-- ═══════════════════════════════
+         ERA 1 — RASHIDUN
+    ═══════════════════════════════ -->
+    <div class="era-banner reveal">
+      <div class="era-icon c1">🌿</div>
+      <div class="era-text">
+        <div class="era-label">Era 1 · Rashidun Period</div>
+        <div class="era-title">Period of the Rashidun Caliphs</div>
+        <div class="era-years">632 – 661 CE</div>
+      </div>
+      <div class="era-divider"></div>
+    </div>
+
+    <div class="topics-grid">
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">01</span>
+          <span class="tcard-badge b-green">656 CE</span>
+        </div>
+        <div class="tcard-title">Election of Hazrat Ali (RA) as Caliph</div>
+        <div class="tcard-arabic">خِلَافَةُ عَلِيٍّ رَضِيَ اللهُ عَنْهُ</div>
+        <p class="tcard-desc">After the martyrdom of Hazrat Uthman (RA), Hazrat Ali ibn Abi Talib (RA) was elected the fourth Caliph of Islam in 656 CE amid a deeply troubled political climate.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">02</span>
+          <span class="tcard-badge b-green">656 CE</span>
+        </div>
+        <div class="tcard-title">Groups that Opposed Hazrat Ali (RA)</div>
+        <div class="tcard-arabic">المُعَارِضُونَ لِعَلِيٍّ رَضِيَ اللهُ عَنْهُ</div>
+        <p class="tcard-desc">Key opponents included Hazrat Aisha (RA), Talha (RA), Zubayr (RA), and Muawiyah (RA) — each with distinct political and justice-based grievances over the killing of Uthman (RA).</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">03</span>
+          <span class="tcard-badge b-green">656 CE</span>
+        </div>
+        <div class="tcard-title">Battle of the Camel (Jamal)</div>
+        <div class="tcard-arabic">مَعْرَكَةُ الجَمَل</div>
+        <p class="tcard-desc">The first armed conflict among Muslims. Causes, events, outcomes — who supported whom in this battle near Basra between the forces of Ali (RA) and Aisha (RA).</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">04</span>
+          <span class="tcard-badge b-green">657 CE</span>
+        </div>
+        <div class="tcard-title">Battle of Siffin</div>
+        <div class="tcard-arabic">مَعْرَكَةُ صِفِّين</div>
+        <p class="tcard-desc">The major confrontation between Hazrat Ali (RA) and Muawiyah (RA) on the banks of the Euphrates — ending in arbitration and creating a lasting political and religious divide.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">05</span>
+          <span class="tcard-badge b-green">657–661 CE</span>
+        </div>
+        <div class="tcard-title">Muawiyah's Demand — Qisas for Uthman (RA)</div>
+        <div class="tcard-arabic">مُطَالَبَةُ مُعَاوِيَةَ بِالقِصَاص</div>
+        <p class="tcard-desc">Muawiyah (RA) refused to give bay'ah to Ali (RA) until the killers of Uthman (RA) were brought to justice — a demand that became the central political challenge of the era.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">06</span>
+          <span class="tcard-badge b-green">661 CE</span>
+        </div>
+        <div class="tcard-title">Hazrat Hasan (RA) & Transfer of Caliphate</div>
+        <div class="tcard-arabic">الحَسَنُ رَضِيَ اللهُ عَنْهُ وَتَنَازُلُهُ</div>
+        <p class="tcard-desc">Biography of Hazrat Hasan (RA) and his selfless decision to hand the caliphate to Muawiyah (RA) in 661 CE to preserve Muslim unity — this year became known as Aam al-Jama'ah.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">07</span>
+          <span class="tcard-badge b-green">661 CE</span>
+        </div>
+        <div class="tcard-title">Martyrdom of Hazrat Ali (RA)</div>
+        <div class="tcard-arabic">شَهَادَةُ عَلِيٍّ رَضِيَ اللهُ عَنْهُ</div>
+        <p class="tcard-desc">Hazrat Ali (RA) was martyred in the mosque of Kufa by Ibn Muljam — a Kharijite assassin — in Ramadan 40 AH (661 CE), bringing the blessed Rashidun era to its close.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+    </div>
+
+    <!-- ═══════════════════════════════
+         ERA 2 — EARLY UMAYYAD
+    ═══════════════════════════════ -->
+    <div class="era-banner reveal">
+      <div class="era-icon c2">🏰</div>
+      <div class="era-text">
+        <div class="era-label">Era 2 · Early Umayyad</div>
+        <div class="era-title">Beginning of the Umayyad Caliphate</div>
+        <div class="era-years">661 – 680 CE</div>
+      </div>
+      <div class="era-divider"></div>
+    </div>
+
+    <div class="topics-grid">
+
+      <a href="#" class="tcard v-gold reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">08</span>
+          <span class="tcard-badge b-gold">661 CE</span>
+        </div>
+        <div class="tcard-title">Establishment of the Umayyad State</div>
+        <div class="tcard-arabic">تَأْسِيسُ الدَّوْلَةِ الأُمَوِيَّة</div>
+        <p class="tcard-desc">Muawiyah ibn Abi Sufyan (RA) established the Umayyad Caliphate with Damascus as its capital — the first hereditary Islamic dynasty, marking a fundamental shift in Islamic governance.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-gold reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">09</span>
+          <span class="tcard-badge b-gold">~676 CE</span>
+        </div>
+        <div class="tcard-title">Caliphate to Monarchy — Bay'ah for Yazid</div>
+        <div class="tcard-arabic">تَحْوِيلُ الخِلَافَةِ إِلَى مُلْك</div>
+        <p class="tcard-desc">Muawiyah's attempt to transform the caliphate into a hereditary monarchy by securing bay'ah for his son Yazid — fiercely opposed by senior Companions including Husayn (RA) and Ibn Zubayr (RA).</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-gold reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">10</span>
+          <span class="tcard-badge b-gold">~670 CE</span>
+        </div>
+        <div class="tcard-title">Incident of Hujr ibn Adi (RA)</div>
+        <div class="tcard-arabic">حَادِثَةُ حُجْرِ بْنِ عَدِيٍّ رَضِيَ اللهُ عَنْهُ</div>
+        <p class="tcard-desc">Hujr ibn Adi (RA) and companions were executed for refusing to curse Hazrat Ali (RA) — the first political execution of Muslims by a Muslim state, a dark precedent in Islamic history.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+    </div>
+
+    <!-- ═══════════════════════════════
+         ERA 3 — YAZID & PUBLIC REACTION
+    ═══════════════════════════════ -->
+    <div class="era-banner reveal">
+      <div class="era-icon c3">🔥</div>
+      <div class="era-text">
+        <div class="era-label">Era 3 · Yazid's Reign</div>
+        <div class="era-title">Period of Yazid and Public Reaction</div>
+        <div class="era-years">680 – 683 CE</div>
+      </div>
+      <div class="era-divider"></div>
+    </div>
+
+    <div class="topics-grid">
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">11</span>
+          <span class="tcard-badge b-amber">680–692 CE</span>
+        </div>
+        <div class="tcard-title">Abdullah ibn Zubayr (RA) — His Claim</div>
+        <div class="tcard-arabic">عَبْدُاللهِ بْنُ الزُّبَيْرِ رَضِيَ اللهُ عَنْهُ</div>
+        <p class="tcard-desc">Who was Abdullah ibn Zubayr (RA)? His refusal to give bay'ah to Yazid, his claim to the caliphate from Makkah, and his long resistance against the Umayyads until his martyrdom in 692 CE.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">12</span>
+          <span class="tcard-badge b-amber">680 CE</span>
+        </div>
+        <div class="tcard-title">Event of Karbala</div>
+        <div class="tcard-arabic">وَاقِعَةُ كَرْبَلَاء</div>
+        <p class="tcard-desc">The tragic martyrdom of Imam Husayn (RA) — grandson of the Prophet ﷺ — along with his family and companions on the plains of Karbala on 10 Muharram 61 AH.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">13</span>
+          <span class="tcard-badge b-amber">685 CE</span>
+        </div>
+        <div class="tcard-title">Movement of the Tawwabun</div>
+        <div class="tcard-arabic">حَرَكَةُ التَّوَّابِين</div>
+        <p class="tcard-desc">The "Penitents" of Kufa — those who had invited Husayn (RA) but failed him — rose in 685 CE to atone for their betrayal, seeking revenge against Umayyad forces in battle.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">14</span>
+          <span class="tcard-badge b-amber">685–687 CE</span>
+        </div>
+        <div class="tcard-title">Mukhtar al-Thaqafi's Movement</div>
+        <div class="tcard-arabic">حَرَكَةُ المُخْتَارِ الثَّقَفِي</div>
+        <p class="tcard-desc">Mukhtar al-Thaqafi launched an uprising in Kufa to avenge Karbala, hunting down and executing many who had participated in the killing of Imam Husayn (RA) — a deeply controversial movement.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">15</span>
+          <span class="tcard-badge b-amber">683 CE</span>
+        </div>
+        <div class="tcard-title">Siege of Madinah — Incident of al-Harrah</div>
+        <div class="tcard-arabic">وَقْعَةُ الحَرَّة</div>
+        <p class="tcard-desc">Yazid's army besieged and sacked the holy city of Madinah, committing grave atrocities against its people — an event that permanently turned Muslim public opinion against Umayyad rule.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+    </div>
+
+    <!-- ═══════════════════════════════
+         ERA 4 — DECLINE OF UMAYYADS
+    ═══════════════════════════════ -->
+    <div class="era-banner reveal">
+      <div class="era-icon c4">⚖️</div>
+      <div class="era-text">
+        <div class="era-label">Era 4 · Umayyad Decline</div>
+        <div class="era-title">Decline and End of the Umayyad Caliphate</div>
+        <div class="era-years">683 – 750 CE</div>
+      </div>
+      <div class="era-divider"></div>
+    </div>
+
+    <div class="topics-grid">
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">16</span>
+          <span class="tcard-badge b-green">683–750 CE</span>
+        </div>
+        <div class="tcard-title">Causes & Roots of Violent Movements</div>
+        <div class="tcard-arabic">أَسْبَابُ الحَرَكَاتِ العُنِيفَة</div>
+        <p class="tcard-desc">A study of the deep political, religious, and social causes behind the armed rebellions — tribal divisions, Arab vs. non-Arab inequality, and unresolved grievances from Karbala.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">17</span>
+          <span class="tcard-badge b-green">683–750 CE</span>
+        </div>
+        <div class="tcard-title">Violent Rebellions Against the State</div>
+        <div class="tcard-arabic">الثَّوَرَاتُ المُسَلَّحَة</div>
+        <p class="tcard-desc">Major armed uprisings during the Umayyad period — from Kharijite revolts to Alid rebellions — that continuously challenged and weakened central authority across the empire.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">18</span>
+          <span class="tcard-badge b-green">683–750 CE</span>
+        </div>
+        <div class="tcard-title">Umayyad Policies Against Uprisings</div>
+        <div class="tcard-arabic">سِيَاسَاتُ الأُمَوِيِّينَ تُجَاهَ الثَّوَرَات</div>
+        <p class="tcard-desc">How Umayyad caliphs responded — from Hajjaj ibn Yusuf's brutal suppression to later diplomatic approaches — in the ongoing cycle of rebellion across Iraq, Persia, and Arabia.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-green reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">19</span>
+          <span class="tcard-badge b-green">683–750 CE</span>
+        </div>
+        <div class="tcard-title">Effects — Political, Social & Religious Divisions</div>
+        <div class="tcard-arabic">آثَارُ هَذِهِ الأَحْدَاث</div>
+        <p class="tcard-desc">Long-term consequences of the Umayyad era conflicts — the solidification of Sunni, Shia, and Kharijite identities, weakened caliphal authority, and deep sectarian memory in the Ummah.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-gold reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">20</span>
+          <span class="tcard-badge b-gold">717–720 CE</span>
+        </div>
+        <div class="tcard-title">Umar ibn Abd al-Aziz (RA) — The Just Caliph</div>
+        <div class="tcard-arabic">عُمَرُ بْنُ عَبْدِ العَزِيزِ رَحِمَهُ اللهُ</div>
+        <p class="tcard-desc">Known as the "Fifth Rightly-Guided Caliph" — his sweeping reforms in justice, taxation, and governance briefly restored trust, halted persecution of Alids, and lifted the ban on cursing Ali (RA).</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+      <a href="#" class="tcard v-amber reveal">
+        <div class="tcard-top">
+          <span class="tcard-num">21</span>
+          <span class="tcard-badge b-amber">750 CE</span>
+        </div>
+        <div class="tcard-title">End of the Umayyads — Abbasid Revolution</div>
+        <div class="tcard-arabic">سُقُوطُ الدَّوْلَةِ الأُمَوِيَّة</div>
+        <p class="tcard-desc">The Abbasid Revolution of 750 CE swept away the Umayyad dynasty. The causes, the Battle of the Zab, the massacre of Umayyad princes, and the rise of the new Abbasid Caliphate in Baghdad.</p>
+        <span class="tcard-arrow">→</span>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 UmmahTechs · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px; color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent = '☀️';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent = '🌙';
+  }
+}
+
+function setLang(code) {
+  document.getElementById('lang-label').textContent = code;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.closest('.lang-option').classList.add('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
