@@ -839,36 +839,7 @@ nav {
   background: linear-gradient(135deg, var(--green), var(--green-light));
 }
 
-.sc-badge {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.badge-live {
-  background: rgba(34,139,94,0.12);
-  color: var(--green-mid);
-}
-
-.badge-soon {
-  background: rgba(184,134,11,0.12);
-  color: var(--gold);
-}
-
-[data-theme="dark"] .badge-live {
-  background: rgba(46,175,119,0.15);
-  color: var(--green-light);
-}
-
-[data-theme="dark"] .badge-soon {
-  background: rgba(212,160,23,0.15);
-  color: var(--gold-light);
-}
-
-.sc-title {
+[data-theme="dark"] [data-theme="dark"] .sc-title {
   font-family: 'Playfair Display', serif;
   font-size: 16px;
   font-weight: 600;
@@ -915,12 +886,7 @@ nav {
 .section-card.featured .sc-arrow { color: rgba(255,255,255,0.7); }
 .section-card.featured:hover .sc-arrow { color: white; }
 .section-card.featured::after { display: none; }
-.section-card.featured .badge-live {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
-
-/* ════════════════════════════════════
+.section-card.featured /* ════════════════════════════════════
    DONATE BANNER
 ════════════════════════════════════ */
 .donate-banner {
@@ -1555,6 +1521,140 @@ Use only from Sihah Sittah (Bukhari, Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Ma
 </section>
 
 <!-- ══════════════ SECTIONS OVERVIEW ══════════════ -->
+<style>
+/* ── CORE CARDS (always visible, green) ── */
+.sc-core { background:#EAF3DE; border:1.5px solid #3B6D11; }
+.sc-core .sc-icon { background:rgba(59,109,17,.15); }
+.sc-core .sc-title { color:#173404; font-family:'Playfair Display',serif; font-size:16px; font-weight:600; }
+.sc-core .sc-arabic { color:#27500A; }
+.sc-core .sc-desc { color:#3B6D11; }
+.sc-core .sc-arrow { color:#3B6D11; }
+.sc-core:hover { border-color:#27500A; transform:translateY(-3px); box-shadow:0 8px 28px rgba(59,109,17,.18); }
+[data-theme="dark"] .sc-core { background:rgba(59,109,17,.14); border-color:#2EAF77; }
+[data-theme="dark"] .sc-core .sc-title { color:#b6f0ca; }
+[data-theme="dark"] .sc-core .sc-arabic { color:#7dcfa0; }
+[data-theme="dark"] .sc-core .sc-desc { color:#7dcfa0; }
+[data-theme="dark"] .sc-core .sc-arrow { color:#2EAF77; }
+
+/* ── CATEGORY TOGGLE HEADING ── */
+.cat-toggle {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:13px 18px; border-radius:12px; cursor:pointer;
+  user-select:none; margin-bottom:0; border:1.5px solid;
+  transition:opacity .15s, transform .15s;
+}
+.cat-toggle:hover { opacity:.88; transform:translateY(-1px); }
+.cat-toggle .cat-left { display:flex; align-items:center; gap:10px; }
+.cat-toggle .cat-emoji { font-size:18px; }
+.cat-toggle .cat-label { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; }
+.cat-toggle .cat-count { font-size:11px; opacity:.6; margin-left:4px; }
+.cat-toggle .cat-chev { font-size:12px; transition:transform .28s; opacity:.65; }
+.cat-toggle.open .cat-chev { transform:rotate(180deg); }
+
+/* ── COLLAPSIBLE BODY ── */
+.cat-body { overflow:hidden; max-height:0; transition:max-height .38s ease, margin .3s; }
+.cat-body.open { max-height:900px; margin-top:10px; }
+
+/* ── EXPANDED CARDS inside each category ── */
+.sc-exp {
+  border-radius:14px; padding:20px 18px 16px; border:1.5px solid;
+  text-decoration:none; display:flex; flex-direction:column; gap:8px;
+  transition:all .22s;
+}
+.sc-exp .sc-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+.sc-exp .sc-title { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; }
+.sc-exp .sc-arabic { font-family:'Amiri',serif; font-size:14px; direction:rtl; }
+.sc-exp .sc-desc { font-size:13px; line-height:1.6; }
+.sc-exp .sc-arrow { font-size:13px; align-self:flex-end; margin-top:2px; transition:transform .2s; }
+.sc-exp:hover { transform:translateY(-3px); }
+.sc-exp:hover .sc-arrow { transform:translateX(3px); }
+
+/* Teal — Learning */
+.cat-teal { background:#E1F5EE; border-color:#0F6E56; }
+.cat-teal .cat-label { color:#04342C; }
+.cat-teal .cat-chev { color:#0F6E56; }
+[data-theme="dark"] .cat-teal { background:rgba(15,110,86,.18); border-color:#1D9E75; }
+[data-theme="dark"] .cat-teal .cat-label { color:#9FE1CB; }
+.sc-teal { background:#E1F5EE; border-color:#0F6E56; }
+.sc-teal .sc-icon { background:rgba(15,110,86,.15); }
+.sc-teal .sc-title { color:#04342C; }
+.sc-teal .sc-arabic { color:#085041; }
+.sc-teal .sc-desc { color:#0F6E56; }
+.sc-teal .sc-arrow { color:#0F6E56; }
+.sc-teal:hover { border-color:#085041; box-shadow:0 8px 28px rgba(15,110,86,.15); }
+[data-theme="dark"] .sc-teal { background:rgba(15,110,86,.14); border-color:#1D9E75; }
+[data-theme="dark"] .sc-teal .sc-title { color:#9FE1CB; }
+[data-theme="dark"] .sc-teal .sc-arabic,[data-theme="dark"] .sc-teal .sc-desc,[data-theme="dark"] .sc-teal .sc-arrow { color:#5DCAA5; }
+
+/* Amber — Tools */
+.cat-amber { background:#FAEEDA; border-color:#854F0B; }
+.cat-amber .cat-label { color:#412402; }
+.cat-amber .cat-chev { color:#854F0B; }
+[data-theme="dark"] .cat-amber { background:rgba(133,79,11,.18); border-color:#EF9F27; }
+[data-theme="dark"] .cat-amber .cat-label { color:#FAC775; }
+.sc-amber { background:#FAEEDA; border-color:#854F0B; }
+.sc-amber .sc-icon { background:rgba(133,79,11,.13); }
+.sc-amber .sc-title { color:#412402; }
+.sc-amber .sc-arabic { color:#633806; }
+.sc-amber .sc-desc { color:#854F0B; }
+.sc-amber .sc-arrow { color:#854F0B; }
+.sc-amber:hover { border-color:#633806; box-shadow:0 8px 28px rgba(133,79,11,.15); }
+[data-theme="dark"] .sc-amber { background:rgba(133,79,11,.14); border-color:#EF9F27; }
+[data-theme="dark"] .sc-amber .sc-title { color:#FAC775; }
+[data-theme="dark"] .sc-amber .sc-arabic,[data-theme="dark"] .sc-amber .sc-desc,[data-theme="dark"] .sc-amber .sc-arrow { color:#EF9F27; }
+
+/* Purple — Fiqh & Belief */
+.cat-purple { background:#EEEDFE; border-color:#534AB7; }
+.cat-purple .cat-label { color:#26215C; }
+.cat-purple .cat-chev { color:#534AB7; }
+[data-theme="dark"] .cat-purple { background:rgba(83,74,183,.18); border-color:#7F77DD; }
+[data-theme="dark"] .cat-purple .cat-label { color:#CECBF6; }
+.sc-purple { background:#EEEDFE; border-color:#534AB7; }
+.sc-purple .sc-icon { background:rgba(83,74,183,.12); }
+.sc-purple .sc-title { color:#26215C; }
+.sc-purple .sc-arabic { color:#3C3489; }
+.sc-purple .sc-desc { color:#534AB7; }
+.sc-purple .sc-arrow { color:#534AB7; }
+.sc-purple:hover { border-color:#3C3489; box-shadow:0 8px 28px rgba(83,74,183,.15); }
+[data-theme="dark"] .sc-purple { background:rgba(83,74,183,.14); border-color:#7F77DD; }
+[data-theme="dark"] .sc-purple .sc-title { color:#CECBF6; }
+[data-theme="dark"] .sc-purple .sc-arabic,[data-theme="dark"] .sc-purple .sc-desc,[data-theme="dark"] .sc-purple .sc-arrow { color:#AFA9EC; }
+
+/* Blue — Community */
+.cat-blue { background:#E6F1FB; border-color:#185FA5; }
+.cat-blue .cat-label { color:#042C53; }
+.cat-blue .cat-chev { color:#185FA5; }
+[data-theme="dark"] .cat-blue { background:rgba(24,95,165,.18); border-color:#378ADD; }
+[data-theme="dark"] .cat-blue .cat-label { color:#B5D4F4; }
+.sc-blue { background:#E6F1FB; border-color:#185FA5; }
+.sc-blue .sc-icon { background:rgba(24,95,165,.12); }
+.sc-blue .sc-title { color:#042C53; }
+.sc-blue .sc-arabic { color:#0C447C; }
+.sc-blue .sc-desc { color:#185FA5; }
+.sc-blue .sc-arrow { color:#185FA5; }
+.sc-blue:hover { border-color:#0C447C; box-shadow:0 8px 28px rgba(24,95,165,.15); }
+[data-theme="dark"] .sc-blue { background:rgba(24,95,165,.14); border-color:#378ADD; }
+[data-theme="dark"] .sc-blue .sc-title { color:#B5D4F4; }
+[data-theme="dark"] .sc-blue .sc-arabic,[data-theme="dark"] .sc-blue .sc-desc,[data-theme="dark"] .sc-blue .sc-arrow { color:#85B7EB; }
+
+/* Coral — Info */
+.cat-coral { background:#FAECE7; border-color:#993C1D; }
+.cat-coral .cat-label { color:#4A1B0C; }
+.cat-coral .cat-chev { color:#993C1D; }
+[data-theme="dark"] .cat-coral { background:rgba(153,60,29,.18); border-color:#D85A30; }
+[data-theme="dark"] .cat-coral .cat-label { color:#F5C4B3; }
+.sc-coral { background:#FAECE7; border-color:#993C1D; }
+.sc-coral .sc-icon { background:rgba(153,60,29,.12); }
+.sc-coral .sc-title { color:#4A1B0C; }
+.sc-coral .sc-arabic { color:#712B13; }
+.sc-coral .sc-desc { color:#993C1D; }
+.sc-coral .sc-arrow { color:#993C1D; }
+.sc-coral:hover { border-color:#712B13; box-shadow:0 8px 28px rgba(153,60,29,.15); }
+[data-theme="dark"] .sc-coral { background:rgba(153,60,29,.14); border-color:#D85A30; }
+[data-theme="dark"] .sc-coral .sc-title { color:#F5C4B3; }
+[data-theme="dark"] .sc-coral .sc-arabic,[data-theme="dark"] .sc-coral .sc-desc,[data-theme="dark"] .sc-coral .sc-arrow { color:#F0997B; }
+</style>
+
 <section class="sections-overview" id="features">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="section-header reveal">
@@ -1563,252 +1663,211 @@ Use only from Sihah Sittah (Bukhari, Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Ma
       <p class="section-desc">Authentic Islamic knowledge organized for easy access — from Quran to daily tools.</p>
     </div>
 
-    <div class="main-grid">
-
-      <!-- 1. QURAN — Core Knowledge -->
-      <a href="ummahtechs-quran.html" class="section-card featured reveal">
-        <div class="sc-top">
-          <div class="sc-icon">📖</div>
-          <span class="sc-badge badge-live">Live</span>
-        </div>
+    <!-- ── CORE KNOWLEDGE (always visible) ── -->
+    <p style="font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;">📖 Core Knowledge</p>
+    <div class="main-grid reveal" style="margin-bottom:1.5rem;">
+      <a href="ummahtechs-quran.html" class="section-card sc-core">
+        <div class="sc-icon">📖</div>
         <div class="sc-title">Al-Quran Al-Kareem</div>
         <div class="sc-arabic">الْقُرْآنُ الْكَرِيمُ</div>
         <p class="sc-desc">Tafseer, Tajweed, Learning Quran, History, Encyclopedia — all in one.</p>
         <span class="sc-arrow">→</span>
       </a>
-
-      <!-- 2. HADEES — Core Knowledge -->
-      <a href="ummahtechs-hadees.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">📚</div>
-          <span class="sc-badge badge-live">Live</span>
-        </div>
+      <a href="ummahtechs-hadees.html" class="section-card sc-core">
+        <div class="sc-icon">📚</div>
         <div class="sc-title">Hadees</div>
         <div class="sc-arabic">الحَدِيثُ الشَّرِيف</div>
         <p class="sc-desc">Sihah Sittah, Bulugh-ul-Maram, Riyaz-us-Saliheen and more.</p>
         <span class="sc-arrow">→</span>
       </a>
-
-      <!-- 3. SEERAH -->
-      <a href="ummahtechs-seerah.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🌙</div>
-          <span class="sc-badge badge-live">Live</span>
-        </div>
+      <a href="ummahtechs-seerah.html" class="section-card sc-core">
+        <div class="sc-icon">🌙</div>
         <div class="sc-title">Seerah</div>
         <div class="sc-arabic">السِّيرَةُ النَّبَوِيَّة</div>
-        <p class="sc-desc">Life of Prophet Muhammad ﷺ — Ar-Raheeq Al-Makhtum & 12 books in 6 languages.</p>
+        <p class="sc-desc">Life of Prophet ﷺ — Ar-Raheeq Al-Makhtum & 12 books in 6 languages.</p>
         <span class="sc-arrow">→</span>
       </a>
-
-      <!-- 4. BIOGRAPHY & HISTORY -->
-      <a href="ummahtechs-biography.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🌟</div>
-          <span class="sc-badge badge-live">Live</span>
-        </div>
+      <a href="ummahtechs-biography.html" class="section-card sc-core">
+        <div class="sc-icon">🌟</div>
         <div class="sc-title">Biography & History</div>
         <div class="sc-arabic">السِّيَرُ وَالتَّارِيخ</div>
         <p class="sc-desc">Anbiya, Sahaba, Ahle Bayt, Islamic History & civilizations.</p>
         <span class="sc-arrow">→</span>
       </a>
-
-      <!-- 5. ISLAM FOR KIDS — Core Knowledge -->
-      <a href="ummahtechs-kids.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🎨</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Islam for Kids</div>
-        <div class="sc-arabic">الإِسْلامُ لِلْأَطْفَال</div>
-        <p class="sc-desc">Prophet stories, Sahaba tales, Akhlaaq, quizzes for young learners.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 6. ARKAN-E-ISLAM — Core Knowledge -->
-      <a href="ummahtechs-arkan.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🕌</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Arkan-e-Islam</div>
-        <div class="sc-arabic">أَرْكَانُ الإِسْلام</div>
-        <p class="sc-desc">Shahadah, Salah, Zakat, Sawm, Hajj/Umrah — complete guides.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 7. BOOKS & ARTICLES — Core Knowledge -->
-      <a href="ummahtechs-books.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">✍️</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Books & Articles</div>
-        <div class="sc-arabic">الكُتُبُ وَالمَقَالَات</div>
-        <p class="sc-desc">Islamic books, misconceptions, research articles by scholars.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 8. SALAH TIMES — Tools -->
-      <a href="ummahtechs-salah.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🕐</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Salah Times</div>
-        <div class="sc-arabic">أَوْقَاتُ الصَّلَاة</div>
-        <p class="sc-desc">Prayer times, Namaz & Wudu guide, Qaza tracker, Tasbeeh.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 9. ISLAMIC CALENDAR — Tools -->
-      <a href="ummahtechs-calendar.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🌙</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Islamic Calendar</div>
-        <div class="sc-arabic">التَّقْوِيمُ الإِسْلَامِي</div>
-        <p class="sc-desc">Hijri dates, Ramadan, Eid, special nights and Islamic events.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 10. ZAKAT CALCULATOR — Tools -->
-      <a href="ummahtechs-zakat.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">💰</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Zakat Calculator</div>
-        <div class="sc-arabic">حَاسِبَةُ الزَّكَاة</div>
-        <p class="sc-desc">Calculate Zakat on gold, silver, cash — with Nisab information.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 11. DUAS — Tools -->
-      <a href="ummahtechs-duas.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🤲</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Duas</div>
-        <div class="sc-arabic">الدُّعَاء</div>
-        <p class="sc-desc">Complete Hisnul Muslim in Hindi, Urdu, English & Nepali.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 12. RUQYA — Tools -->
-      <a href="ummahtechs-ruqya.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🛡️</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Ruqya</div>
-        <div class="sc-arabic">الرُّقْيَةُ الشَّرْعِيَّة</div>
-        <p class="sc-desc">Authentic Quranic & Prophetic protection and healing methods.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 13. FIQHI MADHAHIB — Muslim Groups -->
-      <a href="ummahtechs-madhahib.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🕌</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Fiqhi Madhahib</div>
-        <div class="sc-arabic">الْمَذَاهِبُ الْفِقْهِيَّة</div>
-        <p class="sc-desc">Hanafi, Maliki, Shafi'i, Hanbali — 4 Imams, their lives, usool & fiqh.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 14. AQEEDAH — Belief -->
-      <a href="ummahtechs-aqeedah.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">💎</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Aqeedah — Belief</div>
-        <div class="sc-arabic">العَقِيدَةُ الإِسْلَامِيَّة</div>
-        <p class="sc-desc">6 Arkan-ul-Iman — Allah, Farishte, Kitabein, Anbiya, Qiyamah, Taqdeer.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 15. NEW MUSLIM GUIDE -->
-      <a href="ummahtechs-newmuslim.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🌱</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">New Muslim Guide</div>
-        <div class="sc-arabic">دَلِيلُ المُسْلِمِ الجَدِيد</div>
-        <p class="sc-desc">Shahadah, first steps, basics of Islam — a complete guide for new Muslims.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 16. FITNAH — Qadyaniyat -->
-      <a href="ummahtechs-fitnah.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">⚠️</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Fitnah — Qadyaniyat</div>
-        <div class="sc-arabic">فِتْنَةُ القَادِيَانِيَّة</div>
-        <p class="sc-desc">Scholarly refutation of Qadyani beliefs — with Quran, Hadees & Ijma.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 17. HALAL & MASJID -->
-      <a href="ummahtechs-halal.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🗺️</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Halal & Masjid</div>
-        <div class="sc-arabic">حَلَال — نيبال</div>
-        <p class="sc-desc">Halal restaurants, hotels & Masjid directory — Nepal only.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 18. ABOUT US — Info -->
-      <a href="ummahtechs-about.html" class="section-card reveal">
-
-        <div class="sc-top">
-          <div class="sc-icon">ℹ️</div>
-          <span class="sc-badge badge-live">Live</span>
-        </div>
-        <div class="sc-title">About Us</div>
-        <div class="sc-arabic">مَنْ نَحْنُ</div>
-        <p class="sc-desc">Our mission, vision, goals and the team behind UmmahTechs.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 19. Q&A — Community -->
-      <a href="ummahtechs-qa.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">❓</div>
-          <span class="sc-badge badge-soon">Soon</span>
-        </div>
-        <div class="sc-title">Q&A</div>
-        <div class="sc-arabic">سُؤَالٌ وَجَوَاب</div>
-        <p class="sc-desc">Anonymous Islamic Q&A answered by scholars with daleel.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
-      <!-- 20. CONTRIBUTE — Community -->
-      <a href="ummahtechs-contribute.html" class="section-card reveal">
-        <div class="sc-top">
-          <div class="sc-icon">🤝</div>
-          <span class="sc-badge badge-live">Open</span>
-        </div>
-        <div class="sc-title">Contribute</div>
-        <div class="sc-arabic">المُسَاهَمَة</div>
-        <p class="sc-desc">Join our team — translate, research, write, or develop.</p>
-        <span class="sc-arrow">→</span>
-      </a>
-
     </div>
+
+    <!-- ── LEARNING (accordion) ── -->
+    <div class="cat-toggle cat-teal reveal" onclick="umToggle(this,'cat-learn')">
+      <div class="cat-left"><span class="cat-emoji">🎓</span><span class="cat-label">Learning</span><span class="cat-count">4 sections</span></div>
+      <span class="cat-chev">▼</span>
+    </div>
+    <div class="cat-body" id="cat-learn">
+      <div class="main-grid" style="margin-bottom:.4rem;">
+        <a href="ummahtechs-kids.html" class="sc-exp sc-teal">
+          <div class="sc-icon">🎨</div>
+          <div class="sc-title">Islam for Kids</div>
+          <div class="sc-arabic">الإِسْلامُ لِلْأَطْفَال</div>
+          <p class="sc-desc">Prophet stories, Sahaba tales, Akhlaaq lessons and fun quizzes for young learners.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-arkan.html" class="sc-exp sc-teal">
+          <div class="sc-icon">🕌</div>
+          <div class="sc-title">Arkan-e-Islam</div>
+          <div class="sc-arabic">أَرْكَانُ الإِسْلام</div>
+          <p class="sc-desc">Shahadah, Salah, Zakat, Sawm, Hajj/Umrah — complete step-by-step guides.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-newmuslim.html" class="sc-exp sc-teal">
+          <div class="sc-icon">🌱</div>
+          <div class="sc-title">New Muslim Guide</div>
+          <div class="sc-arabic">دَلِيلُ المُسْلِمِ الجَدِيد</div>
+          <p class="sc-desc">Shahadah, first steps and basics of Islam — a complete guide for new Muslims.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-aqeedah.html" class="sc-exp sc-teal">
+          <div class="sc-icon">💎</div>
+          <div class="sc-title">Aqeedah — Belief</div>
+          <div class="sc-arabic">العَقِيدَةُ الإِسْلَامِيَّة</div>
+          <p class="sc-desc">6 Arkan-ul-Iman — Allah, Farishte, Kitabein, Anbiya, Qiyamah, Taqdeer.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── TOOLS (accordion) ── -->
+    <div class="cat-toggle cat-amber reveal" onclick="umToggle(this,'cat-tools')" style="margin-top:10px;">
+      <div class="cat-left"><span class="cat-emoji">🛠️</span><span class="cat-label">Tools</span><span class="cat-count">5 sections</span></div>
+      <span class="cat-chev">▼</span>
+    </div>
+    <div class="cat-body" id="cat-tools">
+      <div class="main-grid" style="margin-bottom:.4rem;">
+        <a href="ummahtechs-salah.html" class="sc-exp sc-amber">
+          <div class="sc-icon">🕐</div>
+          <div class="sc-title">Salah Times</div>
+          <div class="sc-arabic">أَوْقَاتُ الصَّلَاة</div>
+          <p class="sc-desc">Prayer times, Namaz & Wudu guide, Qaza tracker, Tasbeeh counter.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-zakat.html" class="sc-exp sc-amber">
+          <div class="sc-icon">💰</div>
+          <div class="sc-title">Zakat Calculator</div>
+          <div class="sc-arabic">حَاسِبَةُ الزَّكَاة</div>
+          <p class="sc-desc">Calculate Zakat on gold, silver, cash — with current Nisab information.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-duas.html" class="sc-exp sc-amber">
+          <div class="sc-icon">🤲</div>
+          <div class="sc-title">Duas</div>
+          <div class="sc-arabic">الدُّعَاء</div>
+          <p class="sc-desc">Complete Hisnul Muslim in Hindi, Urdu, English & Nepali.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-calendar.html" class="sc-exp sc-amber">
+          <div class="sc-icon">🌙</div>
+          <div class="sc-title">Islamic Calendar</div>
+          <div class="sc-arabic">التَّقْوِيمُ الإِسْلَامِي</div>
+          <p class="sc-desc">Hijri dates, Ramadan, Eid, special nights and Islamic events.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-ruqya.html" class="sc-exp sc-amber">
+          <div class="sc-icon">🛡️</div>
+          <div class="sc-title">Ruqya</div>
+          <div class="sc-arabic">الرُّقْيَةُ الشَّرْعِيَّة</div>
+          <p class="sc-desc">Authentic Quranic & Prophetic protection and healing methods.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── FIQH & BELIEF (accordion) ── -->
+    <div class="cat-toggle cat-purple reveal" onclick="umToggle(this,'cat-fiqh')" style="margin-top:10px;">
+      <div class="cat-left"><span class="cat-emoji">🕌</span><span class="cat-label">Fiqh &amp; Belief</span><span class="cat-count">3 sections</span></div>
+      <span class="cat-chev">▼</span>
+    </div>
+    <div class="cat-body" id="cat-fiqh">
+      <div class="main-grid" style="margin-bottom:.4rem;">
+        <a href="ummahtechs-madhahib.html" class="sc-exp sc-purple">
+          <div class="sc-icon">🕌</div>
+          <div class="sc-title">Fiqhi Madhahib</div>
+          <div class="sc-arabic">الْمَذَاهِبُ الْفِقْهِيَّة</div>
+          <p class="sc-desc">Hanafi, Maliki, Shafi'i, Hanbali — 4 Imams, their lives, usool & fiqh.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-books.html" class="sc-exp sc-purple">
+          <div class="sc-icon">✍️</div>
+          <div class="sc-title">Books &amp; Articles</div>
+          <div class="sc-arabic">الكُتُبُ وَالمَقَالَات</div>
+          <p class="sc-desc">Islamic books, misconceptions, research articles by scholars.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-fitnah.html" class="sc-exp sc-purple">
+          <div class="sc-icon">⚠️</div>
+          <div class="sc-title">Fitnah — Qadyaniyat</div>
+          <div class="sc-arabic">فِتْنَةُ القَادِيَانِيَّة</div>
+          <p class="sc-desc">Scholarly refutation of Qadyani beliefs — with Quran, Hadees & Ijma.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── COMMUNITY (accordion) ── -->
+    <div class="cat-toggle cat-blue reveal" onclick="umToggle(this,'cat-comm')" style="margin-top:10px;">
+      <div class="cat-left"><span class="cat-emoji">🤝</span><span class="cat-label">Community</span><span class="cat-count">3 sections</span></div>
+      <span class="cat-chev">▼</span>
+    </div>
+    <div class="cat-body" id="cat-comm">
+      <div class="main-grid" style="margin-bottom:.4rem;">
+        <a href="ummahtechs-qa.html" class="sc-exp sc-blue">
+          <div class="sc-icon">❓</div>
+          <div class="sc-title">Q&amp;A</div>
+          <div class="sc-arabic">سُؤَالٌ وَجَوَاب</div>
+          <p class="sc-desc">Anonymous Islamic Q&amp;A answered by scholars with daleel.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-contribute.html" class="sc-exp sc-blue">
+          <div class="sc-icon">🤝</div>
+          <div class="sc-title">Contribute</div>
+          <div class="sc-arabic">المُسَاهَمَة</div>
+          <p class="sc-desc">Join our team — translate, research, write, or develop.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+        <a href="ummahtechs-halal.html" class="sc-exp sc-blue">
+          <div class="sc-icon">🗺️</div>
+          <div class="sc-title">Halal &amp; Masjid</div>
+          <div class="sc-arabic">حَلَال — نيبال</div>
+          <p class="sc-desc">Halal restaurants, hotels &amp; Masjid directory — Nepal only.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── INFO (accordion) ── -->
+    <div class="cat-toggle cat-coral reveal" onclick="umToggle(this,'cat-info')" style="margin-top:10px;">
+      <div class="cat-left"><span class="cat-emoji">ℹ️</span><span class="cat-label">Info</span><span class="cat-count">1 section</span></div>
+      <span class="cat-chev">▼</span>
+    </div>
+    <div class="cat-body" id="cat-info">
+      <div class="main-grid" style="margin-bottom:.4rem;">
+        <a href="ummahtechs-about.html" class="sc-exp sc-coral">
+          <div class="sc-icon">ℹ️</div>
+          <div class="sc-title">About Us</div>
+          <div class="sc-arabic">مَنْ نَحْنُ</div>
+          <p class="sc-desc">Our mission, vision, goals and the team behind UmmahTechs.</p>
+          <span class="sc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<script>
+function umToggle(btn, bodyId) {
+  btn.classList.toggle('open');
+  var body = document.getElementById(bodyId);
+  body.classList.toggle('open');
+}
+</script>
 
 <!-- ══════════════ FEATURED PATHWAY · SEERAH ══════════════ -->
 <style>
