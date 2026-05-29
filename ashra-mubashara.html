@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashara Mubashshara — UmmahTechs</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1B6B4A; --green-mid: #228B5E; --green-light: #2EAF77; --green-pale: #E8F5EE;
+  --gold: #B8860B; --gold-light: #D4A017; --gold-deep: #92660C; --gold-pale: #FBF4DC; --gold-glow: #F5D76E;
+}
+[data-theme="light"] {
+  --bg: #FAFAF8; --bg-2: #F3F3EE; --surface: #FFFFFF; --surface-2: #F7F7F4;
+  --border: #E2E4DC; --text: #1A2318; --text-2: #4A5545; --text-3: #7A8875;
+  --nav-bg: rgba(250,250,248,0.95); --shadow: 0 2px 20px rgba(0,0,0,0.08); --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] {
+  --bg: #0D1710; --bg-2: #111D14; --surface: #1A2A1E; --surface-2: #1F3224;
+  --border: #2A3D2E; --text: #EEF2EC; --text-2: #A8BBA4; --text-3: #6B8066;
+  --nav-bg: rgba(13,23,16,0.95); --shadow: 0 2px 20px rgba(0,0,0,0.3); --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  --gold-pale: rgba(212,160,23,0.10); --green-pale: rgba(46,175,119,0.10);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--green), var(--green-light)); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: white; }
+.logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--text); }
+.logo-name span { color: var(--green-mid); }
+.logo-tagline { font-size: 9px; color: var(--text-3); display: block; margin-top: -2px; }
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; margin-left: 1rem; font-size: 13px; color: var(--text-3); }
+.nav-breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.nav-breadcrumb a:hover { color: var(--green-mid); }
+.crumb-current { color: var(--green-mid); font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; }
+.theme-toggle:hover { border-color: var(--gold-light); }
+.btn-login { padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none; }
+.btn-login:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+.hero { min-height: 420px; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; padding: 110px 1.5rem 60px; overflow: hidden; background: linear-gradient(135deg, #FBF4DC 0%, #FAFAF8 50%, #FDF6E3 100%); }
+[data-theme="dark"] .hero { background: linear-gradient(135deg, #1A1500 0%, #0D1710 50%, #1A1200 100%); }
+.hero-pattern { position: absolute; inset: 0; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23B8860B' stroke-width='0.4' opacity='0.12'%3E%3Cpolygon points='30,3 57,18 57,42 30,57 3,42 3,18'/%3E%3Cpolygon points='30,10 50,22 50,38 30,50 10,38 10,22'/%3E%3C/g%3E%3C/svg%3E"); background-size: 60px 60px; }
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid rgba(212,160,23,0.3); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--gold-light); margin-bottom: 1.2rem; box-shadow: var(--shadow); animation: fadeUp 0.6s ease both; }
+.hero-arabic-main { font-family: 'Amiri', serif; font-size: clamp(22px, 3.5vw, 36px); color: var(--gold-light); margin-bottom: 0.5rem; direction: rtl; animation: fadeUp 0.6s 0.1s ease both; line-height: 1.6; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 38px); font-weight: 700; color: var(--text); margin-bottom: 1.2rem; animation: fadeUp 0.6s 0.15s ease both; }
+.hero-ayah-box { background: var(--surface); border: 1px solid rgba(212,160,23,0.25); border-left: 3px solid var(--gold-light); border-radius: 12px; padding: 18px 22px; margin: 0 auto; max-width: 620px; animation: fadeUp 0.6s 0.2s ease both; box-shadow: var(--shadow); }
+.hero-ayah-arabic { font-family: 'Amiri', serif; font-size: 18px; color: var(--text); direction: rtl; line-height: 1.85; margin-bottom: 8px; }
+.hero-ayah-trans { font-size: 12.5px; color: var(--text-2); font-style: italic; line-height: 1.6; }
+.hero-ayah-ref { font-size: 11px; color: var(--gold-light); font-weight: 600; margin-top: 6px; display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+.stats-strip { background: linear-gradient(90deg, var(--gold-pale), var(--bg-2), var(--gold-pale)); padding: 20px 1.5rem; border-top: 1px solid rgba(212,160,23,0.2); border-bottom: 1px solid rgba(212,160,23,0.2); }
+[data-theme="dark"] .stats-strip { background: rgba(212,160,23,0.06); }
+.stats-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width: 600px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+.stat-item { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--gold-light); line-height: 1; }
+.stat-lbl { font-size: 11px; color: var(--text-2); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+.section { padding: 55px 1.5rem; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-head { margin-bottom: 1.5rem; }
+.sec-tag { display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-deep); background: var(--gold-pale); padding: 4px 11px; border-radius: 6px; margin-bottom: 8px; }
+[data-theme="dark"] .sec-tag { background: rgba(212,160,23,0.12); color: var(--gold-light); }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.8vw, 28px); font-weight: 700; color: var(--text); }
+.section-sub { font-size: 13.5px; color: var(--text-2); margin-top: 6px; line-height: 1.6; }
+
+.hadith-source { background: var(--gold-pale); border: 1px solid rgba(212,160,23,0.25); border-left: 3px solid var(--gold-light); border-radius: 12px; padding: 18px 22px; margin-bottom: 36px; }
+[data-theme="dark"] .hadith-source { background: rgba(212,160,23,0.07); }
+.hadith-source-arabic { font-family: 'Amiri', serif; font-size: 16px; color: var(--text); direction: rtl; line-height: 1.8; margin-bottom: 8px; }
+.hadith-source-trans { font-size: 13px; color: var(--text-2); font-style: italic; line-height: 1.6; }
+.hadith-source-ref { font-size: 11px; color: var(--gold-deep); font-weight: 600; margin-top: 6px; display: block; }
+[data-theme="dark"] .hadith-source-ref { color: var(--gold-light); }
+
+.companion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+@media(max-width: 700px) { .companion-grid { grid-template-columns: 1fr; } }
+
+.companion-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.25s, box-shadow 0.25s; position: relative; }
+.companion-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(212,160,23,0.4); }
+.companion-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold-deep), var(--gold-glow), var(--gold-light)); }
+
+.companion-header { padding: 22px 22px 16px; display: flex; align-items: flex-start; gap: 14px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, var(--gold-pale) 0%, var(--surface) 60%); }
+[data-theme="dark"] .companion-header { background: linear-gradient(135deg, rgba(212,160,23,0.08) 0%, transparent 60%); }
+.companion-num { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--gold-deep), var(--gold-light)); color: white; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; flex-shrink: 0; box-shadow: 0 3px 10px rgba(184,134,11,0.3); }
+.companion-arabic { font-family: 'Amiri', serif; font-size: 18px; color: var(--gold-deep); direction: rtl; margin-bottom: 2px; line-height: 1.4; }
+[data-theme="dark"] .companion-arabic { color: var(--gold-light); }
+.companion-name { font-family: 'Playfair Display', serif; font-size: 15.5px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.companion-ra { font-size: 11.5px; color: var(--text-3); font-weight: 400; }
+
+.companion-body { padding: 16px 22px 20px; display: flex; flex-direction: column; gap: 12px; }
+.companion-laqab { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--gold-pale); color: var(--gold-deep); width: fit-content; }
+[data-theme="dark"] .companion-laqab { background: rgba(212,160,23,0.12); color: var(--gold-light); }
+.companion-meta { display: flex; gap: 7px; flex-wrap: wrap; }
+.meta-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px; font-size: 11px; color: var(--text-2); }
+.companion-desc { font-size: 13px; color: var(--text-2); line-height: 1.65; }
+.companion-highlights { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.companion-highlights li { display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px; color: var(--text-2); }
+.hi-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold-light); margin-top: 7px; flex-shrink: 0; }
+
+/* First 4 green override */
+.first-four .companion-card::before { background: linear-gradient(90deg, var(--green), var(--green-light), var(--gold-light)); }
+.first-four .companion-card:hover { border-color: rgba(34,139,94,0.4); }
+.first-four .companion-num { background: linear-gradient(135deg, var(--green), var(--green-light)); box-shadow: 0 3px 10px rgba(27,107,74,0.3); }
+.first-four .companion-arabic { color: var(--green-mid); }
+[data-theme="dark"] .first-four .companion-arabic { color: var(--green-light); }
+.first-four .companion-laqab { background: var(--green-pale); color: var(--green-mid); }
+[data-theme="dark"] .first-four .companion-laqab { background: rgba(46,175,119,0.12); color: var(--green-light); }
+.first-four .companion-header { background: linear-gradient(135deg, var(--green-pale) 0%, var(--surface) 60%); }
+[data-theme="dark"] .first-four .companion-header { background: linear-gradient(135deg, rgba(46,175,119,0.08) 0%, transparent 60%); }
+.first-four .hi-dot { background: var(--green-mid); }
+
+.section-divider { display: flex; align-items: center; gap: 16px; margin: 32px 0 28px; }
+.divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-text { font-size: 12px; font-weight: 700; color: var(--gold-deep); text-transform: uppercase; letter-spacing: 1px; background: var(--gold-pale); padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(212,160,23,0.2); white-space: nowrap; }
+[data-theme="dark"] .divider-text { background: rgba(212,160,23,0.1); color: var(--gold-light); }
+
+.hadith-section { background: var(--gold-pale); border-top: 1px solid rgba(212,160,23,0.2); border-bottom: 1px solid rgba(212,160,23,0.2); padding: 48px 1.5rem; text-align: center; }
+[data-theme="dark"] .hadith-section { background: rgba(212,160,23,0.05); }
+.hadith-arabic { font-family: 'Amiri', serif; font-size: clamp(18px, 3vw, 26px); color: var(--gold-deep); direction: rtl; margin-bottom: 10px; }
+[data-theme="dark"] .hadith-arabic { color: var(--gold-light); }
+.hadith-trans { font-size: 13.5px; color: var(--text-2); font-style: italic; margin-bottom: 6px; }
+.hadith-ref { font-size: 12px; color: var(--gold-deep); font-weight: 600; }
+[data-theme="dark"] .hadith-ref { color: var(--gold-light); }
+
+footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 28px 1.5rem; text-align: center; }
+.footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
+.footer-quran-arabic { font-family: 'Amiri', serif; font-size: 16px; color: var(--gold-light); direction: rtl; }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">U</div>
+    <div>
+      <span class="logo-name">Ummah<span>Techs</span></span>
+      <span class="logo-tagline">Serving the Ummah</span>
+    </div>
+  </a>
+  <div class="nav-breadcrumb">
+    <a href="index.html">Home</a> <span>›</span>
+    <a href="ummahtechs-biography.html">Biography</a> <span>›</span>
+    <a href="sahaba-sahabiya.html">Sahaba</a> <span>›</span>
+    <span class="crumb-current">Ashara Mubashshara</span>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+    <a href="#" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⭐ Promised Paradise</div>
+    <div class="hero-arabic-main">العَشَرَةُ المُبَشَّرَةُ بِالجَنَّة</div>
+    <h1 class="hero-title">Ashara Mubashshara</h1>
+    <div class="hero-ayah-box">
+      <div class="hero-ayah-arabic">عَشَرَةٌ فِي الجَنَّةِ: أَبُو بَكْرٍ فِي الجَنَّةِ، وَعُمَرُ فِي الجَنَّةِ...</div>
+      <p class="hero-ayah-trans">"Ten are in Paradise: Abu Bakr, Umar, Uthman, Ali, Talha, Zubayr, Abd al-Rahman ibn Awf, Sa'd, Sa'id, and Abu Ubaydah ibn al-Jarrah."</p>
+      <span class="hero-ayah-ref">— Prophet Muhammad ﷺ · Tirmidhi 3747, Abu Dawud 4649</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-lbl">Promised Paradise</div></div>
+    <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">Also Khulafa Rashideen</div></div>
+    <div class="stat-item"><div class="stat-num">1</div><div class="stat-lbl">Hadith — All Named</div></div>
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-lbl">From Quraysh</div></div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="sec-tag">⭐ Ashara Mubashshara</span>
+      <h2 class="section-title">The Ten Promised Paradise</h2>
+      <p class="section-sub">These ten Companions were explicitly named by the Prophet ﷺ in a single hadith as people of Jannah.</p>
+    </div>
+
+    <div class="hadith-source reveal">
+      <div class="hadith-source-arabic">عَنْ عَبْدِ الرَّحْمَنِ بْنِ عَوْفٍ قَالَ قَالَ رَسُولُ اللَّهِ ﷺ: أَبُو بَكْرٍ فِي الجَنَّةِ، وَعُمَرُ فِي الجَنَّةِ، وَعُثْمَانُ فِي الجَنَّةِ، وَعَلِيٌّ فِي الجَنَّةِ، وَطَلْحَةُ فِي الجَنَّةِ، وَالزُّبَيْرُ فِي الجَنَّةِ، وَعَبْدُ الرَّحْمَنِ بْنُ عَوْفٍ فِي الجَنَّةِ، وَسَعْدٌ فِي الجَنَّةِ، وَسَعِيدٌ فِي الجَنَّةِ، وَأَبُو عُبَيْدَةَ بْنُ الجَرَّاحِ فِي الجَنَّةِ</div>
+      <p class="hadith-source-trans">Abd al-Rahman ibn Awf narrated that the Prophet ﷺ said: "Abu Bakr is in Paradise, Umar is in Paradise, Uthman is in Paradise, Ali is in Paradise, Talha is in Paradise, al-Zubayr is in Paradise, Abd al-Rahman ibn Awf is in Paradise, Sa'd is in Paradise, Sa'id is in Paradise, and Abu Ubaydah ibn al-Jarrah is in Paradise."</p>
+      <span class="hadith-source-ref">Tirmidhi 3747 · Abu Dawud 4649 · Ibn Majah 133 — Sahih</span>
+    </div>
+
+    <div class="section-divider reveal">
+      <div class="divider-line"></div>
+      <div class="divider-text">👑 Also Khulafa-e-Rashideen</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="companion-grid first-four reveal">
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">١</div>
+          <div>
+            <div class="companion-arabic">أَبُو بَكْرٍ الصِّدِّيق</div>
+            <div class="companion-name">Abu Bakr al-Siddiq <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🌟 Al-Siddiq — The Truthful</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 573 – 634 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">1st Caliph</span>
+          </div>
+          <p class="companion-desc">Closest companion and father-in-law of the Prophet ﷺ. First adult male to accept Islam. Accompanied the Prophet ﷺ in the Hijrah. Led the Ummah as the first Caliph after the Prophet's ﷺ passing.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>First to believe in Isra wal Mi'raj without hesitation</li>
+            <li><span class="hi-dot"></span>Crushed Riddah wars; ordered compilation of the Quran</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٢</div>
+          <div>
+            <div class="companion-arabic">عُمَرُ بْنُ الخَطَّاب</div>
+            <div class="companion-name">Umar ibn al-Khattab <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">⚖️ Al-Farooq — Distinguisher of Truth</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 584 – 644 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">2nd Caliph</span>
+          </div>
+          <p class="companion-desc">Renowned for justice, strength, and simplicity. His acceptance of Islam was a turning point for the early Muslims. Expanded the Islamic state across Persia and Byzantium in just 10 years.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Conquered Persia, Syria, Egypt, and Iraq</li>
+            <li><span class="hi-dot"></span>Introduced the Hijri calendar; established Bayt al-Mal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٣</div>
+          <div>
+            <div class="companion-arabic">عُثْمَانُ بْنُ عَفَّان</div>
+            <div class="companion-name">Uthman ibn Affan <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🔑 Dhul-Nurayn — Possessor of Two Lights</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 576 – 656 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">3rd Caliph</span>
+          </div>
+          <p class="companion-desc">Known for extraordinary generosity and modesty. Married two daughters of the Prophet ﷺ. His greatest legacy — the Uthmani Mushaf — is the standardized Quran still used by every Muslim today.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Standardized the Uthmani Mushaf of the Quran</li>
+            <li><span class="hi-dot"></span>Martyred while reciting the Quran, 35 AH</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٤</div>
+          <div>
+            <div class="companion-arabic">عَلِيُّ بْنُ أَبِي طَالِب</div>
+            <div class="companion-name">Ali ibn Abi Talib <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🦁 Asadullah — Lion of Allah</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 601 – 661 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">4th Caliph</span>
+          </div>
+          <p class="companion-desc">Cousin and son-in-law of the Prophet ﷺ. First child to accept Islam. Renowned for bravery, knowledge, and eloquence. Husband of Fatimah RA, father of Hasan and Husayn RA.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Slept in Prophet's ﷺ bed on the night of Hijrah</li>
+            <li><span class="hi-dot"></span>Martyred by Ibn Muljam in Kufa, 40 AH</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider reveal">
+      <div class="divider-line"></div>
+      <div class="divider-text">⭐ Remaining Six</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="companion-grid reveal">
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٥</div>
+          <div>
+            <div class="companion-arabic">طَلْحَةُ بْنُ عُبَيْدِ اللَّه</div>
+            <div class="companion-name">Talha ibn Ubaydullah <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🛡️ Talhat al-Khayr — Talha the Good</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 594 – 656 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Tribe: Taym</span>
+          </div>
+          <p class="companion-desc">Among the earliest converts to Islam. At Uhud he shielded the Prophet ﷺ with his own body, losing the use of his hand permanently. Renowned across Arabia for his extraordinary generosity.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Shielded the Prophet ﷺ at Uhud with his body</li>
+            <li><span class="hi-dot"></span>Called "Talha the Generous" for his immense charity</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٦</div>
+          <div>
+            <div class="companion-arabic">الزُّبَيْرُ بْنُ العَوَّام</div>
+            <div class="companion-name">Zubayr ibn al-Awwam <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">⚔️ Hawari al-Rasul — Disciple of the Prophet ﷺ</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 594 – 656 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Nephew of Khadijah RA</span>
+          </div>
+          <p class="companion-desc">Cousin of the Prophet ﷺ and one of the earliest Muslims. The Prophet ﷺ called him his "disciple." A fierce warrior who participated in nearly every major battle of early Islam.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>First to draw his sword in the path of Islam</li>
+            <li><span class="hi-dot"></span>Son of Safiyyah bint Abd al-Muttalib, aunt of the Prophet ﷺ</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٧</div>
+          <div>
+            <div class="companion-arabic">عَبْدُ الرَّحْمَنِ بْنُ عَوْف</div>
+            <div class="companion-name">Abd al-Rahman ibn Awf <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">💰 Al-Jawwad — The Most Generous</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 580 – 652 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Tribe: Zuhrah</span>
+          </div>
+          <p class="companion-desc">One of the wealthiest Companions, yet among the most generous. Migrated to Madinah with nothing and rebuilt his fortune quickly. Donated enormous wealth — horses, camels, and gold — in the way of Allah.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Donated 500 horses and 1,500 camels for jihad</li>
+            <li><span class="hi-dot"></span>Led Salah when the Prophet ﷺ was absent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٨</div>
+          <div>
+            <div class="companion-arabic">سَعْدُ بْنُ أَبِي وَقَّاص</div>
+            <div class="companion-name">Sa'd ibn Abi Waqqas <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🏹 First Archer in Islam</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 595 – 674 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Maternal uncle of Prophet ﷺ</span>
+          </div>
+          <p class="companion-desc">The first person to shoot an arrow in the path of Allah. The Prophet ﷺ honored him by saying "May my father and mother be your ransom" — a distinction given to very few companions.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>First archer in the path of Allah</li>
+            <li><span class="hi-dot"></span>Conquered Persia at the Battle of al-Qadisiyyah</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">٩</div>
+          <div>
+            <div class="companion-arabic">سَعِيدُ بْنُ زَيْد</div>
+            <div class="companion-name">Sa'id ibn Zayd <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🌿 Min al-Sabiqeen — Among the Forerunners</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 ~593 – 671 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Brother-in-law of Umar RA</span>
+          </div>
+          <p class="companion-desc">One of the earliest Muslims, accepting Islam even before the Prophet ﷺ entered Dar al-Arqam. Brother-in-law of Umar RA. Participated in almost all major battles alongside the Prophet ﷺ.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Accepted Islam among the very first</li>
+            <li><span class="hi-dot"></span>Participated in all major battles of Islam</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="companion-card">
+        <div class="companion-header">
+          <div class="companion-num">١٠</div>
+          <div>
+            <div class="companion-arabic">أَبُو عُبَيْدَةَ بْنُ الجَرَّاح</div>
+            <div class="companion-name">Abu Ubaydah ibn al-Jarrah <span class="companion-ra">RA</span></div>
+          </div>
+        </div>
+        <div class="companion-body">
+          <span class="companion-laqab">🤝 Ameen al-Ummah — Trustee of the Ummah</span>
+          <div class="companion-meta">
+            <span class="meta-chip">📅 583 – 639 CE</span>
+            <span class="meta-chip">📍 Makkah</span>
+            <span class="meta-chip">Tribe: Fahr</span>
+          </div>
+          <p class="companion-desc">The Prophet ﷺ called him "the trustee of this Ummah." Known for remarkable humility, trustworthiness, and selflessness. Commanded the Muslim armies in Syria. Died in the Amwas plague as a martyr.</p>
+          <ul class="companion-highlights">
+            <li><span class="hi-dot"></span>Called "Ameen al-Ummah" by the Prophet ﷺ</li>
+            <li><span class="hi-dot"></span>Led conquest of Syria; died in Amwas plague, 18 AH</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hadith-section reveal">
+  <div class="hadith-arabic">رَضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ</div>
+  <p class="hadith-trans">"Allah is pleased with them and they are pleased with Him."</p>
+  <p class="hadith-ref">— Surah Al-Bayyinah 98:8</p>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 <a href="index.html" style="color:var(--green-mid);text-decoration:none;">UmmahTechs</a> · info@ummahtechs.com</p>
+    <span class="footer-quran-arabic">وَقُل رَّبِّ زِدْنِي عِلْمًا</span>
+    <p style="font-size:11.5px; color:var(--text-3);">Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  if (html.getAttribute('data-theme') === 'light') { html.setAttribute('data-theme', 'dark'); icon.textContent = '☀️'; }
+  else { html.setAttribute('data-theme', 'light'); icon.textContent = '🌙'; }
+}
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
