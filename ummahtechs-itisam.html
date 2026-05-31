@@ -451,18 +451,11 @@ nav {
 }
 
 /* TRANSLATION TABS */
-.trans-tabs { display: flex; gap: 4px; }
-.trans-tab {
-  padding: 3px 10px; font-size: 11px; font-weight: 600; border-radius: 5px;
-  cursor: pointer; border: 1px solid var(--border); background: transparent;
-  color: var(--text-3); font-family: 'DM Sans', sans-serif; transition: all 0.15s;
-}
-.trans-tab.active { background: var(--green-pale); color: var(--green-mid); border-color: var(--green-mid); }
-[data-theme="dark"] .trans-tab.active { background: rgba(46,175,119,0.12); }
-.trans-panel { display: none; font-size: 13.5px; color: var(--text-2); line-height: 1.75; }
-.trans-panel.active { display: block; }
-.trans-panel.urdu { font-family: 'Amiri', serif; font-size: 15px; direction: rtl; text-align: right; }
-.trans-panel.hindi { font-size: 13.5px; }
+.t-tr { margin-top: 0.55rem; }
+.t-tr-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-3); display: block; margin-bottom: 2px; }
+.t-en { font-style: italic; font-size: 13.5px; color: var(--text-2); line-height: 1.7; }
+.t-ur { font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; direction: rtl; text-align: right; color: var(--text-2); line-height: 2; }
+.t-hi { font-size: 13.5px; color: var(--text-2); line-height: 1.7; }
 
 .ayat-theme { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--text-3); margin-top: 2px; }
 .ayat-theme-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-light); flex-shrink: 0; }
@@ -898,52 +891,37 @@ footer {
 
       <div class="ayat-card featured reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">١</div>
+          <div class="ayat-num">1</div>
           <span class="ayat-surah-ref">Âl-i İmrân 3/31-32</span>
         </div>
         <div class="ayat-arabic">قُلْ إِن كُنتُمْ تُحِبُّونَ اللَّهَ فَاتَّبِعُونِي يُحْبِبْكُمُ اللَّهُ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَاللَّهُ غَفُورٌ رَّحِيمٌ ۝ قُلْ أَطِيعُوا اللَّهَ وَالرَّسُولَ ۖ فَإِن تَوَلَّوْا فَإِنَّ اللَّهَ لَا يُحِبُّ الْكَافِرِينَ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Say: If you love Allah, follow me — Allah will love you and forgive your sins. Allah is Most Forgiving, Most Merciful. Say: Obey Allah and the Messenger. If they turn away — Allah does not love the disbelievers."</div>
-        <div class="trans-panel ur">کہہ دو: اگر تم اللہ سے محبت رکھتے ہو تو میری پیروی کرو، اللہ تم سے محبت کرے گا اور تمہارے گناہ معاف کرے گا۔ اللہ سے اور رسول سے فرمانبرداری کرو، اگر وہ روگردانی کریں تو اللہ کافروں کو پسند نہیں کرتا۔</div>
-        <div class="trans-panel hindi">कहो: यदि तुम अल्लाह से प्रेम करते हो तो मेरा अनुसरण करो — अल्लाह तुमसे प्रेम करेगा और तुम्हारे पाप क्षमा करेगा। अल्लाह और रसूल की आज्ञा मानो। यदि वे मुँह फेर लें तो अल्लाह काफ़िरों को पसंद नहीं करता।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Say: If you love Allah, follow me — Allah will love you and forgive your sins. Allah is Most Forgiving, Most Merciful. Say: Obey Allah and the Messenger. If they turn away — Allah does not love the disbelievers."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">کہہ دو: اگر تم اللہ سے محبت رکھتے ہو تو میری پیروی کرو، اللہ تم سے محبت کرے گا اور تمہارے گناہ معاف کرے گا۔ اللہ سے اور رسول سے فرمانبرداری کرو، اگر وہ روگردانی کریں تو اللہ کافروں کو پسند نہیں کرتا۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">कहो: यदि तुम अल्लाह से प्रेम करते हो तो मेरा अनुसरण करो — अल्लाह तुमसे प्रेम करेगा और तुम्हारे पाप क्षमा करेगा। अल्लाह और रसूल की आज्ञा मानो। यदि वे मुँह फेर लें तो अल्लाह काफ़िरों को पसंद नहीं करता।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>Following the Prophet ﷺ = loving Allah</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٢</div>
+          <div class="ayat-num">2</div>
           <span class="ayat-surah-ref">Nisâ 4/80</span>
         </div>
         <div class="ayat-arabic">مَّن يُطِعِ الرَّسُولَ فَقَدْ أَطَاعَ اللَّهَ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Whoever obeys the Messenger has indeed obeyed Allah."</div>
-        <div class="trans-panel ur">جس نے رسول کی اطاعت کی اس نے اللہ کی اطاعت کی۔</div>
-        <div class="trans-panel hindi">जिसने रसूल की आज्ञा मानी, उसने अल्लाह की आज्ञा मानी।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Whoever obeys the Messenger has indeed obeyed Allah."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">جس نے رسول کی اطاعت کی اس نے اللہ کی اطاعت کی۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">जिसने रसूल की आज्ञा मानी, उसने अल्लाह की आज्ञा मानी।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>Obeying the Prophet ﷺ = obeying Allah</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٣</div>
+          <div class="ayat-num">3</div>
           <span class="ayat-surah-ref">Hucurât 49/1</span>
         </div>
         <div class="ayat-arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُقَدِّمُوا بَيْنَ يَدَيِ اللَّهِ وَرَسُولِهِ وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"O you who believe! Do not put yourselves ahead of Allah and His Messenger. Fear Allah — indeed, Allah is All-Hearing, All-Knowing."</div>
-        <div class="trans-panel ur">اے ایمان والو! اللہ اور اس کے رسول سے آگے نہ بڑھو اور اللہ سے ڈرو، بے شک اللہ سب سننے والا، سب جاننے والا ہے۔</div>
-        <div class="trans-panel hindi">ऐ ईमान वालो! अल्लाह और उसके रसूल से आगे मत बढ़ो और अल्लाह से डरो — निश्चय ही अल्लाह सब सुनने वाला, सब जानने वाला है।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"O you who believe! Do not put yourselves ahead of Allah and His Messenger. Fear Allah — indeed, Allah is All-Hearing, All-Knowing."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">اے ایمان والو! اللہ اور اس کے رسول سے آگے نہ بڑھو اور اللہ سے ڈرو، بے شک اللہ سب سننے والا، سب جاننے والا ہے۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">ऐ ईमान वालो! अल्लाह और उसके रसूल से आगे मत बढ़ो और अल्लाह से डरो — निश्चय ही अल्लाह सब सुनने वाला, सब जानने वाला है।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>No one precedes Allah and His Messenger</div>
       </div>
 
@@ -955,52 +933,37 @@ footer {
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٤</div>
+          <div class="ayat-num">4</div>
           <span class="ayat-surah-ref">Nisâ 4/65</span>
         </div>
         <div class="ayat-arabic">فَلَا وَرَبِّكَ لَا يُؤْمِنُونَ حَتَّىٰ يُحَكِّمُوكَ فِيمَا شَجَرَ بَيْنَهُمْ ثُمَّ لَا يَجِدُوا فِي أَنفُسِهِمْ حَرَجًا مِّمَّا قَضَيْتَ وَيُسَلِّمُوا تَسْلِيمًا</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"No! By your Lord, they will not believe until they make you judge in all disputes between them, then find no discomfort in what you decide, and submit completely."</div>
-        <div class="trans-panel ur">نہیں، تیرے رب کی قسم! وہ ایمان نہیں لائیں گے جب تک آپس کے جھگڑوں میں آپ کو حَکَم نہ بنائیں، پھر آپ کے فیصلے پر دل میں تنگی نہ پائیں اور پوری طرح سر تسلیم خم کر دیں۔</div>
-        <div class="trans-panel hindi">नहीं, तुम्हारे रब की कसम! वे ईमान नहीं लाएंगे जब तक अपने आपसी विवादों में आपको न्यायाधीश न बना लें, फिर आपके निर्णय पर मन में कोई संकोच न पाएं और पूरी तरह समर्पण कर दें।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"No! By your Lord, they will not believe until they make you judge in all disputes between them, then find no discomfort in what you decide, and submit completely."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">نہیں، تیرے رب کی قسم! وہ ایمان نہیں لائیں گے جب تک آپس کے جھگڑوں میں آپ کو حَکَم نہ بنائیں، پھر آپ کے فیصلے پر دل میں تنگی نہ پائیں اور پوری طرح سر تسلیم خم کر دیں۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">नहीं, तुम्हारे रब की कसम! वे ईमान नहीं लाएंगे जब तक अपने आपसी विवादों में आपको न्यायाधीश न बना लें, फिर आपके निर्णय पर मन में कोई संकोच न पाएं और पूरी तरह समर्पण कर दें।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>The Prophet ﷺ is the ultimate judge in all disputes</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٥</div>
+          <div class="ayat-num">5</div>
           <span class="ayat-surah-ref">Nisâ 4/115</span>
         </div>
         <div class="ayat-arabic">وَمَن يُشَاقِقِ الرَّسُولَ مِن بَعْدِ مَا تَبَيَّنَ لَهُ الْهُدَىٰ وَيَتَّبِعْ غَيْرَ سَبِيلِ الْمُؤْمِنِينَ نُوَلِّهِ مَا تَوَلَّىٰ وَنُصْلِهِ جَهَنَّمَ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Whoever opposes the Messenger after guidance has become clear, and follows other than the believers' way — We will leave them to what they have chosen and cast them into Hell."</div>
-        <div class="trans-panel ur">جو شخص ہدایت واضح ہو جانے کے بعد رسول کی مخالفت کرے اور مومنوں کی راہ چھوڑ کر چلے، ہم اسے اسی طرف پھیر دیں گے جدھر وہ پھرا اور اسے جہنم میں جھونکیں گے۔</div>
-        <div class="trans-panel hindi">जो व्यक्ति हिदायत स्पष्ट होने के बाद रसूल का विरोध करे और मोमिनों की राह छोड़कर चले — हम उसे उसी ओर फेर देंगे जिधर वह मुड़ा और उसे जहन्नम में झोंक देंगे।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Whoever opposes the Messenger after guidance has become clear, and follows other than the believers' way — We will leave them to what they have chosen and cast them into Hell."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">جو شخص ہدایت واضح ہو جانے کے بعد رسول کی مخالفت کرے اور مومنوں کی راہ چھوڑ کر چلے، ہم اسے اسی طرف پھیر دیں گے جدھر وہ پھرا اور اسے جہنم میں جھونکیں گے۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">जो व्यक्ति हिदायत स्पष्ट होने के बाद रसूल का विरोध करे और मोमिनों की राह छोड़कर चले — हम उसे उसी ओर फेर देंगे जिधर वह मुड़ा और उसे जहन्नम में झोंक देंगे।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>Opposing the Prophet after clear guidance leads to misguidance</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٦</div>
+          <div class="ayat-num">6</div>
           <span class="ayat-surah-ref">Ahzâb 33/21</span>
         </div>
         <div class="ayat-arabic">لَّقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Indeed, in the Messenger of Allah you have an excellent example for whoever hopes in Allah and the Last Day and remembers Allah often."</div>
-        <div class="trans-panel ur">یقیناً تمہارے لیے رسول اللہ میں بہترین نمونہ ہے، ہر اس شخص کے لیے جو اللہ اور یومِ آخرت کی امید رکھتا ہو اور اللہ کو کثرت سے یاد کرتا ہو۔</div>
-        <div class="trans-panel hindi">निःसंदेह तुम्हारे लिए रसूलुल्लाह में एक उत्तम आदर्श है — हर उस व्यक्ति के लिए जो अल्लाह और अंतिम दिन की आशा रखता हो और अल्लाह को अधिक याद करता हो।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Indeed, in the Messenger of Allah you have an excellent example for whoever hopes in Allah and the Last Day and remembers Allah often."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">یقیناً تمہارے لیے رسول اللہ میں بہترین نمونہ ہے، ہر اس شخص کے لیے جو اللہ اور یومِ آخرت کی امید رکھتا ہو اور اللہ کو کثرت سے یاد کرتا ہو۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">निःसंदेह तुम्हारे लिए रसूलुल्लाह में एक उत्तम आदर्श है — हर उस व्यक्ति के लिए जो अल्लाह और अंतिम दिन की आशा रखता हो और अल्लाह को अधिक याद करता हो।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>The Prophet ﷺ is the perfect living example — Uswah Hasanah</div>
       </div>
 
@@ -1012,52 +975,37 @@ footer {
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٧</div>
+          <div class="ayat-num">7</div>
           <span class="ayat-surah-ref">Nûr 24/63</span>
         </div>
         <div class="ayat-arabic">فَلْيَحْذَرِ الَّذِينَ يُخَالِفُونَ عَنْ أَمْرِهِ أَن تُصِيبَهُمْ فِتْنَةٌ أَوْ يُصِيبَهُمْ عَذَابٌ أَلِيمٌ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Let those who oppose his command beware, lest a trial befall them or a painful punishment overtake them."</div>
-        <div class="trans-panel ur">جو لوگ رسول کے حکم کی مخالفت کرتے ہیں انہیں ڈرنا چاہیے کہ انہیں کوئی فتنہ آ پکڑے یا دردناک عذاب آ جائے۔</div>
-        <div class="trans-panel hindi">जो लोग रसूल के आदेश का विरोध करते हैं उन्हें डरना चाहिए कि कोई फ़ितना उन्हें आ पकड़े या दर्दनाक अज़ाब आ जाए।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Let those who oppose his command beware, lest a trial befall them or a painful punishment overtake them."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">جو لوگ رسول کے حکم کی مخالفت کرتے ہیں انہیں ڈرنا چاہیے کہ انہیں کوئی فتنہ آ پکڑے یا دردناک عذاب آ جائے۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">जो लोग रसूल के आदेश का विरोध करते हैं उन्हें डरना चाहिए कि कोई फ़ितना उन्हें आ पकड़े या दर्दनाक अज़ाब आ जाए।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>Opposing his command leads to fitnah or punishment</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٨</div>
+          <div class="ayat-num">8</div>
           <span class="ayat-surah-ref">Ahzâb 33/36</span>
         </div>
         <div class="ayat-arabic">وَمَا كَانَ لِمُؤْمِنٍ وَلَا مُؤْمِنَةٍ إِذَا قَضَى اللَّهُ وَرَسُولُهُ أَمْرًا أَن يَكُونَ لَهُمُ الْخِيَرَةُ مِنْ أَمْرِهِمْ ۗ وَمَن يَعْصِ اللَّهَ وَرَسُولَهُ فَقَدْ ضَلَّ ضَلَالًا مُّبِينًا</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"It is not for a believing man or woman, when Allah and His Messenger have decided a matter, to have any choice in it. Whoever disobeys Allah and His Messenger has clearly gone astray."</div>
-        <div class="trans-panel ur">کسی مومن مرد یا مومن عورت کو یہ حق نہیں کہ جب اللہ اور اس کے رسول کوئی فیصلہ کر دیں تو اپنے معاملے میں خود اختیار رکھیں۔ جو اللہ اور رسول کی نافرمانی کرے وہ کھلی گمراہی میں پڑ گیا۔</div>
-        <div class="trans-panel hindi">किसी मोमिन मर्द या मोमिन औरत को यह अधिकार नहीं कि जब अल्लाह और उसका रसूल कोई फ़ैसला कर दें तो वे अपने मामले में खुद अख्तियार रखें। जो अल्लाह और रसूल की नाफ़रमानी करे वह खुली गुमराही में पड़ गया।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"It is not for a believing man or woman, when Allah and His Messenger have decided a matter, to have any choice in it. Whoever disobeys Allah and His Messenger has clearly gone astray."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">کسی مومن مرد یا مومن عورت کو یہ حق نہیں کہ جب اللہ اور اس کے رسول کوئی فیصلہ کر دیں تو اپنے معاملے میں خود اختیار رکھیں۔ جو اللہ اور رسول کی نافرمانی کرے وہ کھلی گمراہی میں پڑ گیا۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">किसी मोमिन मर्द या मोमिन औरत को यह अधिकार नहीं कि जब अल्लाह और उसका रसूल कोई फ़ैसला कर दें तो वे अपने मामले में खुद अख्तियार रखें। जो अल्लाह और रसूल की नाफ़रमानी करे वह खुली गुमराही में पड़ गया।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>No personal choice after Allah and His Messenger decide</div>
       </div>
 
       <div class="ayat-card reveal">
         <div class="ayat-num-badge">
-          <div class="ayat-num">٩</div>
+          <div class="ayat-num">9</div>
           <span class="ayat-surah-ref">Haşr 59/7</span>
         </div>
         <div class="ayat-arabic">وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا وَاتَّقُوا اللَّهَ ۚ إِنَّ اللَّهَ شَدِيدُ الْعِقَابِ</div>
-        <div class="trans-tabs">
-          <button class="trans-tab active" onclick="switchTab(this,'en')">EN</button>
-          <button class="trans-tab" onclick="switchTab(this,'ur')">UR</button>
-          <button class="trans-tab" onclick="switchTab(this,'hi')">HI</button>
-        </div>
-        <div class="trans-panel active en">"Whatever the Messenger gives you, take it; and whatever he forbids you from, abstain. Fear Allah — indeed, Allah is severe in punishment."</div>
-        <div class="trans-panel ur">رسول تمہیں جو دے وہ لے لو اور جس سے روکے اس سے رک جاؤ۔ اللہ سے ڈرو، بے شک اللہ سخت عذاب دینے والا ہے۔</div>
-        <div class="trans-panel hindi">रसूल तुम्हें जो दें वह ले लो और जिससे रोकें उससे रुक जाओ। अल्लाह से डरो — निश्चय ही अल्लाह बड़ा कड़ा अज़ाब देने वाला है।</div>
+        <div class="t-tr"><span class="t-tr-label">EN</span><div class="t-en">"Whatever the Messenger gives you, take it; and whatever he forbids you from, abstain. Fear Allah — indeed, Allah is severe in punishment."</div></div>
+        <div class="t-tr"><span class="t-tr-label">UR</span><div class="t-ur">رسول تمہیں جو دے وہ لے لو اور جس سے روکے اس سے رک جاؤ۔ اللہ سے ڈرو، بے شک اللہ سخت عذاب دینے والا ہے۔</div></div>
+        <div class="t-tr"><span class="t-tr-label">HI</span><div class="t-hi">रसूल तुम्हें जो दें वह ले लो और जिससे रोकें उससे रुक जाओ। अल्लाह से डरो — निश्चय ही अल्लाह बड़ा कड़ा अज़ाब देने वाला है।</div></div>
         <div class="ayat-theme"><span class="ayat-theme-dot"></span>The most direct Quranic command of the Sunnah</div>
       </div>
 
@@ -1109,43 +1057,6 @@ footer {
   </div>
 </div>
 
-<!-- METHODOLOGY -->
-<div class="method-wrap reveal">
-  <div class="method-inner">
-    <h2 class="method-title">How to Study These Verses</h2>
-    <p class="method-desc">A structured approach to understanding each verse and its implications.</p>
-    <div class="method-steps">
-      <div class="method-step">
-        <div class="method-step-num">1</div>
-        <div class="method-step-content">
-          <div class="method-step-title">Read the Arabic Text</div>
-          <p class="method-step-text">Begin with the original Arabic to connect directly with the Quran. Notice the strength and directness of the divine language.</p>
-        </div>
-      </div>
-      <div class="method-step">
-        <div class="method-step-num">2</div>
-        <div class="method-step-content">
-          <div class="method-step-title">Read in Your Language</div>
-          <p class="method-step-text">Switch between English, Urdu, and Hindi translations using the tab on each card to understand the meaning fully in your preferred language.</p>
-        </div>
-      </div>
-      <div class="method-step">
-        <div class="method-step-num">3</div>
-        <div class="method-step-content">
-          <div class="method-step-title">Identify the Theme</div>
-          <p class="method-step-text">Each card's theme label shows the core principle established — obedience, judgment, love of Allah, or warning against opposition.</p>
-        </div>
-      </div>
-      <div class="method-step">
-        <div class="method-step-num">4</div>
-        <div class="method-step-content">
-          <div class="method-step-title">Cross-Reference with Hadees</div>
-          <p class="method-step-text">Pair these Quranic proofs with the Hadees collections to see how the Prophet ﷺ embodied these commands in his blessed life.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- RELATED -->
 <div class="sec-header reveal">
@@ -1255,13 +1166,6 @@ function setLang(code, label) {
   event.target.closest('.lang-option').classList.add('active');
 }
 
-function switchTab(btn, lang) {
-  const card = btn.closest('.ayat-card');
-  card.querySelectorAll('.trans-tab').forEach(t => t.classList.remove('active'));
-  card.querySelectorAll('.trans-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  card.querySelector('.trans-panel.' + lang).classList.add('active');
-}
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
