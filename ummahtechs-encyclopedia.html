@@ -629,8 +629,32 @@ nav {
 .modal-content {
   font-size: 14.5px; color: var(--text-2);
   line-height: 1.85;
-  white-space: pre-wrap;
   font-family: 'DM Sans', sans-serif;
+}
+.chapter-para {
+  margin-bottom: 1.1rem;
+}
+.chapter-para:last-child { margin-bottom: 0; }
+.chapter-ayah {
+  background: var(--bg-2);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-style: italic;
+  color: var(--text);
+  display: block;
+}
+.chapter-list-item {
+  display: flex;
+  gap: 8px;
+  padding: 3px 0;
+}
+.chapter-num {
+  color: var(--green);
+  font-weight: 600;
+  flex-shrink: 0;
+  min-width: 28px;
 }
 
 /* Quran quotes inside article */
@@ -782,6 +806,196 @@ footer {
   .modal-header { padding: 22px 20px 18px; }
   .modal-nav { padding: 14px 20px; }
   .nav-breadcrumb { display: none; }
+}
+
+/* ══════════════════════════════════
+   READING PAGE (full-screen)
+══════════════════════════════════ */
+.reading-page {
+  position: fixed; inset: 0; z-index: 3000;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s;
+  overflow: hidden;
+}
+.reading-page.open { opacity: 1; visibility: visible; }
+
+/* Top bar */
+.rp-topbar {
+  height: 52px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.rp-back {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-2); font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  padding: 6px 10px; border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.rp-back:hover { background: var(--bg-2); color: var(--green-mid); }
+.rp-center { text-align: center; }
+.rp-title-main { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: 0.03em; }
+.rp-title-sub { font-size: 11px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
+.rp-controls { display: flex; align-items: center; gap: 10px; }
+.rp-ctrl-btn {
+  background: none; border: 1px solid var(--border); color: var(--text-2);
+  border-radius: 8px; cursor: pointer;
+  font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+  padding: 5px 10px; transition: all 0.15s;
+}
+.rp-ctrl-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.rp-ctrl-btn.active { background: var(--green-mid); color: white; border-color: transparent; }
+
+/* Body: sidebar + content */
+.rp-body {
+  flex: 1; display: flex; overflow: hidden;
+}
+
+/* Sidebar */
+.rp-sidebar {
+  width: 300px; flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  overflow-y: auto; background: var(--surface);
+}
+.rp-sidebar::-webkit-scrollbar { width: 4px; }
+.rp-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.rp-sidebar-head {
+  padding: 16px 20px 10px;
+  font-size: 10px; font-weight: 700; color: var(--text-3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.rp-sidebar-book {
+  padding: 14px 20px 6px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700; color: var(--text);
+  line-height: 1.3;
+}
+.rp-sidebar-sub {
+  padding: 0 20px 14px;
+  font-size: 11px; color: var(--text-3);
+  border-bottom: 1px solid var(--border);
+}
+.rp-alpha-group { }
+.rp-alpha-label {
+  padding: 10px 20px 4px;
+  font-size: 10px; font-weight: 700; color: var(--text-3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.rp-sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px; cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+}
+.rp-sidebar-item:hover { background: var(--bg-2); }
+.rp-sidebar-item.active {
+  background: var(--green-pale);
+  border-left-color: var(--green-mid);
+}
+[data-theme="dark"] .rp-sidebar-item.active { background: rgba(46,175,119,0.12); }
+.rp-item-num {
+  flex-shrink: 0; width: 26px; height: 26px;
+  background: var(--bg-2); color: var(--text-3);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+}
+.rp-sidebar-item.active .rp-item-num {
+  background: var(--green-mid); color: white;
+}
+.rp-item-name {
+  font-size: 13px; color: var(--text-2); line-height: 1.3;
+  font-weight: 500;
+}
+.rp-sidebar-item.active .rp-item-name { color: var(--green); font-weight: 600; }
+
+/* Main reading area */
+.rp-main {
+  flex: 1; overflow-y: auto;
+  padding: 3rem 4rem;
+  max-width: 800px;
+}
+.rp-main::-webkit-scrollbar { width: 6px; }
+.rp-main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.rp-breadcrumb {
+  font-size: 11px; color: var(--text-3); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.rp-breadcrumb span { color: var(--green-mid); font-weight: 700; }
+.rp-topic-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 38px); font-weight: 700;
+  color: var(--text); line-height: 1.25; margin-bottom: 0.5rem;
+}
+.rp-topic-num-badge {
+  display: inline-block; margin-bottom: 1.5rem;
+  background: var(--green-pale); color: var(--green-mid);
+  font-size: 12px; font-weight: 700; padding: 4px 12px;
+  border-radius: 20px; letter-spacing: 0.05em;
+}
+[data-theme="dark"] .rp-topic-num-badge { background: rgba(46,175,119,0.15); }
+.rp-divider {
+  width: 40px; height: 3px; background: var(--green-mid);
+  border-radius: 2px; margin-bottom: 2rem;
+}
+.rp-content {
+  font-size: 16px; line-height: 1.95;
+  color: var(--text-2);
+  font-family: 'DM Sans', sans-serif;
+}
+.rp-content .chapter-para { margin-bottom: 1.4rem; }
+.rp-content .chapter-ayah {
+  background: var(--bg-2);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 20px; margin: 1.5rem 0;
+  font-size: 15px; font-style: italic; color: var(--text);
+  line-height: 1.8;
+}
+.rp-content .chapter-list-item {
+  display: flex; gap: 10px; padding: 4px 0;
+}
+.rp-content .chapter-num {
+  color: var(--green); font-weight: 700; flex-shrink: 0; min-width: 32px;
+}
+
+/* Bottom nav */
+.rp-footnav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 3rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.rp-nav-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  color: var(--text-2); padding: 10px 20px;
+  border-radius: 10px; cursor: pointer;
+  font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+  transition: all 0.2s;
+}
+.rp-nav-btn:hover { border-color: var(--green-mid); color: var(--green-mid); }
+.rp-nav-btn:disabled { opacity: 0.3; cursor: default; }
+.rp-nav-info { font-size: 12px; color: var(--text-3); }
+
+/* alpha divider in grid */
+.alpha-divider {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 0 4px;
+}
+.alpha-divider-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; color: var(--green-mid);
+  flex-shrink: 0;
+}
+.alpha-divider-line {
+  flex: 1; height: 1px; background: var(--border);
 }
 </style>
 </head>
@@ -1023,7 +1237,45 @@ footer {
   </div>
 </div>
 
-<!-- ══════════════ MODAL ══════════════ -->
+<!-- ══════════════ READING PAGE ══════════════ -->
+<div class="reading-page" id="readingPage">
+  <!-- Top bar -->
+  <div class="rp-topbar">
+    <button class="rp-back" onclick="closeReading()">← Back</button>
+    <div class="rp-center">
+      <div class="rp-title-main">Encyclopedia of Quran</div>
+      <div class="rp-title-sub" id="rpSubtitle">Topic</div>
+    </div>
+    <div class="rp-controls">
+      <button class="rp-ctrl-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+  <!-- Body -->
+  <div class="rp-body">
+    <!-- Sidebar -->
+    <div class="rp-sidebar">
+      <div class="rp-sidebar-head">Contents</div>
+      <div class="rp-sidebar-book">Encyclopedia of Quran</div>
+      <div class="rp-sidebar-sub">Quran Topics A–Z</div>
+      <div id="rpSidebarList"></div>
+    </div>
+    <!-- Main content -->
+    <div class="rp-main" id="rpMain">
+      <div class="rp-breadcrumb" id="rpBreadcrumb"></div>
+      <div class="rp-topic-title" id="rpTopicTitle"></div>
+      <div class="rp-topic-num-badge" id="rpTopicBadge"></div>
+      <div class="rp-divider"></div>
+      <div class="rp-content" id="rpContent"></div>
+      <div class="rp-footnav">
+        <button class="rp-nav-btn" id="rpPrevBtn" onclick="rpNavigate(-1)">← Prev</button>
+        <span class="rp-nav-info" id="rpNavInfo"></span>
+        <button class="rp-nav-btn" id="rpNextBtn" onclick="rpNavigate(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL (kept for compat) ══════════════ -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -1358,12 +1610,19 @@ async function init() {
     const json = await res.json();
     // Format: {"Sheet1": [{ID, Alfabe, Topic, Chapter}, ...]}
     const raw = Array.isArray(json) ? json : (json.Sheet1 || json.data || json.topics || []);
-    ENCYCLOPEDIA_DATA = raw.map(item => ({
+    const mapped = raw.map(item => ({
       id: item.ID || item.id,
-      alfabe: item.Alfabe || item.alfabe,
+      alfabe: (item.Alfabe || item.alfabe || '').trim(),
       topic: item.Topic || item.topic,
       chapter: (item.Chapter || item.chapter || '').replace(/\\n/g, '\n')
     }));
+    // Agar alfabe empty ho toh pichle topic ka alfabe use karo
+    let lastAlfabe = '';
+    ENCYCLOPEDIA_DATA = mapped.map(item => {
+      if (item.alfabe) { lastAlfabe = item.alfabe; }
+      else { item.alfabe = lastAlfabe; }
+      return item;
+    });
     if (ENCYCLOPEDIA_DATA.length === 0) throw new Error('empty');
   } catch(err) {
     console.warn('GitHub fetch failed, using inline data.', err);
@@ -1432,16 +1691,27 @@ function renderTopics() {
   }
   noResults.style.display = 'none';
 
-  grid.innerHTML = filteredTopics.map((item, i) => `
-    <div class="topic-card" onclick="openTopic(${i})">
+  // Build grid with alpha dividers
+  let html = '';
+  let lastAlpha = null;
+  filteredTopics.forEach((item, i) => {
+    if (item.alfabe !== lastAlpha) {
+      html += `<div class="alpha-divider">
+        <span class="alpha-divider-letter">${item.alfabe}</span>
+        <span class="alpha-divider-line"></span>
+      </div>`;
+      lastAlpha = item.alfabe;
+    }
+    html += `<div class="topic-card" onclick="openReading(${i})">
       <div class="topic-num">${item.id}</div>
       <div class="topic-text">
         <div class="topic-name">${item.topic}</div>
         <div class="topic-preview">${item.chapter.substring(0, 80).replace(/\n/g,' ')}…</div>
       </div>
       <div class="topic-arrow">→</div>
-    </div>
-  `).join('');
+    </div>`;
+  });
+  grid.innerHTML = html;
 }
 
 /* ═══════════════════════
@@ -1454,15 +1724,39 @@ function openTopic(filteredIndex) {
   document.body.style.overflow = 'hidden';
 }
 
+function formatChapter(text) {
+  if (!text) return '';
+  // Split into paragraphs by double newline, then handle single newlines
+  return text
+    .split(/\n\n+/)
+    .map(para => para.trim())
+    .filter(Boolean)
+    .map(para => {
+      // Numbered lists: lines starting with digit+dot become styled items
+      const lines = para.split('\n').map(line => {
+        const numMatch = line.match(/^(\d+[.)।]\s*)(.+)/);
+        if (numMatch) {
+          return `<div class="chapter-list-item"><span class="chapter-num">${numMatch[1]}</span><span>${numMatch[2]}</span></div>`;
+        }
+        // Ayah/quote lines (starting with «»)
+        if (line.trim().startsWith('«') || line.trim().startsWith('"')) {
+          return `<div class="chapter-ayah">${line.trim()}</div>`;
+        }
+        return line;
+      }).join('<br>');
+      return `<p class="chapter-para">${lines}</p>`;
+    })
+    .join('');
+}
+
 function renderModal() {
   const item = filteredTopics[currentTopicIndex];
-  document.getElementById('modalNum').textContent = `Topic ${item.id} of 379`;
+  document.getElementById('modalNum').textContent = `Topic ${item.id} of ${ENCYCLOPEDIA_DATA.length}`;
   document.getElementById('modalTitle').textContent = item.topic;
-  document.getElementById('modalContent').textContent = item.chapter;
+  document.getElementById('modalContent').innerHTML = formatChapter(item.chapter);
   document.getElementById('modalNavInfo').textContent = `${currentTopicIndex + 1} / ${filteredTopics.length}`;
   document.getElementById('prevBtn').disabled = currentTopicIndex === 0;
   document.getElementById('nextBtn').disabled = currentTopicIndex === filteredTopics.length - 1;
-  // Scroll modal body to top
   document.querySelector('.modal-body').scrollTop = 0;
 }
 
@@ -1538,6 +1832,90 @@ window.addEventListener('scroll', () => {
 /* ═══════════════════════
    START
 ═══════════════════════ */
+
+/* ═══════════════════════
+   READING PAGE
+═══════════════════════ */
+let rpCurrentIndex = -1;
+
+function buildRpSidebar() {
+  const list = document.getElementById('rpSidebarList');
+  let html = '';
+  let lastAlpha = null;
+  filteredTopics.forEach((item, i) => {
+    if (item.alfabe !== lastAlpha) {
+      html += `<div class="rp-alpha-label">${item.alfabe}</div>`;
+      lastAlpha = item.alfabe;
+    }
+    html += `<div class="rp-sidebar-item ${i === rpCurrentIndex ? 'active' : ''}" id="rp-item-${i}" onclick="rpGoTo(${i})">
+      <div class="rp-item-num">${item.id}</div>
+      <div class="rp-item-name">${item.topic}</div>
+    </div>`;
+  });
+  list.innerHTML = html;
+}
+
+function rpRender() {
+  const item = filteredTopics[rpCurrentIndex];
+  document.getElementById('rpSubtitle').textContent = item.topic;
+  document.getElementById('rpBreadcrumb').innerHTML = `Encyclopedia <span>/ ${item.alfabe}</span>`;
+  document.getElementById('rpTopicTitle').textContent = item.topic;
+  document.getElementById('rpTopicBadge').textContent = `Topic ${item.id} of ${ENCYCLOPEDIA_DATA.length}`;
+  document.getElementById('rpContent').innerHTML = formatChapter(item.chapter);
+  document.getElementById('rpNavInfo').textContent = `${rpCurrentIndex + 1} / ${filteredTopics.length}`;
+  document.getElementById('rpPrevBtn').disabled = rpCurrentIndex === 0;
+  document.getElementById('rpNextBtn').disabled = rpCurrentIndex === filteredTopics.length - 1;
+  document.getElementById('rpMain').scrollTop = 0;
+  // Highlight active sidebar item
+  document.querySelectorAll('.rp-sidebar-item').forEach((el, i) => {
+    el.classList.toggle('active', i === rpCurrentIndex);
+  });
+  // Scroll sidebar to active
+  const activeEl = document.getElementById('rp-item-' + rpCurrentIndex);
+  if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+}
+
+function openReading(filteredIndex) {
+  rpCurrentIndex = filteredIndex;
+  document.getElementById('readingPage').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  buildRpSidebar();
+  rpRender();
+}
+
+function rpGoTo(i) {
+  rpCurrentIndex = i;
+  rpRender();
+}
+
+function rpNavigate(dir) {
+  const next = rpCurrentIndex + dir;
+  if (next >= 0 && next < filteredTopics.length) {
+    rpCurrentIndex = next;
+    rpRender();
+    // update sidebar highlight
+    document.querySelectorAll('.rp-sidebar-item').forEach((el, i) => {
+      el.classList.toggle('active', i === rpCurrentIndex);
+    });
+    const activeEl = document.getElementById('rp-item-' + rpCurrentIndex);
+    if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function closeReading() {
+  document.getElementById('readingPage').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Keyboard nav for reading page
+document.addEventListener('keydown', e => {
+  const rp = document.getElementById('readingPage');
+  if (!rp.classList.contains('open')) return;
+  if (e.key === 'Escape') closeReading();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') rpNavigate(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') rpNavigate(-1);
+});
+
 init();
 </script>
 </body>
