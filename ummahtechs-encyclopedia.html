@@ -1108,10 +1108,35 @@ footer {
 
 <script>
 /* ═══════════════════════════════════════════
-   DATA — Replace this with API fetch later
-   await fetch('/api/encyclopedia') 
+   CONFIG
 ═══════════════════════════════════════════ */
-const ENCYCLOPEDIA_DATA = [
+const DATA_URL = 'https://raw.githubusercontent.com/motiullahansari/Nepali-Muslim/main/data/quran-encyclopedia.json';
+
+let ENCYCLOPEDIA_DATA = [];
+
+/* ═══════════════════════════════════════════
+   LOADING UI
+═══════════════════════════════════════════ */
+function showLoader() {
+  document.getElementById('topicsGrid').innerHTML = `
+    <div style="grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--text-3);">
+      <div style="font-size:2rem; margin-bottom:1rem; animation: spin 1s linear infinite; display:inline-block;">⏳</div>
+      <p style="font-size:1rem;">डेटा लोड हो रहा है…</p>
+    </div>`;
+}
+
+function showError(msg) {
+  document.getElementById('topicsGrid').innerHTML = `
+    <div style="grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--text-3);">
+      <div style="font-size:2rem; margin-bottom:1rem;">⚠️</div>
+      <p style="font-size:1rem; color:#c0392b;">${msg}</p>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   LEGACY INLINE DATA (fallback — empty)
+═══════════════════════════════════════════ */
+const _INLINE_DATA = [
   {
     id: 1, alfabe: "अ", topic: "अल्लाह",
     chapter: `अल्लाह अरबी भाषा का शब्द है। वह 'इलाह' से बना है जिसका अर्थ है 'उपास्य', 'पूज्य'। अल्लाह में विश्वास रखने का अर्थ है कि हम केवल उसी की उपासना करें; उसकी उपासना में किसी को साझी न बनाएँ। क्योंकि वास्तव में इस ब्रह्मांड का बनानेवाला केवल एक ही है जिसे हम अल्लाह कहते हैं।
@@ -1306,9 +1331,48 @@ let currentTopicIndex = -1;
 let filteredTopics = [];
 
 /* ═══════════════════════
-   INIT
+   INIT — GitHub se fetch
 ═══════════════════════ */
-function init() {
+function showLoader() {
+  document.getElementById('topicsGrid').innerHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--text-3);">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">📖</div>
+      <p style="font-size:1rem;font-weight:500;">डेटा लोड हो रहा है…</p>
+    </div>`;
+}
+
+function showError(msg) {
+  document.getElementById('topicsGrid').innerHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;">
+      <div style="font-size:2rem;margin-bottom:1rem;">⚠️</div>
+      <p style="color:#c0392b;font-size:0.95rem;">\${msg}</p>
+      <button onclick="init()" style="margin-top:1rem;padding:0.5rem 1.2rem;background:var(--green);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;">फिर से कोशिश करें</button>
+    </div>`;
+}
+
+async function init() {
+  showLoader();
+  try {
+    const res = await fetch(DATA_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    // Format: {"Sheet1": [{ID, Alfabe, Topic, Chapter}, ...]}
+    const raw = Array.isArray(json) ? json : (json.Sheet1 || json.data || json.topics || []);
+    ENCYCLOPEDIA_DATA = raw.map(item => ({
+      id: item.ID || item.id,
+      alfabe: item.Alfabe || item.alfabe,
+      topic: item.Topic || item.topic,
+      chapter: (item.Chapter || item.chapter || '').replace(/\\n/g, '\n')
+    }));
+    if (ENCYCLOPEDIA_DATA.length === 0) throw new Error('empty');
+  } catch(err) {
+    console.warn('GitHub fetch failed, using inline data.', err);
+    ENCYCLOPEDIA_DATA = _INLINE_DATA;
+    if (ENCYCLOPEDIA_DATA.length === 0) {
+      showError('डेटा लोड नहीं हो सका। कृपया पेज रिफ्रेश करें।');
+      return;
+    }
+  }
   buildAlphaBar();
   renderTopics();
 }
