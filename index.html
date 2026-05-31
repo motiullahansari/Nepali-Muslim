@@ -53,6 +53,22 @@
 }
 
 /* ════════════════════════════════════
+   SCROLL PROGRESS BAR
+════════════════════════════════════ */
+#scroll-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green), var(--green-light), var(--gold-light));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(46,175,119,0.5);
+}
+
+/* ════════════════════════════════════
    RESET & BASE
 ════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1305,6 +1321,7 @@ footer {
 </style>
 </head>
 <body>
+<div id="scroll-progress"></div>
 
 <!-- ══════════════ NAVBAR ══════════════ -->
 <nav>
@@ -1328,6 +1345,7 @@ footer {
         <a href="/quran/translation"><span class="d-icon">🌐</span> Translation</a>
         <a href="/quran/audio"><span class="d-icon">🎧</span> Audio Quran</a>
         <a href="/quran/search"><span class="d-icon">🔎</span> Quran Search</a>
+        <a href="ummahtechs-tahaddi.html"><span class="d-icon">🔥</span> Tahaddi Ayat</a>
       </div>
     </li>
     <!-- 2. Hadith -->
@@ -1473,6 +1491,7 @@ footer {
 <!-- Mobile Nav -->
 <div class="mobile-nav" id="mobileNav">
   <a href="/quran">📖 Al-Quran</a>
+  <a href="ummahtechs-tahaddi.html">🔥 Tahaddi Ayat</a>
   <a href="/hadith">📚 Hadith</a>
   <a href="ummahtechs-seerah.html">🌙 Seerah</a>
   <a href="/learn">🌿 Learn Islam</a>
@@ -2301,6 +2320,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<script>
+// Scroll Progress Bar
+const scrollBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollBar.style.width = progress + '%';
+});
 </script>
 </body>
 </html>
